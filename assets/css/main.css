@@ -1,0 +1,79 @@
+:root {
+  --BlackColor:#000;
+  --DarkBlueColor:#006490;
+  --DaknessBlue:#055375;
+  --WhiteColor: #fff;
+  --GrayColor:#6B7377;
+  --GrayFill:#EEEEEE;
+  --GreenColor:#039A7B;
+  --YellowColor:#E99005;
+}
+
+html{
+  scroll-behavior: smooth;
+}
+body{
+  font-family: 'Almarai', sans-serif !important;
+  font-size: 14px;
+  direction: rtl;
+  text-align: right ;
+  overflow-x: hidden !important;
+  transition: .75s ease-in-out;
+}
+#__nuxt{
+  overflow-x: hidden !important;
+}
+
+a{
+  text-decoration-line: none !important;
+}
+/* bootstrap modified */
+
+
+/* class */
+.text_blue{
+  color: var(--DarkBlueColor);
+}
+.text_green{
+  color: var(--GreenColor);
+}
+.text_yellow{
+  color: var(--YellowColor);
+}
+.text_Gray{
+  color: var(--GrayColor);
+}
+.bgYellow{
+  background-color: var(--YellowColor);
+}
+.bgGreen{
+  background-color: var(--GreenColor);
+}
+.bgGray{
+  background-color: var(--GrayFill);
+}
+.btn_blue{
+  background-color: var(--DarkBlueColor);
+  color: var(--WhiteColor);
+}
+.btn_blue:hover{
+  background-color: var(--DaknessBlue);
+  color: var(--WhiteColor);
+}
+.font-16{
+  font-size: 16px;
+}
+.rounded_0{
+  border-radius: 8px;
+}
+.m-sec{
+  margin-top: 100px;
+}
+
+.search_btn{
+  background-color: var(--DarkBlueColor);
+}
+.search_btn img{
+  width: 20px;
+}
+
