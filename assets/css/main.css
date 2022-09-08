@@ -8,6 +8,7 @@
   --GreenColor:#039A7B;
   --YellowColor:#E99005;
   --Dark:#15252B;
+  --bluebg:#036B98;
 }
 
 html{
@@ -56,6 +57,9 @@ a{
 .bgDark{
   background-color: var(--Dark);
 }
+.bluebg{
+  background-color: var(--bluebg);
+}
 .btn_blue{
   background-color: var(--DarkBlueColor);
   color: var(--WhiteColor);
@@ -63,6 +67,15 @@ a{
 .btn_blue:hover{
   background-color: var(--DaknessBlue);
   color: var(--WhiteColor);
+}
+.btn_blue_sp{
+  background-color: var(--DarkBlueColor);
+  color: var(--WhiteColor);
+  border: 1px solid #fff;
+}
+.btn_blue_sp:hover{
+  background-color: var(--DaknessBlue);
+  border: 1px solid #fff;
 }
 .font-16{
   font-size: 16px;
@@ -79,6 +92,9 @@ a{
 
 .search_btn{
   background-color: var(--DarkBlueColor);
+}
+.search_btn:hover{
+  background-color: var(--DaknessBlue);
 }
 .search_btn img{
   width: 20px;

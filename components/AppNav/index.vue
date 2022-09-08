@@ -13,21 +13,32 @@
 
       <b-navbar-nav class="pr-0 NavBar mr-5 text-center justify-content-between align-items-center">
         <NuxtLink  to="/" tag="li" exact class="nav-link" >الرئيسية</NuxtLink >
-        <NuxtLink to="#WE" class="nav-link"> الكورسات</NuxtLink>
-        <NuxtLink to="/Qudurat" class="nav-link">لماذا المنصف</NuxtLink>
-        <NuxtLink to="#Tahasuli" class="nav-link">عن المنصف</NuxtLink>
-        <NuxtLink to="#Contact" class="nav-link"> خطوات التسجيل</NuxtLink>
-        <NuxtLink to="#LastNews" class="nav-link">تواصل معنا</NuxtLink>
+        <NuxtLink to="/" class="nav-link"> الكورسات</NuxtLink>
+        <NuxtLink to="/" class="nav-link">لماذا المنصف</NuxtLink>
+        <NuxtLink to="/" class="nav-link">عن المنصف</NuxtLink>
+        <NuxtLink to="/" class="nav-link"> خطوات التسجيل</NuxtLink>
+        <NuxtLink to="/" class="nav-link">تواصل معنا</NuxtLink>
       </b-navbar-nav>
 
       <b-navbar-nav class="pr-0">
 
-        <b-button  v-b-modal.modal-1  size="sm" class="search_btn my-2 my-sm-2 mx-2 py-2 px-3 rounded_0" type="button" > <img :src="require(`~/assets/icon/search.svg`)" alt="icon"/></b-button>
+        <!-- <b-button  v-b-modal.modal-1  size="sm" class="search_btn my-2 my-sm-2 mx-2 py-2 px-3 rounded_0" type="button" > <img :src="require(`~/assets/icon/search.svg`)" alt="icon"/></b-button> -->
+        <b-button   size="sm" class="search_btn my-2 my-sm-2 mx-2 py-2 px-3 rounded_0" type="button" > <img :src="require(`~/assets/icon/search.svg`)" alt="icon"/></b-button>
+
         <b-button size="sm" class="my-2 my-sm-2 mx-2 py-2 px-4 rounded_0" type="button" variant="outline-warning" >تسجيل دخول</b-button>
-        <b-modal id="modal-1" title="إنشاء حساب جديد"  hide-footer>
+        <!-- <b-modal id="modal-1"   hide-footer hide-header>
           <div class="modal_style">
+            <b-form @submit="onSubmit" @reset="onReset">
+            <b-form-input
+              id="input-1"
+              v-model="form.search"
+              type="search"
+              placeholder="Enter search ...."
+              required
+            ></b-form-input>
+            </b-form>
           </div>
-        </b-modal>
+        </b-modal> -->
       </b-navbar-nav>
 
     </b-collapse>
@@ -37,6 +48,24 @@
 
 <script>
 export default {
+  // data() {
+  //     return {
+  //       form: {
+  //       search: '',
+  //     }
+  //   }
+  // },
+  //  methods: {
+  //     onSubmit(event) {
+  //       event.preventDefault()
+  //       alert(JSON.stringify(this.form))
+  //     },
+  //     onReset(event) {
+  //       event.preventDefault()
+  //       // Reset our form values
+  //       this.form.search = ''
+  //     }
+  //   }
 
 };
 

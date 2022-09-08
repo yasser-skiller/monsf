@@ -7,6 +7,7 @@
    <Steps/>
    <Channel/>
    <Try/>
+   <Sec/>
    <Contact/>
    <AppFooter/>
  </div>
@@ -20,6 +21,7 @@ import Cources from '@/components/Cources';
 import Steps from '@/components/Steps';
 import Channel from '@/components/Channel';
 import Try from '@/components/Try';
+import Sec from '@/components/Sec';
 import Contact from '@/components/Contact';
 import AppFooter from '@/components/AppFooter';
 
@@ -32,6 +34,7 @@ export default {
     Steps,
     Channel,
     Try,
+    Sec,
     Contact,
     AppFooter,
   },
