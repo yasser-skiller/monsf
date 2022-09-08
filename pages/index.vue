@@ -6,6 +6,8 @@
    <Cources/>
    <Steps/>
    <Channel/>
+   <Try/>
+   <Contact/>
  </div>
 </template>
 
@@ -16,6 +18,8 @@ import Info from '@/components/Info';
 import Cources from '@/components/Cources';
 import Steps from '@/components/Steps';
 import Channel from '@/components/Channel';
+import Try from '@/components/Try';
+import Contact from '@/components/Contact';
 
 export default {
   components:{
@@ -25,6 +29,8 @@ export default {
     Cources,
     Steps,
     Channel,
+    Try,
+    Contact,
   },
 }
 </script>
