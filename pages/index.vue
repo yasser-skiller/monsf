@@ -8,6 +8,7 @@
    <Channel/>
    <Try/>
    <Contact/>
+   <AppFooter/>
  </div>
 </template>
 
@@ -20,6 +21,7 @@ import Steps from '@/components/Steps';
 import Channel from '@/components/Channel';
 import Try from '@/components/Try';
 import Contact from '@/components/Contact';
+import AppFooter from '@/components/AppFooter';
 
 export default {
   components:{
@@ -31,6 +33,7 @@ export default {
     Channel,
     Try,
     Contact,
+    AppFooter,
   },
 }
 </script>

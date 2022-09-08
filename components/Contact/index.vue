@@ -1,7 +1,7 @@
 <template>
     <b-container class="m-sec">
-      <b-row align-h="center"  class="flex-wrap align-items-center rounded_1 bgGray">
-        <b-col cols="12" sm="10"  lg="6" class="bg text-white p-5">
+      <b-row align-h="center"  class="flex-wrap align-items-center bgGray">
+        <b-col cols="12"   lg="6" class="bg text-white p-5">
           <h3>تواصل معنا الان</h3>
           <p class="mt-4">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص</p>
           <h6 class="m-sec mb-4"> بيانات التواصل : </h6>
@@ -19,16 +19,65 @@
           </div>
 
         </b-col>
-        <b-col cols="12" sm="10" lg="6" class="bgGray">
+        <b-col cols="12"  lg="6" class="bgGray p-4 px-5">
+            <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+             <b-form-group id="input-group-2" label="الاسم" label-for="input-2">
+                <b-form-input
+                  id="input-2"
+                  v-model="form.name"
+                  placeholder="محمد مصطفي علي"
+                  required
+                ></b-form-input>
+              </b-form-group>
 
+              <p class="text_blue mt-4">رسالتك</p>
+              <b-form-textarea
+                id="textarea-rows"
+                placeholder="...اكتب رسالتك هنا"
+                v-model="form.textarea"
+                rows="7"
+              ></b-form-textarea>
+
+
+              <div class="d-flex justifiy-contant-center">
+                <b-button type="submit" class="btn btn_blue mt-5 mx-auto py-2 px-5 rounded_0" >ارسل الان</b-button>
+              </div>
+
+
+            </b-form>
         </b-col>
       </b-row>
-      <div class="m-sec">r</div>
     </b-container>
 </template>
 
 <script>
 export default {
+   data() {
+      return {
+        form: {
+          name: '',
+          textarea:''
+        },
+        show: true
+      }
+    },
+    methods: {
+      onSubmit(event) {
+        event.preventDefault()
+        alert(JSON.stringify(this.form))
+      },
+      onReset(event) {
+        event.preventDefault()
+        // Reset our form values
+        this.form.name = ''
+        this.form.textarea = ''
+        // Trick to reset/clear native browser form validation state
+        this.show = false
+        this.$nextTick(() => {
+          this.show = true
+        })
+      }
+    }
 
 };
 
@@ -42,6 +91,7 @@ export default {
   background-repeat:repeat-y repeat-x;
   background-size: cover;
   width: 100%;
+  height: 500px;
 }
 .mark{
   width: 10px;
@@ -49,6 +99,12 @@ export default {
   border-radius: 50%;
   background-color: var(--GrayColor);
   margin: 10px 0 10px 10px;
+}
+#input-group-2{
+  color: var(--DarkBlueColor);
+}
+#input-2::placeholder{
+  color: var(--GreenColor);
 }
 
 </style>

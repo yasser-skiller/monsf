@@ -10,7 +10,6 @@
           <img :src="require(`~/assets/img/sec.png`)" class="sec" alt="icon"/>
         </b-col>
       </b-row>
-      <div class="m-sec">r</div>
     </b-container>
 </template>
 
