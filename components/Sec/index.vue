@@ -12,7 +12,7 @@
               </div>
               </div>
               <p class="text-white">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى</p>
-              <div class="d-flex justify-content-left">
+              <div class="d-flex justify-content-left w-100">
                 <b-button size="sm" type="button" class="btn_blue_sp mx-2 px-4 py-2 rounded_0">عرض التجربة</b-button>
               </div>
             </div>
@@ -62,5 +62,8 @@ export default {
   width: 60px;
   height: 60px;
   border-radius: 50%;
+}
+.justify-content-left{
+  justify-content: left
 }
 </style>
