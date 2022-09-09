@@ -106,5 +106,9 @@ export default {
 #input-2::placeholder{
   color: var(--GreenColor);
 }
+#input-2{
+  height: 50px;
+  color: var(--GreenColor);
+}
 
 </style>

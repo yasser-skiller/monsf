@@ -21,11 +21,12 @@
       </b-navbar-nav>
 
       <b-navbar-nav class="pr-0">
+        <div class="d-flex">
+          <b-button   size="sm" class="search_btn my-2 my-sm-2 mx-2 py-2 px-3 rounded_0" type="button" > <img :src="require(`~/assets/icon/search.svg`)" alt="icon"/></b-button>
+          <b-button size="sm" class="my-2 my-sm-2 mx-2 py-2 px-4 rounded_0" type="button" variant="outline-warning" >تسجيل دخول</b-button>
+        </div>
 
         <!-- <b-button  v-b-modal.modal-1  size="sm" class="search_btn my-2 my-sm-2 mx-2 py-2 px-3 rounded_0" type="button" > <img :src="require(`~/assets/icon/search.svg`)" alt="icon"/></b-button> -->
-        <b-button   size="sm" class="search_btn my-2 my-sm-2 mx-2 py-2 px-3 rounded_0" type="button" > <img :src="require(`~/assets/icon/search.svg`)" alt="icon"/></b-button>
-
-        <b-button size="sm" class="my-2 my-sm-2 mx-2 py-2 px-4 rounded_0" type="button" variant="outline-warning" >تسجيل دخول</b-button>
         <!-- <b-modal id="modal-1"   hide-footer hide-header>
           <div class="modal_style">
             <b-form @submit="onSubmit" @reset="onReset">
@@ -115,6 +116,14 @@ export default {
 @media (max-width:1100px) {
   .nav-link{
     margin: 0 5px
+  }
+}
+@media (max-width:989px) {
+  .NavBar{
+    align-items: start !important;
+  }
+  .nav-link{
+    margin: 5px 0;
   }
 }
 </style>

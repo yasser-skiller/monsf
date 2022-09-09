@@ -1,0 +1,10 @@
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="invisible_box" data-name="invisible box">
+    <rect id="Rectangle_39" data-name="Rectangle 39" width="24" height="24" fill="none"/>
+    <rect id="Rectangle_40" data-name="Rectangle 40" width="24" height="24" fill="none"/>
+    <rect id="Rectangle_41" data-name="Rectangle 41" width="24" height="24" fill="none"/>
+  </g>
+  <g id="Q3_icons" data-name="Q3 icons" transform="translate(5.001 4.5)">
+    <path id="Path_469" data-name="Path 469" d="M23.7,17.735l-6,5.95a.95.95,0,0,1-1.4,0l-6-5.95a1.05,1.05,0,0,1-.1-1.35.95.95,0,0,1,1.5-.1l4.3,4.3V9.985a1,1,0,0,1,2,0v10.6l4.3-4.3a.95.95,0,0,1,1.5.1,1.05,1.05,0,0,1-.1,1.35Z" transform="translate(-10.001 -8.985)" fill="#15252b"/>
+  </g>
+</svg>

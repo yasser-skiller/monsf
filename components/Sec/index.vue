@@ -1,14 +1,14 @@
 <template>
     <b-container class="m-sec">
-      <b-row align-h="center"  class="flex-wrap align-items-center">
-        <b-col cols="12" sm="10"  lg="6" class="">
+      <b-row align-h="center"  class="flex-wrap-reverse align-items-center">
+        <b-col cols="12" sm="10"  lg="5" class=" mt-5">
           <div class="pr-5 mb-5">
             <div class="bluebg rounded_0 py-4 px-4">
               <div class="d-flex">
-              <img :src="require(`~/assets/img/Content-Round-Gray-Icone.png`)" class="person" alt="icon"/>
+              <img :src="Double === true ? require(`~/assets/img/Content-Round-Gray-Icon.png`) : require(`~/assets/img/Content-Round-Gray-Icone.png`)" class="person" alt="icon"/>
               <div class="mr-2">
                 <p class="text-white my-1">محمد مصطفي علي</p>
-                <small class="color_2">الرياض, السعودية</small>
+                <small class="color_2">{{Double === false ? 'الرياض, السعودية' : 'جدة, السعودية'}}</small>
               </div>
               </div>
               <p class="text-white">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى</p>
@@ -19,18 +19,25 @@
           </div>
 
           <div class="pl-5">
-            <div class="bgGray rounded_0 py-4 px-5">
+            <div  class="bgGray rounded_0 py-4 px-5">
               <div class="d-flex">
-                <img :src="require(`~/assets/img/Content-Round-Gray-Icon.png`)" class="person" alt="icon"/>
+                <img :src="Double === true ? require(`~/assets/img/Content-Round-Gray-Icone.png`) : require(`~/assets/img/Content-Round-Gray-Icon.png`)" class="person" alt="icon"/>
                 <div class="mr-2">
                   <p class="color_1 my-1">محمد مصطفي علي</p>
-                  <small class="color_2">الرياض, السعودية</small>
+                  <small class="color_2">{{Double === true ? 'الرياض, السعودية' : 'جدة, السعودية'}}</small>
                 </div>
               </div>
               <p class="color_0">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى</p>
             </div>
           </div>
 
+        </b-col>
+        <b-col cols="12" sm="10"  lg="1" class="mt-5">
+          <img :src="require(`~/assets/icon/arr.svg`)" v-on:click="Double = false" class="arrow" alt="icon"/>
+          <br/>
+          <br/>
+
+          <img :src="require(`~/assets/icon/arr2.svg`)" v-on:click="Double = true" class="arrow" alt="icon"/>
         </b-col>
         <b-col cols="12" sm="10" lg="6" class="px-5">
           <h3 class="px-5">يمكنك الاطلاع علي درجاتنا</h3>
@@ -43,6 +50,11 @@
 
 <script>
 export default {
+  data() {
+      return {
+      Double: false,
+    }
+  },
 
 };
 
@@ -65,5 +77,9 @@ export default {
 }
 .justify-content-left{
   justify-content: left
+}
+.arrow{
+  width:25px;
+  cursor: pointer;
 }
 </style>

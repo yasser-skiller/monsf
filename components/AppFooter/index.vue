@@ -9,19 +9,19 @@
           <p class="my-4">كل الحقوق محفوظة الي المنصف 2022</p>
         </b-col>
         <b-col cols="12" sm="10" lg="6" class="d-flex flex-wrap align-items-start ">
-          <b-col cols="12" sm="10" md="4" lg="4" class="">
+          <b-col cols="6" sm="6" md="4" lg="4" class="">
             <p class="my-4">روابط سريعة</p>
             <p class="my-3"> الكورسات</p>
             <p class="my-3"> خطوات التسجيل</p>
             <p class="my-3"> تواصل معنا</p>
           </b-col>
-          <b-col cols="12" sm="10" md="4" lg="4" class="">
+          <b-col cols="6" sm="6" md="4" lg="4" class="">
             <p class="my-4"> كورسات المنصف</p>
             <p class="my-3"> الكورس الاول</p>
             <p class="my-3"> الكورس الثاني </p>
             <p class="my-3">  انشاء حساب</p>
           </b-col>
-          <b-col cols="12" sm="10" md="4" lg="4" class="">
+          <b-col cols="8" sm="6" md="4" lg="4" class="">
             <p class="my-3 text-center">  التواصل الاجتماعي</p>
             <div class="d-flex justify-content-between px-4">
               <a><img :src="require(`~/assets/icon/linkedin.svg`)" class="icon" alt="icon"/></a>

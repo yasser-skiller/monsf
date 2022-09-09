@@ -1,6 +1,6 @@
 <template>
     <b-container class="">
-      <b-row align-h="center"  class="flex-wrap align-items-center ">
+      <b-row align-h="center"  class="flex-wrap-reverse align-items-center ">
         <b-col cols="12" lg="4" class="mt-5">
           <div class="position-relative w-100">
             <img :src="require(`~/assets/icon/path.svg`)" class="path" alt="icon"/>
@@ -13,7 +13,7 @@
 
           <p class="text_Gray mt-3">المنصف فى القدرات هو دليلك الأول والأخير لضمان النجاح والتفوق ابدا معنا الان وحقق نجاحك</p>
           <div class="d-flex m-sec">
-            <b-button  v-b-modal.modal-1  size="sm" class="btn_blue my-2  mx-2 py-3 px-5 rounded_0" type="button" >ابدا الان</b-button>
+            <b-button  v-b-modal.modal-1  size="sm" class="btn_blue my-2  mx-2 py-2 px-4 rounded_0" type="button" >ابدا الان</b-button>
             <b-button size="sm" class="my-3 my-sm-2 mx-2 py-3 px-5 rounded_0" type="button" variant="outline-warning" >تسجيل دخول</b-button>
           </div>
 
