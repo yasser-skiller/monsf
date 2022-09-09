@@ -11,7 +11,7 @@
 
     <b-collapse id="nav-collapse" class="justify-content-between" is-nav>
 
-      <b-navbar-nav class="pr-0 NavBar mr-5 text-center justify-content-between align-items-center">
+      <b-navbar-nav class="pr-0 NavBar mr-5  text-center justify-content-between align-items-center">
         <NuxtLink  to="/" tag="li" exact class="nav-link" >الرئيسية</NuxtLink >
         <NuxtLink to="#2" class="nav-link"> الكورسات</NuxtLink>
         <NuxtLink to="#3" class="nav-link">لماذا المنصف</NuxtLink>
@@ -120,7 +120,7 @@ export default {
 }
 @media (max-width:989px) {
   .NavBar{
-    align-items: start !important;
+    margin-right: 0 !important;
   }
   .nav-link{
     margin: 5px 0;
