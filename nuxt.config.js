@@ -24,6 +24,7 @@ export default {
   css: [
     '@/assets/css/main.css',
     '@/assets/css/normaliz.css',
+    '@/assets/css/animate.min.css',
     '@/assets/css/video.css',
     '@/assets/css/video_2.css',
   ],

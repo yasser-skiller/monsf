@@ -1,8 +1,8 @@
 <template>
     <b-container class="m-sec">
-      <b-row align-h="center"  class="flex-wrap align-items-center ">
+      <b-row align-h="center"  class="flex-wrap align-items-center animate__animated animate__lightSpeedInRight">
         <b-col cols="12" sm="10"  lg="4" class="mt-4">
-          <h4 class="text_blue font-weight-bold">
+          <h4 class="text_blue font-weight-bold ">
             افضل اختيار ودورات
             <br/>
             للتعلم اونلاين علي الانترنت

@@ -1,7 +1,7 @@
 <template>
     <b-container class="m-sec">
       <b-row align-h="center"  class="flex-wrap align-items-center bgGray">
-        <b-col cols="12"   lg="6" class="bg text-white p-5">
+        <b-col cols="12"   lg="6" class="bg text-white p-5 animate__animated animate__fadeInRight">
           <h3>تواصل معنا الان</h3>
           <p class="mt-4">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص</p>
           <h6 class="m-sec mb-4"> بيانات التواصل : </h6>
@@ -19,8 +19,8 @@
           </div>
 
         </b-col>
-        <b-col cols="12"  lg="6" class="bgGray p-4 px-5">
-            <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+        <b-col cols="12"  lg="6" class="bgGray p-4 px-5 animate__animated animate__fadeInLeft">
+            <b-form @submit="onSubmit" @reset="onReset" >
              <b-form-group id="input-group-2" label="الاسم" label-for="input-2">
                 <b-form-input
                   id="input-2"
@@ -58,7 +58,7 @@ export default {
           name: '',
           textarea:''
         },
-        show: true
+
       }
     },
     methods: {
@@ -71,11 +71,7 @@ export default {
         // Reset our form values
         this.form.name = ''
         this.form.textarea = ''
-        // Trick to reset/clear native browser form validation state
-        this.show = false
-        this.$nextTick(() => {
-          this.show = true
-        })
+
       }
     }
 

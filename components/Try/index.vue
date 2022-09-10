@@ -1,5 +1,5 @@
 <template>
-    <b-container class="m-sec">
+    <b-container class="m-sec animate__animated animate__fadeInRightBig">
       <b-row align-h="center"  class="flex-wrap align-items-center rounded_1 bgGray">
         <b-col cols="12" sm="10"  lg="5" class="mt-4 pb-2">
           <h3 class="text_blue font-weight-bold">جرب اختبارت المنصف</h3>

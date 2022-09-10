@@ -1,7 +1,7 @@
 <template>
     <b-container class="m-sec">
       <b-row align-h="center"  class="flex-wrap align-items-center ">
-        <b-col cols="12" sm="10"  lg="5" class="mt-4">
+        <b-col cols="12" sm="10"  lg="5" class="mt-4 animate__animated animate__fadeInRight">
           <h3 class="text_blue font-weight-bold">
             خطوات التسجيل
             <br/>
@@ -10,7 +10,7 @@
           <p class="my-3 ml-5">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد</p>
           <button class="btn btn_blue my-2 mx-2 py-2 px-4 rounded_0">احصل عليها الان</button>
         </b-col>
-        <b-col cols="12" sm="10" lg="6" class="">
+        <b-col cols="12" sm="10" lg="6" class="animate__animated animate__fadeInDown">
 
           <div class="d-flex flex-wrap justify-content-between align-items-center">
             <b-col cols="12" sm="10"  lg="6" class="d-flex mt-4">

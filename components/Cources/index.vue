@@ -1,8 +1,8 @@
 <template>
     <b-container class="m-sec">
-      <h5 class="font-weight-bold">كورسات المنصف</h5>
+      <h5 class="font-weight-bold animate__animated animate__fadeInRight">كورسات المنصف</h5>
       <b-row align-h="center"  class="flex-wrap align-items-center">
-        <b-col cols="10" sm="10" md="8"  lg="6" class="mb-4 py-2 px-4">
+        <b-col cols="10" sm="10" md="8"  lg="6" class="mb-4 py-2 px-4 animate__animated animate__fadeInRight">
           <div class="parent">
             <img :src="require(`~/assets/img/Rectangle 613.png`)" class="w-100" alt="icon"/>
             <div class="overly">
@@ -26,7 +26,7 @@
             <p class="mr-2 my-0">300 ر.س</p>
           </div>
         </b-col>
-        <b-col cols="10" sm="10" md="8"  lg="6" class="mb-4 py-2 px-4">
+        <b-col cols="10" sm="10" md="8"  lg="6" class="mb-4 py-2 px-4 animate__animated animate__fadeInRight">
           <div class="parent">
             <img :src="require(`~/assets/img/Rectangle 613.png`)" class="w-100" alt="icon"/>
             <div class="overly">

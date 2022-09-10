@@ -1,7 +1,7 @@
 <template>
     <b-container class="m-sec">
       <b-row align-h="center"  class="flex-wrap-reverse align-items-center">
-        <b-col cols="12" sm="10"  lg="6" class=" mt-5">
+        <b-col cols="12" sm="10"  lg="6" class=" mt-5 animate__animated animate__fadeInRight">
           <div class="d-flex">
 
             <div>
@@ -46,7 +46,7 @@
 
 
         </b-col>
-        <b-col cols="12" sm="10" lg="6" class="px-5">
+        <b-col cols="12" sm="10" lg="6" class="px-5 animate__animated animate__fadeInLeft">
           <div class="line"></div>
           <h3 class="px-5 font-weight-bold">يمكنك الاطلاع علي درجاتنا</h3>
           <p class="text_Gray px-5">المنصف فى القدرات .. طريقك إلى ال100% ... أفضل الدورات والدروس والمرجعات الشاملة</p>

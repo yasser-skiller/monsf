@@ -1,15 +1,15 @@
 <template>
-    <b-navbar toggleable="lg"  class="mx-3 fixed bg-white w-100" >
+    <b-navbar toggleable="lg"  class="mx-3 fixed bg-white w-100 animate__animated animate__fadeInDown" >
 
     <b-navbar-brand href="#">
       <div  class="d-flex align-items-center">
         <img :src="require(`~/assets/icon/logo.svg`)" class="logo" alt="icon"/>
       </div>
     </b-navbar-brand>
-        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
 
-    <b-collapse id="nav-collapse" class="justify-content-between" is-nav>
+    <b-collapse id="nav-collapse" class="justify-content-between " is-nav>
 
       <b-navbar-nav class="pr-0 NavBar mr-5  text-center justify-content-between align-items-center">
         <NuxtLink  to="/" tag="li" exact class="nav-link" >الرئيسية</NuxtLink >
