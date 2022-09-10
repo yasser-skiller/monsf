@@ -1,12 +1,11 @@
 <template >
-  <div class="bgDark m-sec">
+  <div class="bgDark">
     <b-container class="text-white p-5">
       <img :src="require(`~/assets/icon/logoWhite.svg`)" class="logo" alt="icon"/>
 
       <b-row align-h="center"  class="flex-wrap align-items-center ">
         <b-col cols="12" sm="10"  lg="6" class="">
           <p class="title">قم بتحسين مهارتك مع المنصف</p>
-          <p class="my-4">كل الحقوق محفوظة الي المنصف 2022</p>
         </b-col>
         <b-col cols="12" sm="10" lg="6" class="d-flex flex-wrap align-items-start ">
           <b-col cols="6" sm="6" md="4" lg="4" class="">
@@ -21,20 +20,24 @@
             <p class="my-3"> الكورس الثاني </p>
             <p class="my-3">  انشاء حساب</p>
           </b-col>
-          <b-col cols="8" sm="6" md="4" lg="4" class="">
+          <b-col cols="12" sm="10" md="4" lg="4" class="">
             <p class="my-3 text-center">  التواصل الاجتماعي</p>
-            <div class="d-flex justify-content-between px-4">
-              <a><img :src="require(`~/assets/icon/linkedin.svg`)" class="icon" alt="icon"/></a>
-              <a><img :src="require(`~/assets/icon/twitter.svg`)" class="icon" alt="icon"/></a>
+            <div class=" icons">
+              <div class="d-flex justify-content-between px-4 my-2">
+                <a><img :src="require(`~/assets/icon/linkedin.svg`)" class="icon" alt="icon"/></a>
+                <a><img :src="require(`~/assets/icon/twitter.svg`)" class="icon" alt="icon"/></a>
+              </div>
+              <div class="d-flex justify-content-between px-4 my-2">
+                <a><img :src="require(`~/assets/icon/youtube.svg`)" class="icon" alt="icon"/></a>
+                <a><img :src="require(`~/assets/icon/facebook.svg`)" class="icon" alt="icon"/></a>
+              </div>
             </div>
-            <div class="d-flex justify-content-between px-4 mt-4">
-              <a><img :src="require(`~/assets/icon/youtube.svg`)" class="icon" alt="icon"/></a>
-              <a><img :src="require(`~/assets/icon/facebook.svg`)" class="icon" alt="icon"/></a>
-            </div>
+
           </b-col>
 
         </b-col>
       </b-row>
+      <p class="my-4 text-right">كل الحقوق محفوظة الي المنصف 2022</p>
     </b-container>
   </div>
 
@@ -56,6 +59,17 @@ export default {
 }
 .title{
   font-size: 40px;
+}
+@media (max-width:767px) {
+  .icons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .icons div{
+    justify-content: space-between !important;
+    width: 50%;
+  }
 }
 
 </style>

@@ -2,7 +2,7 @@
     <b-container class="m-sec">
       <b-row align-h="center"  class="flex-wrap align-items-center ">
         <b-col cols="12" sm="10"  lg="5" class="mt-4">
-          <h3 class="text_blue">
+          <h3 class="text_blue font-weight-bold">
             خطوات التسجيل
             <br/>
             في دوراتنا

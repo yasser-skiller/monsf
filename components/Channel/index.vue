@@ -1,6 +1,6 @@
 <template>
     <b-container class="m-sec mb-5">
-      <h3 class="text-center">قناة المنصف</h3>
+      <h3 class="text-center font-weight-bold">قناة المنصف</h3>
       <p class="mt-3 text-center">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق</p>
       <b-row align-h="center"  class="d-flex flex-wrap justify-content-between align-items-center">
         <b-col cols="12" sm="10" lg="4"  class="mt-4">

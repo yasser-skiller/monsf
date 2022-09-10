@@ -1,24 +1,25 @@
 <template>
     <b-container class="">
-      <b-row align-h="center"  class="flex-wrap-reverse align-items-center ">
+      <b-row align-h="center"  class="flex-wrap-reverse align-items-center">
         <b-col cols="12" lg="4" class="mt-5">
           <div class="position-relative w-100">
             <img :src="require(`~/assets/icon/path.svg`)" class="path" alt="icon"/>
-            <h2 class="text_blue">
+            <h3 class="text_blue font-weight-bold">
               المنصف في القدرات
-              <br/>
               طريق مضمون لمستقبلك
-            </h2>
+            </h3>
           </div>
 
           <p class="text_Gray mt-3">المنصف فى القدرات هو دليلك الأول والأخير لضمان النجاح والتفوق ابدا معنا الان وحقق نجاحك</p>
           <div class="d-flex m-sec">
-            <b-button  v-b-modal.modal-1  size="sm" class="btn_blue my-2  mx-2 py-2 px-4 rounded_0" type="button" >ابدا الان</b-button>
+            <b-button  v-b-modal.modal-1  size="sm" class="btn_blue my-3 my-sm-2  mx-2 py-3 px-5 ppp rounded_0" type="button" >ابدا الان</b-button>
             <b-button size="sm" class="my-3 my-sm-2 mx-2 py-3 px-5 rounded_0" type="button" variant="outline-warning" >تسجيل دخول</b-button>
           </div>
 
+          <img :src="require(`~/assets/icon/logooo.svg`)" class="logooo" alt="icon"/>
+
         </b-col>
-        <b-col cols="12" lg="8" class="position-relative mt-5">
+        <b-col cols="12" lg="8" class="position-relative m-sec">
           <img :src="require(`~/assets/img/header.png`)" class="header_img" alt="icon"/>
           <div class="boxTop">
             <p class="text-center text-white m-0">كورسات المنصف</p>
@@ -65,7 +66,7 @@ export default {
 .path{
   position: absolute;
   top: -20px;
-  left: 50px;
+  left: 10px;
   width: 30px;
 }
 .boxTop{
@@ -85,6 +86,10 @@ export default {
   border-radius: 15px;
   padding: 30px 20px;
 }
+.logooo{
+  width: 120px;
+  margin-top: 50px;
+}
 .header_img{
   width: 100%;
 }
@@ -98,12 +103,19 @@ export default {
 }
 @media (max-width:989px) {
   .path{
-   left: 380px;
+   left: 90px;
   }
+  .logooo{
+    display: none;
+  }
+
 }
 @media (max-width:767px) {
+  .ppp{
+    padding: 15px 20px !important;
+  }
   .path{
-   left: 200px;
+   left: 70px;
   }
   .boxTop{
   position: relative;
@@ -130,4 +142,5 @@ export default {
    left: 20px;
   }
 }
+
 </style>

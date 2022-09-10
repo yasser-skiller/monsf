@@ -1,6 +1,6 @@
 <template>
     <b-container class="m-sec">
-      <h5 >كورسات المنصف</h5>
+      <h5 class="font-weight-bold">كورسات المنصف</h5>
       <b-row align-h="center"  class="flex-wrap align-items-center">
         <b-col cols="10" sm="10" md="8"  lg="6" class="mb-4 py-2 px-4">
           <div class="parent">
@@ -11,7 +11,7 @@
               </div>
               <div class="d-flex bgYellow m-2 p-2  rounded_0" >
                 <img :src="require(`~/assets/icon/star.svg`)" class="icon" alt="icon"/>
-                <span class="text-white">(5.0)</span>
+                <span class="text-white mr-1">(5.0)</span>
               </div>
 
             </div>
@@ -35,7 +35,7 @@
               </div>
               <div class="d-flex bgYellow m-2 p-2  rounded_0" >
                 <img :src="require(`~/assets/icon/star.svg`)" class="icon" alt="icon"/>
-                <span class="text-white">(5.0)</span>
+                <span class="text-white mr-1">(5.0)</span>
               </div>
 
             </div>
@@ -78,6 +78,6 @@ export default {
   align-items: flex-start;
 }
 .icon{
-  width: 20px;
+  width: 15px;
 }
 </style>

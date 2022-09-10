@@ -1,5 +1,5 @@
 <template>
-    <b-navbar toggleable="lg"  class="mx-3" >
+    <b-navbar toggleable="lg"  class="mx-3 fixed bg-white w-100" >
 
     <b-navbar-brand href="#">
       <div  class="d-flex align-items-center">
@@ -21,7 +21,7 @@
       </b-navbar-nav>
 
       <b-navbar-nav class="pr-0">
-        <div class="d-flex">
+        <div class="d-flex btns">
           <b-button   size="sm" class="search_btn my-2 my-sm-2 mx-2 py-2 px-3 rounded_0" type="button" > <img :src="require(`~/assets/icon/search.svg`)" alt="icon"/></b-button>
           <b-button size="sm" class="my-2 my-sm-2 mx-2 py-2 px-4 rounded_0" type="button" variant="outline-warning" >تسجيل دخول</b-button>
         </div>
@@ -73,7 +73,10 @@ export default {
 </script>
 
 <style scoped>
-
+.fixed{
+  position: fixed;
+  z-index: 20000000000;
+}
  .logo{
   width: 65px;
   margin-left: 5px;
@@ -124,6 +127,10 @@ export default {
   }
   .nav-link{
     margin: 5px 0;
+  }
+  .btns{
+    justify-content: center;
+    align-items: center;
   }
 }
 </style>

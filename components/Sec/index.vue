@@ -36,10 +36,10 @@
             </div>
 
             <div class="m-sec mr-5">
-              <img :src="require(`~/assets/icon/arr.svg`)" v-on:click="Double = false" class="arrow" alt="icon"/>
+              <img :src="require(`~/assets/icon/arr.svg`)" v-on:click="Double = !Double" class="arrow" alt="icon"/>
               <br/>
               <br/>
-              <img :src="require(`~/assets/icon/arr2.svg`)" v-on:click="Double = true" class="arrow" alt="icon"/>
+              <img :src="require(`~/assets/icon/arr2.svg`)" v-on:click="Double = !Double" class="arrow" alt="icon"/>
             </div>
 
           </div>
@@ -47,7 +47,8 @@
 
         </b-col>
         <b-col cols="12" sm="10" lg="6" class="px-5">
-          <h3 class="px-5">يمكنك الاطلاع علي درجاتنا</h3>
+          <div class="line"></div>
+          <h3 class="px-5 font-weight-bold">يمكنك الاطلاع علي درجاتنا</h3>
           <p class="text_Gray px-5">المنصف فى القدرات .. طريقك إلى ال100% ... أفضل الدورات والدروس والمرجعات الشاملة</p>
           <b-button size="sm" type="button" class="btn_blue mt-5 mx-2 p-3 mx-5 rounded_0">الاطلاع علي درجاتنا</b-button>
         </b-col>
@@ -68,6 +69,13 @@ export default {
 </script>
 
 <style scoped>
+.line{
+  background-color: var(--GreenColor);
+  width: 90px;
+  height: 3px;
+  margin-right: 3rem;
+  margin-bottom: 1.5rem;
+}
 .color_0{
   color: #5C5C5C;
 }
