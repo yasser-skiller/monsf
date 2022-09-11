@@ -1,5 +1,5 @@
 <template>
-    <b-navbar toggleable="lg"  class="mx-3 fixed bg-white w-100 animate__animated animate__fadeInDown" >
+    <b-navbar toggleable="lg"  class="fixed bg-white w-100 animate__animated animate__fadeInDown" >
 
     <b-navbar-brand href="#">
       <div  class="d-flex align-items-center">
