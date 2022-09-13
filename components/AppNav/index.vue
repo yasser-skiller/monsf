@@ -15,7 +15,7 @@
         <NuxtLink  to="/" tag="li" exact class="nav-link" >الرئيسية</NuxtLink >
         <NuxtLink to="#2" class="nav-link"> الكورسات</NuxtLink>
         <NuxtLink to="#3" class="nav-link">لماذا المنصف</NuxtLink>
-        <NuxtLink to="#4" class="nav-link">عن المنصف</NuxtLink>
+        <NuxtLink to="/About" class="nav-link">عن المنصف</NuxtLink>
         <NuxtLink to="#5" class="nav-link"> خطوات التسجيل</NuxtLink>
         <NuxtLink to="#6" class="nav-link">تواصل معنا</NuxtLink>
       </b-navbar-nav>
@@ -23,7 +23,9 @@
       <b-navbar-nav class="pr-0">
         <div class="d-flex btns">
           <b-button   size="sm" class="search_btn my-2 my-sm-2 mx-2 py-2 px-3 rounded_0" type="button" > <img :src="require(`~/assets/icon/search.svg`)" alt="icon"/></b-button>
-          <b-button size="sm" class="my-2 my-sm-2 mx-2 py-2 px-4 rounded_0" type="button" variant="outline-warning" >تسجيل دخول</b-button>
+          <NuxtLink to="/Login" class="">
+            <b-button size="sm" class="my-2 my-sm-2 mx-2 py-2 px-4 rounded_0" type="button" variant="outline-warning" >تسجيل دخول</b-button>
+          </NuxtLink>
         </div>
 
         <!-- <b-button  v-b-modal.modal-1  size="sm" class="search_btn my-2 my-sm-2 mx-2 py-2 px-3 rounded_0" type="button" > <img :src="require(`~/assets/icon/search.svg`)" alt="icon"/></b-button> -->
@@ -75,7 +77,7 @@ export default {
 <style scoped>
 .fixed{
   position: fixed;
-  z-index: 20000000000;
+  z-index: 10;
 }
  .logo{
   width: 65px;

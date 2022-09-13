@@ -40,8 +40,24 @@
 
 
               <div class="d-flex justifiy-contant-center">
-                <b-button type="submit" class="btn btn_blue mt-5 mx-auto py-2 px-5 rounded_0" >ارسل الان</b-button>
+                <b-button v-b-modal.modal-contact type="submit" class="btn btn_blue mt-5 mx-auto py-2 px-5 rounded_0" >ارسل الان</b-button>
               </div>
+
+              <b-modal id="modal-contact"   hide-footer hide-header>
+                <div class="modal_style rounded_1">
+                  <h3 class="text-center text_blue">شكرا لك</h3>
+                  <p class="text-center my-3">
+                    يمكنك التواصل معنا الان عن طريق الوتساب
+                    <br/>
+مباشرة فقط اضغط علي الزر وتواصل معنا الان
+                  </p>
+                  <div class="d-flex flex-column w-100 justify-content-center">
+                    <img :src="require(`~/assets/img/Group 232.png`)" class="w-50" alt="icon"/>
+                    <b-button v-b-modal.modal-contact type="submit" class="btn btn_blue mt-5 mx-auto py-3 px-5 rounded_0" >تواصل معنا</b-button>
+                  </div>
+
+                </div>
+              </b-modal>
 
 
             </b-form>

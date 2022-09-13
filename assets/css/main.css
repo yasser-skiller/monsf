@@ -6,9 +6,13 @@
   --GrayColor:#6B7377;
   --GrayFill:#EEEEEE;
   --GreenColor:#039A7B;
+  --DarkGreenColor:#02876d;
   --YellowColor:#E99005;
   --Dark:#15252B;
   --bluebg:#036B98;
+  --fillBlue:#DFF5FF;
+  --fillGreen:#F3FFFD;
+  --fillOrange:#FFF6E9;
 }
 
 html{
@@ -57,6 +61,15 @@ a{
 .bgDark{
   background-color: var(--Dark);
 }
+.bgfillBlue{
+  background-color: var(--fillBlue);
+}
+.bgfillOrange{
+  background-color: var(--fillOrange);
+}
+.bgfillGreen{
+  background-color: var(--fillGreen);
+}
 .bluebg{
   background-color: var(--bluebg);
 }
@@ -68,6 +81,15 @@ a{
   background-color: var(--DaknessBlue);
   color: var(--WhiteColor);
 }
+
+.btn_Green{
+  background-color: var(--GreenColor);
+  color: var(--WhiteColor);
+}
+.btn_Green:hover{
+  background-color: var(--DarkGreenColor);
+}
+
 .btn_blue_sp{
   background-color: var(--DarkBlueColor);
   color: var(--WhiteColor);
@@ -84,7 +106,7 @@ a{
   border-radius: 8px;
 }
 .rounded_1{
-  border-radius: 25px;
+  border-radius: 25px !important;
 }
 .m-sec{
   margin-top: 100px;
@@ -98,5 +120,23 @@ a{
 }
 .search_btn img{
   width: 20px;
+}
+
+.border_blue{
+  border: 1px solid var(--DarkBlueColor);
+  border-radius: 25px;
+  width: 270px;
+}
+
+.border_Green{
+  border: 1px solid var(--GreenColor);
+  border-radius: 25px;
+  width: 270px;
+}
+
+.border_orange{
+  border: 1px solid var(--YellowColor);
+  border-radius: 25px;
+  width: 270px;
 }
 
