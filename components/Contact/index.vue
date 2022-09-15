@@ -51,7 +51,7 @@
                     <br/>
 مباشرة فقط اضغط علي الزر وتواصل معنا الان
                   </p>
-                  <div class="d-flex flex-column w-100 justify-content-center">
+                  <div class="d-flex flex-column w-100 justify-content-center align-items-center">
                     <img :src="require(`~/assets/img/Group 232.png`)" class="w-50" alt="icon"/>
                     <b-button v-b-modal.modal-contact type="submit" class="btn btn_blue mt-5 mx-auto py-3 px-5 rounded_0" >تواصل معنا</b-button>
                   </div>
