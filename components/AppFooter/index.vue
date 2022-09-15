@@ -1,7 +1,9 @@
 <template >
   <div class="bgDark">
     <b-container class="text-white p-5">
-      <img :src="require(`~/assets/icon/logoWhite.svg`)" class="logo" alt="icon"/>
+      <NuxtLink to="/" exact>
+        <img :src="require(`~/assets/icon/logoWhite.svg`)" class="logo" alt="icon"/>
+      </NuxtLink>
 
       <b-row align-h="center"  class="flex-wrap align-items-center ">
         <b-col cols="12" sm="10"  lg="6" class="">

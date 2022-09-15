@@ -1,7 +1,9 @@
 <template>
   <b-row align-h="center"  class="flex-wrap-reverse">
-    <b-col cols="12" lg="6" class=" p-5 animate__animated animate__fadeInRight">
-      <img :src="require(`~/assets/icon/logo.svg`)" class="logo" alt="icon"/>
+    <b-col cols="12" lg="6" class=" p-5 pb-0 animate__animated animate__fadeInRight">
+      <NuxtLink to="/"  exact>
+        <img :src="require(`~/assets/icon/logo.svg`)" class="logo" alt="icon"/>
+      </NuxtLink>
       <div class="position-relative">
         <h3 class="my-4 text_blue">مرحبا بك في المنصف</h3>
         <img :src="require(`~/assets/icon/pathgreen.svg`)" class="path_1" alt="icon"/>
