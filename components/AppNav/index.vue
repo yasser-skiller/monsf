@@ -13,7 +13,7 @@
 
       <b-navbar-nav class="pr-0 NavBar mr-5  text-center justify-content-between align-items-center">
         <NuxtLink  to="/" tag="li" exact class="nav-link" >الرئيسية</NuxtLink >
-        <NuxtLink to="#2" class="nav-link"> الكورسات</NuxtLink>
+        <NuxtLink to="/Cources" class="nav-link"> الكورسات</NuxtLink>
         <NuxtLink to="#3" class="nav-link">لماذا المنصف</NuxtLink>
         <NuxtLink to="/About" class="nav-link">عن المنصف</NuxtLink>
         <NuxtLink to="#5" class="nav-link"> خطوات التسجيل</NuxtLink>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="Layer_28" data-name="Layer 28" transform="translate(-2 -2)">
+    <path id="Path_2442" data-name="Path 2442" d="M20,18H36.8V34H20Z" transform="translate(-10.8 -9.6)" fill="#e2e7f6"/>
+    <path id="Path_2443" data-name="Path 2443" d="M34.4,32.312a.8.8,0,0,0,.8-.8V18H20V32.312Z" transform="translate(-10.8 -9.6)" fill="#eff2f9"/>
+    <path id="Path_2444" data-name="Path 2444" d="M20,8.4V2H32.8l4,4V8.4Z" transform="translate(-10.8)" fill="#d23f34"/>
+    <path id="Path_2445" data-name="Path 2445" d="M35.132,6.4V4.332L32.8,2H20V7.2H34.332A.8.8,0,0,0,35.132,6.4Z" transform="translate(-10.8)" fill="#e24f4b"/>
+    <path id="Path_2446" data-name="Path 2446" d="M14.288,26.564l-8.1,1.6L2,6.973,9.2,5.606V26.564Z" transform="translate(0 -2.164)" fill="#a72b25"/>
+    <path id="Path_2447" data-name="Path 2447" d="M52,2V6h4" transform="translate(-30)" fill="#a72b25"/>
+    <g id="Group_1440" data-name="Group 1440" transform="translate(11.2 3.2)">
+      <path id="Path_2448" data-name="Path 2448" d="M26.6,5H25.4a.4.4,0,0,0-.4.4V9h.8V7.4h.8a1.2,1.2,0,0,0,0-2.4Zm0,1.6h-.8V5.8h.8a.4.4,0,0,1,0,.8Z" transform="translate(-25 -5)" fill="#eff2f9"/>
+      <path id="Path_2449" data-name="Path 2449" d="M34.6,5H33.4a.4.4,0,0,0-.4.4V8.6a.4.4,0,0,0,.4.4h1.2a1.2,1.2,0,0,0,1.2-1.2V6.2A1.2,1.2,0,0,0,34.6,5ZM35,7.8a.4.4,0,0,1-.4.4h-.8V5.8h.8a.4.4,0,0,1,.4.4Z" transform="translate(-29.8 -5)" fill="#eff2f9"/>
+      <path id="Path_2450" data-name="Path 2450" d="M43.4,5.8V5h-2a.4.4,0,0,0-.4.4V9h.8V7.4h1.6V6.6H41.8V5.8Z" transform="translate(-34.6 -5)" fill="#eff2f9"/>
+    </g>
+    <path id="Path_2451" data-name="Path 2451" d="M38.6,29V23H29v4h3.6l2,2Z" transform="translate(-16.2 -12.6)" fill="#f29b99"/>
+    <path id="Path_2452" data-name="Path 2452" d="M38,35.8v4.4a.8.8,0,0,1-.8.8H26.8a.8.8,0,0,1-.8-.8V33.8a.8.8,0,0,1,.8-.8h4l2,2h4.4A.8.8,0,0,1,38,35.8Z" transform="translate(-14.4 -18.6)" fill="#a72b25"/>
+    <path id="Path_2453" data-name="Path 2453" d="M32,26h7.2v.8H32Z" transform="translate(-18 -14.4)" fill="#f8ced7"/>
+    <path id="Path_2454" data-name="Path 2454" d="M32,29h7.2v.8H32Z" transform="translate(-18 -16.2)" fill="#f8ced7"/>
+    <path id="Path_2455" data-name="Path 2455" d="M36.8,38.6V35h-4l-2-2h-4a.8.8,0,0,0-.8.8v5.6H36A.8.8,0,0,0,36.8,38.6Z" transform="translate(-14.4 -18.6)" fill="#d23f34"/>
+  </g>
+</svg>
