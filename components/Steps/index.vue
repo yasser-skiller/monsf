@@ -1,5 +1,5 @@
 <template>
-    <b-container class="m-sec">
+    <b-container class="m-sec" id="steps">
       <b-row align-h="center"  class="flex-wrap align-items-center ">
         <b-col cols="12" sm="10"  lg="5" class="mt-4 animate__animated animate__fadeInRight">
           <h3 class="text_blue font-weight-bold">

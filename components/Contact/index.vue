@@ -1,5 +1,5 @@
 <template>
-    <b-container class="m-sec">
+    <b-container class="m-sec" id="contact">
       <b-row align-h="center"  class="flex-wrap align-items-center bgGray">
         <b-col cols="12"   lg="6" class="bg text-white p-5 animate__animated animate__fadeInRight">
           <h3>تواصل معنا الان</h3>

@@ -15,6 +15,8 @@
   --fillBlue:#DFF5FF;
   --fillGreen:#F3FFFD;
   --fillOrange:#FFF6E9;
+  --fillRed:#FFE0DD;
+  --red:#CE5B64;
 }
 
 html{
@@ -51,6 +53,9 @@ a{
 .text_Gray{
   color: var(--GrayColor);
 }
+.text_red{
+  color: var(--red);
+}
 .text_GraySec{
   color: var(--GraySec);
 }
@@ -72,11 +77,18 @@ a{
 .bgfillOrange{
   background-color: var(--fillOrange);
 }
+.bgfillRed{
+  background-color: var(--fillRed);
+}
 .bgfillGreen{
   background-color: var(--fillGreen);
 }
 .bluebg{
   background-color: var(--bluebg);
+}
+.btn{
+  outline: none !important;
+  border: none !important;
 }
 .btn_blue{
   background-color: var(--DarkBlueColor);
@@ -156,3 +168,27 @@ a{
 .border-radius{
   border-radius: 50%;
 }
+
+.border_blue_2{
+  border: 1px solid var(--DarkBlueColor);
+  border-radius: 15px;
+  width: 320px;
+}
+.border_Green_2{
+  border: 1px solid var(--GreenColor);
+  border-radius: 15px;
+  width: 320px;
+}
+
+.border_orange_2{
+  border: 1px solid var(--YellowColor);
+  border-radius: 15px;
+  width: 320px;
+}
+
+.border_red_2{
+  border: 1px solid var(--red);
+  border-radius: 15px;
+  width: 320px;
+}
+
