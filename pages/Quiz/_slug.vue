@@ -35,15 +35,15 @@
               >
               </b-form-radio>
             </div>
-            </div>
+          </div>
 
             <div class="mt-3 ">Selected: <strong>{{ selected }}</strong></div>
 
           </div>
         </b-col>
-        <b-col cols="12" lg="5" class="m-sec border">
+        <b-col cols="12" lg="5" class="m-sec ">
 
-          <h5 class="font-weight-bold" v-html="Quiz_data[Quiz_serial].title"></h5>
+          <img :src="Quiz_data[Quiz_serial].thumbnail" class="thumbnail" alt="icon"/>
 
           <div
            class="d-flex bgfillRed border_red_2 px-3 py-2 mt-5 font-16 cursor_pointer"
@@ -355,9 +355,13 @@
 
 
 <style scoped>
-  .spinner_loading{
-    height: 90vh;
+  .thumbnail{
+    width: 100%;
+    height: 150px;
   }
+.spinner_loading{
+  height: 90vh;
+}
  .progress{
   background-color: #FFD89B;
   height: .5rem;
@@ -405,6 +409,11 @@
  }
  label{
   cursor: pointer !important;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
  }
  .selected{
   outline: 2px solid rgb(15, 192, 124);
