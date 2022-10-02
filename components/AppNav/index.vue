@@ -22,7 +22,7 @@
         <div class="d-flex btns">
           <b-button   size="sm" class="search_btn my-2 my-sm-2 mx-2 py-2 px-3 rounded_0" type="button" > <img :src="require(`~/assets/icon/search.svg`)" alt="icon"/></b-button>
           <NuxtLink to="/Login" class="">
-            <b-button size="sm" class="my-2 my-sm-2 mx-2 py-2 px-4 rounded_0" type="button" variant="outline-warning" >تسجيل دخول</b-button>
+            <b-button size="sm" class="btn btn_yellow my-2 my-sm-2 mx-2 py-2 px-4 rounded_0" type="button" >تسجيل دخول</b-button>
           </NuxtLink>
         </div>
 
