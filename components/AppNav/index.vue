@@ -2,9 +2,7 @@
     <b-navbar toggleable="lg"  class="fixed bg-white w-100 animate__animated animate__fadeInDown" >
 
     <b-navbar-brand href="#">
-      <NuxtLink to="/"  exact class="d-flex align-items-center">
         <img :src="require(`~/assets/icon/logo.svg`)" class="logo" alt="icon"/>
-      </NuxtLink>
     </b-navbar-brand>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 

@@ -8,7 +8,7 @@
             للتعلم اونلاين علي الانترنت
           </h4>
         </b-col>
-        <b-col cols="12" sm="10" lg="8" class="d-flex flex-wrap justify-content-between">
+        <b-col cols="8" sm="6" md="8" lg="8" class="d-flex flex-wrap justify-content-between">
           <div class="mt-4">
             <img :src="require(`~/assets/icon/bronze-medal.svg`)" class="icon" alt="icon"/>
             <p class="text_green font-16 my-2 font-weight-bold">تحصل عالـ 100 معنا بإذن الله </p>

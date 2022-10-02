@@ -1,0 +1,5 @@
+export default {
+  apiUrl:'https://droos.alhutacademy.com/',
+  token :`eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZHJvb3MuYWxodXRhY2FkZW15LmNvbSIsImlhdCI6MTY2NDA3Njk4NCwibmJmIjoxNjY0MDc2OTg0LCJleHAiOjE2NjQ2ODE3ODQsImRhdGEiOnsidXNlciI6eyJpZCI6IjE5In19fQ.wcHmDgTtSbNagaLtUzZ9WWVoI0eGWIv2pa02e9Tczcs`,
+}
+

@@ -59,6 +59,9 @@ a{
 .text_GraySec{
   color: var(--GraySec);
 }
+.bg_GraySec{
+  background-color: #F8F8F8;
+}
 .bgYellow{
   background-color: var(--YellowColor);
 }
@@ -86,9 +89,16 @@ a{
 .bluebg{
   background-color: var(--bluebg);
 }
+button:not(:disabled),
+[type="button"]:not(:disabled),
+ [type="reset"]:not(:disabled),
+ [type="submit"]:not(:disabled){
+  cursor: pointer ;
+}
 .btn{
   outline: none !important;
   border: none !important;
+  cursor: pointer !important;
 }
 .btn_blue{
   background-color: var(--DarkBlueColor);
@@ -105,6 +115,22 @@ a{
 }
 .btn_yellow:hover{
   background-color: var(--DarkYellowColor);
+}
+.btn_yellow:focus{
+  background-color: var(--DarkYellowColor);
+  outline: none;
+}
+
+.btn_red{
+  background-color: #B10221;
+  color: var(--WhiteColor);
+}
+.btn_red:hover{
+  background-color: #9b011d;
+}
+.btn_red:focus{
+  background-color: #9b011d;
+  outline: none;
 }
 
 .btn_Green{
@@ -135,6 +161,9 @@ a{
 }
 .m-sec{
   margin-top: 100px;
+}
+.mb-sec{
+  margin-bottom: 100px;
 }
 
 .search_btn{
@@ -192,3 +221,33 @@ a{
   width: 320px;
 }
 
+.fit_width{
+  width: fit-content;
+}
+
+.cursor_pointer{
+  cursor: pointer;
+}
+
+
+.border_blue_3{
+  border: 1px solid var(--DarkBlueColor);
+  border-radius: 10px;
+  width: 200px;
+}
+.border_Green_3{
+  border: 1px solid var(--GreenColor);
+  border-radius: 10px;
+  width: 200px;
+}
+
+.border_red_3{
+  border: 1px solid var(--red);
+  border-radius: 10px;
+  width: 200px;
+}
+
+/* modal */
+.modal-header .close{
+  display: none !important;
+}
