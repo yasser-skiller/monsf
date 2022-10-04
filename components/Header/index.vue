@@ -1,8 +1,8 @@
 <template>
     <b-container class="">
       <b-row align-h="center"  class="flex-wrap-reverse align-items-center ">
-        <b-col cols="12" lg="4" class="mt-5 animate__animated animate__fadeInRight">
-          <div class="position-relative w-100">
+        <b-col cols="12" lg="4" class="mt-5 ">
+          <div class="position-relative w-100 animate__animated animate__fadeInRight">
             <img :src="require(`~/assets/icon/path.svg`)" class="path" alt="icon"/>
             <h3 class="text_blue font-weight-bold">
               المنصف في القدرات
@@ -19,8 +19,8 @@
           <img :src="require(`~/assets/icon/logooo.svg`)" class="logooo" alt="icon"/>
 
         </b-col>
-        <b-col cols="12" lg="8" class="position-relative m-sec animate__animated animate__fadeInLeft">
-          <img :src="require(`~/assets/img/header.png`)" class="header_img" alt="icon"/>
+        <b-col cols="12" lg="8" class="position-relative m-sec ">
+          <img :src="require(`~/assets/img/header.png`)" class="header_img animate__animated animate__fadeInLeft" alt="icon"/>
           <div class="boxTop">
             <p class="text-center text-white m-0">كورسات المنصف</p>
           </div>
