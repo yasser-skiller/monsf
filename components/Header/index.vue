@@ -2,7 +2,7 @@
     <b-container class="">
       <b-row align-h="center"  class="flex-wrap-reverse align-items-center ">
         <b-col cols="12" lg="4" class="mt-5 ">
-          <div class="position-relative w-100 animate__animated animate__fadeInRight">
+          <div class="position-relative w-100  animate__fadeInRight">
             <img :src="require(`~/assets/icon/path.svg`)" class="path" alt="icon"/>
             <h3 class="text_blue font-weight-bold">
               المنصف في القدرات
@@ -13,14 +13,14 @@
           <p class="text_Gray mt-3">المنصف فى القدرات هو دليلك الأول والأخير لضمان النجاح والتفوق ابدا معنا الان وحقق نجاحك</p>
           <div class="d-flex m-sec">
             <b-button  v-b-modal.modal-1  size="sm" class="btn_blue my-3 my-sm-2  mx-2 py-3 px-5 ppp rounded_0" type="button" >ابدا الان</b-button>
-            <b-button size="sm" class="my-3 my-sm-2 mx-2 py-3 px-5 rounded_0" type="button" variant="outline-warning" >تسجيل دخول</b-button>
+            <b-button size="sm" class="btn btn_yellow my-3 my-sm-2 mx-2 py-3 px-5 rounded_0" type="button" variant="outline-warning" >تسجيل دخول</b-button>
           </div>
 
           <img :src="require(`~/assets/icon/logooo.svg`)" class="logooo" alt="icon"/>
 
         </b-col>
         <b-col cols="12" lg="8" class="position-relative m-sec ">
-          <img :src="require(`~/assets/img/header.png`)" class="header_img animate__animated animate__fadeInLeft" alt="icon"/>
+          <img :src="require(`~/assets/img/header.png`)" class="header_img  animate__fadeInLeft" alt="icon"/>
           <div class="boxTop">
             <p class="text-center text-white m-0">كورسات المنصف</p>
           </div>
