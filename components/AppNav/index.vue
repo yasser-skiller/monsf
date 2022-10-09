@@ -11,8 +11,8 @@
 
       <b-navbar-nav class="pr-0 NavBar mr-5  text-center justify-content-between align-items-center">
         <NuxtLink  to="/" tag="li" exact class="nav-link" >الرئيسية</NuxtLink >
-        <NuxtLink to="/Cources" class="nav-link"> الكورسات</NuxtLink>
-        <NuxtLink to="/Session" class="nav-link"> الدورة</NuxtLink>
+        <NuxtLink to="/#steps" class="nav-link"> الكورسات</NuxtLink>
+        <NuxtLink to="/#steps" class="nav-link"> الدورة</NuxtLink>
         <NuxtLink to="/About" class="nav-link">عن المنصف</NuxtLink>
         <NuxtLink to="/#steps" class="nav-link"> خطوات التسجيل</NuxtLink>
         <NuxtLink to="/#contact" class="nav-link">تواصل معنا</NuxtLink>

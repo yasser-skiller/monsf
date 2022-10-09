@@ -201,24 +201,24 @@ button:not(:disabled),
 .border_blue_2{
   border: 1px solid var(--DarkBlueColor);
   border-radius: 15px;
-  width: 320px;
+  width: 330px;
 }
 .border_Green_2{
   border: 1px solid var(--GreenColor);
   border-radius: 15px;
-  width: 320px;
+  width: 330px;
 }
 
 .border_orange_2{
   border: 1px solid var(--YellowColor);
   border-radius: 15px;
-  width: 320px;
+  width: 330px;
 }
 
 .border_red_2{
   border: 1px solid var(--red);
   border-radius: 15px;
-  width: 320px;
+  width: 330px;
 }
 
 .fit_width{
@@ -226,7 +226,7 @@ button:not(:disabled),
 }
 
 .cursor_pointer{
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 
