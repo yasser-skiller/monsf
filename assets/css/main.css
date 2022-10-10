@@ -122,6 +122,12 @@ a{
 .bluebg{
   background-color: var(--bluebg);
 }
+.bg_liner{
+  background-image: linear-gradient( #006490 , #60B7DE) !important;
+}
+.bg_liner:hover{
+  background-image: linear-gradient( #015b81 , #58a9cf) !important;
+}
 button:not(:disabled),
 [type="button"]:not(:disabled),
  [type="reset"]:not(:disabled),
@@ -264,6 +270,9 @@ button:not(:disabled),
 
 .fit_width{
   width: fit-content;
+}
+.fit_height{
+  height: fit-content;
 }
 
 .cursor_pointer{

@@ -213,7 +213,6 @@
   },
     data() {
       return {
-        Course_data: [],
         CurentCourse_data: '',
         Lessons_data: [],
         CurentLessons_data: '',
@@ -223,7 +222,7 @@
     mounted() {
     this.fetchCurentCourses();
     this.fetchCurentLessons();
-    this.CurentCourse();
+
     },
     methods: {
       fetchCurentCourses() {
@@ -239,7 +238,7 @@
         fetch(config.apiUrl+"wp-json/learnpress/v1/courses", requestOptions)
           .then(response => response.text())
           .then(result => {
-            this.Course_data = JSON.parse(result)
+            this.CurentCourse(JSON.parse(result));
           })
           .catch(error => console.log('error', error));
       },
@@ -261,19 +260,16 @@
           })
           .catch(error => console.log('error', error));
       },
-      CurentCourse(){
-        setTimeout(() => {
-          this.Course_data.forEach(element => {
-            if(element.id.toString() === this.$route.params.slug ){
-              this.CurentCourse_data = element
-            }
-          });
-          console.log("this.CurentCourse_data",this.CurentCourse_data)
-        }, 2000);
+      CurentCourse(Course_data){
+        Course_data.forEach(element => {
+          if(element.id.toString() === this.$route.params.slug ){
+            this.CurentCourse_data = element
+          }
+        });
+
       },
       CurentLessons(item_id){
-        console.log("item_id",item_id)
-        console.log("this.Lessons_data",this.Lessons_data)
+
         this.Lessons_data.forEach(element => {
           if(element.id === item_id ){
             this.CurentLessons_data = element

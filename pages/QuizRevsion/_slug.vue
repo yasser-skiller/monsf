@@ -2,7 +2,7 @@
 <div>
   <AppNav/>
   <div class="m-4" >
-  <div v-if="this.Quiz_data.length > 0 &&  this.Answered.length > 0 ">
+  <div v-if="this.Quiz_data.length > 0 ">
     <b-row align-h="center"  class="flex-wrap-reverse mb-5">
         <b-col cols="12" lg="6" class="m-sec">
           <div class="d-flex flex-wrap">
@@ -46,7 +46,7 @@
             </div>
             </div>
 
-            <div class="mt-3 ">Selected: <strong>{{ selected }}</strong></div>
+            <!-- <div class="mt-3 ">Selected: <strong>{{ selected }}</strong></div> -->
 
           </div>
         </b-col>
@@ -74,17 +74,17 @@
           </div>
 
 
-          <div id="list1" class="dropdown-check-list cursor_pointer bgfillGreen border_Green_2 px-3 py-2 mt-5 font-16" tabindex="100">
+          <div id="list1" class="dropdown-check-list visible cursor_pointer bgfillGreen border_Green_2 px-3 py-2 mt-5 font-16" tabindex="100">
             <span class="anchor ">
               <img :src="require(`~/assets/icon/file0.svg`)" class="icon ml-2" alt="icon"/>
               <span class="text_green"> اضف السؤال لمجلد</span>
             </span>
             <ul class="items FoldersListCheckbox mt-2"  v-for="list in FoldersList" :key="list.index">
               <div class="d-flex justify-content-between">
-                <li v-on:click="FoldersListCheckbox(Quiz_data[Quiz_serial])">
-                  <input type="checkbox" :class="list.title" :id="list.title"/>
-                  <label :for="list.title">{{list.title}}</label>
-                </li>
+                <li class="d-flex" v-on:click="FoldersListCheckbox(Quiz_data[Quiz_serial])">
+                    <input type="checkbox" :class="list.title" :id="list.title"/>
+                    <label :for="list.title" class="mx-2">{{list.title}}</label>
+                  </li>
 
                 <div>
                   <span
@@ -184,10 +184,6 @@ import AppNav from '@/components/AppNav';
     },
     methods: {
       CurrentState(){
-        console.log('localStorage.Pass_Quiz_',JSON.parse(localStorage.getItem(`Pass_Quiz_${this.$route.params.slug}`)))
-      console.log('localStorage.Quiz_duration',JSON.parse(localStorage.getItem(`Quiz_duration${this.$route.params.slug}`)))
-      console.log('localStorage.Answered_',JSON.parse(localStorage.getItem(`Answered_${this.$route.params.slug}`)))
-      console.log('localStorage.Quiz_data_',JSON.parse(localStorage.getItem(`Quiz_data_${this.$route.params.slug}`)))
         this.Pass_Quiz = JSON.parse(localStorage.getItem(`Pass_Quiz_${this.$route.params.slug}`));
         this.Favorite_Quiz = JSON.parse(localStorage.getItem(`Favorite_Quiz_${this.$route.params.slug}`));
         this.Answered = JSON.parse(localStorage.getItem(`Answered_${this.$route.params.slug}`));
@@ -286,13 +282,9 @@ import AppNav from '@/components/AppNav';
       console.log("Favorite_Quiz",this.Favorite_Quiz)
     },
     Drop(){
-      var checkList = document.getElementById('list1');
-      checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
-        if (checkList.classList.contains('visible'))
-          checkList.classList.remove('visible');
-        else
-          checkList.classList.add('visible');
-      }
+      document.querySelector('.anchor').addEventListener('click',()=>{
+        document.getElementById('list1').classList.toggle('visible');
+      })
     },
     CreateList(){
       if(this.ListName !== ''){
@@ -494,6 +486,7 @@ import AppNav from '@/components/AppNav';
 
 .dropdown-check-list ul.items li {
   list-style: none;
+  display: flex !important;
 
 }
 
@@ -504,6 +497,5 @@ import AppNav from '@/components/AppNav';
 .dropdown-check-list.visible .items {
   display: block;
 }
-
 
 </style>

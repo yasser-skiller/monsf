@@ -2,7 +2,7 @@
   <div>
       <AppNav/>
     <b-container class="my-4" >
-      <div v-if="this.Answered.length > 0  ">
+      <div v-if="this.Quiz_data.length > 0  ">
         <b-row  align-h="center"  class="flex-wrap  justify-content-between align-items-center bg-DarkBlueOldColor p-1">
           <b-col cols="11" sm="10"  md="8" lg="6" class="">
             <p class="m-0">اسم الاختبار- اسم المختبر</p>
@@ -34,17 +34,17 @@
 
 
         <div class="grid-container  w-100 mt-5 mb-4">
-          <div class="border_0000" v-for="(item, index) in Answered" :key="index">
+          <div class="border_0000" v-for="(item, index) in All" :key="index">
           <span
             class="Pagination_label d-flex justify-content-between p-1"
             >
             <div v-on:click="CheckRevsionQuestion(index)">
-              <img  v-if="item.Delay_Qu === false" :src="require(`~/assets/icon/flag_unmarked.svg`)" alt="img" class="clock_img ml-1"/>
-              <img v-if="item.Delay_Qu === true" :src="require(`~/assets/icon/flag_marked.svg`)" alt="img" class="clock_img ml-1"/>
+              <img  v-if="item.Pass === false" :src="require(`~/assets/icon/flag_unmarked.svg`)" alt="img" class="clock_img ml-1"/>
+              <img v-if="item.Pass === true" :src="require(`~/assets/icon/flag_marked.svg`)" alt="img" class="clock_img ml-1"/>
               سؤال {{index +1}}
             </div>
 
-            <p v-if="item.answer === '' && item.Delay_Qu === false" class="text-danger ml-2">غير مكتمل</p>
+            <p v-if="item.Answered === false " class="text-danger ml-2">غير مكتمل</p>
             </span>
           </div>
         </div>
@@ -100,6 +100,7 @@ import Loading from "@/components/Loading";
       return {
         Answered:[],
         Result:[],
+        Pass_Quiz: [],
         Quiz_data:[],
         Answered_obj : {},
         selected: '',
@@ -110,7 +111,9 @@ import Loading from "@/components/Loading";
         Seconds:0,
         Remseconds:0,
         Incompleted_Answered:[],
-        Marked_Answered:[],
+        All:[],
+        Answered_obj :{},
+
       }
     },
     mounted() {
@@ -119,28 +122,44 @@ import Loading from "@/components/Loading";
       console.log('localStorage.',JSON.parse(localStorage.getItem(`Quiz_data_${this.$route.params.slug}`)))
       this.Answered = JSON.parse(localStorage.getItem(`Answered_${this.$route.params.slug}`));
       this.Quiz_data = JSON.parse(localStorage.getItem(`Quiz_data_${this.$route.params.slug}`));
+      this.Pass_Quiz = JSON.parse(localStorage.getItem(`Pass_Quiz_${this.$route.params.slug}`));
       this.Seconds = JSON.parse(localStorage.getItem(`Quiz_duration${this.$route.params.slug}`));
+      this.Made();
     },
     methods: {
-      CheckQuizIncomplete(){
-        this.Answered.forEach(element => {
-          if(element.answer === '' && element.Delay_Qu === false){
-            this.Incompleted_Answered.push(element)
-          }
+      Made(){
+        this.Answered_ids = [];
+        this.Pass_Quiz_ids = [];
 
+        this.Answered.forEach(element => {
+          this.Answered_ids.push(element.id);
         });
-        if(this.Incompleted_Answered.length > 0){
+
+        this.Pass_Quiz.forEach(element => {
+          this.Pass_Quiz_ids.push(element.id);
+        });
+
+        this.Quiz_data.forEach(ele => {
+          this.All.push({ele,Answered:false, Pass:false});
+        });
+
+        this.All.forEach(element => {
+          if(this.Answered_ids.includes(element.ele.id)){
+            element.Answered = true
+          }
+          if(this.Pass_Quiz_ids.includes(element.ele.id)){
+            element.Pass = true
+          }
+        });
+
+      },
+      CheckQuizIncomplete(){
+        if(this.Quiz_data.length - this.Answered.length > 0){
           this.$router.push({path:`/OldStyleQuizIncomplete/${this.$route.params.slug}`})
         }
       },
       CheckQuizMarked(){
-        this.Answered.forEach(element => {
-          if(element.Delay_Qu === true){
-            this.Marked_Answered.push(element)
-          }
-
-        });
-        if(this.Marked_Answered.length > 0){
+        if(this.Pass_Quiz.length > 0){
           this.$router.push({path:`/OldStyleQuizMarked/${this.$route.params.slug}`})
         }
       },
@@ -151,10 +170,38 @@ import Loading from "@/components/Loading";
       CheckRevsionQuestion(serial){
         this.$router.push({path:`/OldStyleRevsionQuiz/${this.$route.params.slug}`})
         localStorage.setItem(`Quiz_serial${this.$route.params.slug}`, JSON.stringify(serial));
-      }
+      },
 
+      SendData() {
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer${config.token}`);
+        myHeaders.append("Content-Type", "application/json");
+
+        if(this.Answered.length > 0){
+          for (var i=0; i<this.Answered.length; i++){
+            this.Answered_obj[this.Answered[i].id] = {answered: `${this.Answered[i].answer}`} ;
+          }
+        }
+
+        var raw = JSON.stringify({"id":this.$route.params.slug, "answered" : this.Answered_obj});
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+        fetch(config.apiUrl+"wp-json/learnpress/v1/quiz/finish", requestOptions)
+          .then(response => response.text())
+          .then(res => {
+            localStorage.setItem(`Result_${this.$route.params.slug}`, res);
+            this.$router.push({path:`/`})
+          })
+          .catch(error => console.log('error', error));
     },
-    watch: {
+  },
+  watch: {
       Seconds: {
         handler(value) {
           if (value > 0) {
@@ -170,16 +217,17 @@ import Loading from "@/components/Loading";
                 this.Quiz_duration = this.Minute + ':' + this.Remseconds
               }
               localStorage.setItem(`Quiz_duration${this.$route.params.slug}`, JSON.stringify((this.Minute*60)+this.Remseconds));
+              if(this.Minute === 0 && this.Remseconds === 1){
+                this.SendData();
+              }
             }, 1000);
-            if(this.Minute === 0 && this.Remseconds === 1){
-              this.$router.push({path:`/Result/${this.$route.params.slug}`})
-            }
+
           }
         },
         immediate: true,
       },
 
-    }
+  }
 
   }
 </script>

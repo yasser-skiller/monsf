@@ -103,13 +103,12 @@ export default {
   },
   data (){
     return {
-      Course_data: [],
       CurentCourse_data: '',
     }
   },
   mounted() {
     this.fetchCurentCourses();
-    this.CurentCourse();
+
   },
   methods: {
     fetchCurentCourses() {
@@ -125,19 +124,17 @@ export default {
       fetch(config.apiUrl+"wp-json/learnpress/v1/courses", requestOptions)
         .then(response => response.text())
         .then(result => {
-          this.Course_data = JSON.parse(result)
+          this.CurentCourse(JSON.parse(result));
         })
         .catch(error => console.log('error', error));
     },
-    CurentCourse(){
-      setTimeout(() => {
-        this.Course_data.forEach(element => {
-          if(element.id.toString() === this.$route.params.slug ){
-            this.CurentCourse_data = element
-          }
-        });
-        console.log("this.CurentCourse_data",this.CurentCourse_data)
-      }, 2000);
+    CurentCourse(Course_data){
+      Course_data.forEach(element => {
+        if(element.id.toString() === this.$route.params.slug ){
+          this.CurentCourse_data = element
+        }
+      });
+
     },
   },
 

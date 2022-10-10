@@ -21,7 +21,7 @@
       </b-row>
 
       <b-row class="flex-wrap align-items-center  justify-content-end  bg-BlueOldColor p-1">
-        <p class="cursor text-white m-0 ml-5"  v-on:click="Pass"><img :src="marked_case === false ? require(`~/assets/icon/flag_top.svg`) :  require(`~/assets/icon/flag_marked.svg`)" alt="img" class="clock_img"/> تميز السؤال للمراجعة </p>
+        <p class="cursor text-white m-0 ml-5"  v-on:click="Pass(Quiz_data[Quiz_serial])"><img :src="marked_case === false ? require(`~/assets/icon/flag_top.svg`) :  require(`~/assets/icon/flag_marked.svg`)" alt="img" class="clock_img"/> تميز السؤال للمراجعة </p>
         <b-dropdown id="dropdown-1" text="الخط" class="m-0 mr-5">
           <b-dropdown-item active>خط عادي</b-dropdown-item>
           <b-dropdown-item>خط عريض </b-dropdown-item>
@@ -44,7 +44,7 @@
                     <div
                       v-for="option in Quiz_data[Quiz_serial].options"
                       :key="option.uid"
-                        v-on:click="Save(Quiz_data[Quiz_serial].id, option.value, Quiz_serial,marked_case )"
+                        v-on:click="Save(Quiz_data[Quiz_serial].id, option.value, Quiz_serial )"
                         class="radioParent"
                       >
                         <b-form-radio
@@ -112,6 +112,8 @@ import AppNav from '@/components/AppNav';
       return {
         Quiz_data: [],
         Answered:[],
+        Pass_Quiz :[],
+        Answered_obj:{},
         selected: '',
         status_code: '',
         Quiz_serial:0,
@@ -152,77 +154,113 @@ import AppNav from '@/components/AppNav';
         .catch (error => console.log(error));
       },
       Compare(){
-        this.marked_case = false
-        setTimeout(() => {
-          if(this.Answered.length > 0 ){
-          if(this.Answered[this.Quiz_serial].answer !== undefined){
-            this.selected = this.Answered[this.Quiz_serial].answer;
-            if(this.Answered[this.Quiz_serial].Delay_Qu === true){
-              this.marked_case = true
-            }
+        if(this.Answered.length > 0){
+        this.Answered.forEach(element => {
+          if(element.my_Quiz_serial === this.Quiz_serial){
+            this.selected = element.answer
           }
-        }
-        }, 300);
+        });
+      }
+
+
+        //Pass
+        this.marked_case = false;
+        this.Pass_Quiz.forEach(element => {
+          if(element.id === this.Quiz_data[this.Quiz_serial].id){
+            this.marked_case = true;
+          }
+        });
 
       },
-      Save(id, option_value, my_Quiz_serial, Delay_Qu){
+      Save(id, option_value, my_Quiz_serial){
         if(this.Answered.length > 0){
           this.Answered.forEach(element => {
             if(element){
               if(element.id === id){
-                element.answer = option_value;
-                element.Delay_Qu = Delay_Qu;
+                this.Answered =  this.Answered.filter(e => e !== element);
               }
             }
           });
+          this.Answered.push({'id':id,'answer':option_value,'my_Quiz_serial':my_Quiz_serial});
+        }if(this.Answered.length === 0){
+          this.Answered.push({'id':id,'answer':option_value,'my_Quiz_serial':my_Quiz_serial});
         }
-        if(this.Answered.length === 0){
-          this.Answered.push({'id':id,'answer':option_value,'my_Quiz_serial':my_Quiz_serial, Delay_Qu:Delay_Qu});
-        }
-
+        console.log("this.Answered",this.Answered)
       },
       Next(){
         this.Quiz_serial++ ;
         this.Compare();
-        if(this.Answered.length > 0){
-          if(this.Answered.length === this.Quiz_serial){
-            this.Answered.forEach(element => {
-              if(element.id !== this.Quiz_data[this.Quiz_serial].id){
-                this.Answered.push({'id':this.Quiz_data[this.Quiz_serial].id,'answer':'','my_Quiz_serial':this.Quiz_serial, Delay_Qu:false});
-              }
-            });
+        // if(this.Answered.length > 0){
+        //   if(this.Answered.length === this.Quiz_serial){
+        //     this.Answered.forEach(element => {
+        //       if(element.id !== this.Quiz_data[this.Quiz_serial].id){
+        //         this.Answered.push({'id':this.Quiz_data[this.Quiz_serial].id,'answer':'','my_Quiz_serial':this.Quiz_serial, Delay_Qu:false});
+        //       }
+        //     });
 
-          }
+        //   }
 
-        }else{
-          this.Answered.push({'id':this.Quiz_data[this.Quiz_serial].id,'answer':'','my_Quiz_serial':this.Quiz_serial, Delay_Qu:false});
-        }
+        // }else{
+        //   this.Answered.push({'id':this.Quiz_data[this.Quiz_serial].id,'answer':'','my_Quiz_serial':this.Quiz_serial, Delay_Qu:false});
+        // }
+        console.log("Answered Next",this.Answered)
 
       },
-      Pass(){
-        if(this.Answered[this.Quiz_serial].Delay_Qu === true){
-          this.marked_case = false;
-          this.Answered[this.Quiz_serial].Delay_Qu = false ;
-
-        }else{
-          this.marked_case = true ;
-          this.Answered[this.Quiz_serial].Delay_Qu = true ;
-        }
+      Pass(item){
+        this.marked_case = !this.marked_case;
+      if(this.marked_case === true){
+        this.Pass_Quiz.push(item)
+      }
+      if(this.marked_case === false){
+        console.log("Pass_Quiz false")
+        this.Pass_Quiz =  this.Pass_Quiz.filter(e =>  e.id !== item.id)
+      }
       },
       Previous(){
         this.Quiz_serial-- ;
         this.Compare();
       },
       Finish_Quiz(){
-        this.Answered.pop()
+        this.Answered.pop();
+        console.log("Answered",this.Answered);
+        console.log("Pass_Quiz",this.Pass_Quiz);
+        localStorage.setItem(`Pass_Quiz_${this.$route.params.slug}`, JSON.stringify(this.Pass_Quiz));
         localStorage.setItem(`Answered_${this.$route.params.slug}`, JSON.stringify(this.Answered));
         localStorage.setItem(`Quiz_data_${this.$route.params.slug}`, JSON.stringify(this.Quiz_data));
         localStorage.setItem(`Quiz_duration${this.$route.params.slug}`, JSON.stringify((this.Minute*60)+this.Remseconds));
         this.$router.push({path:`/ResultOldStyle/${this.$route.params.slug}`})
       },
 
+    SendData() {
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer${config.token}`);
+        myHeaders.append("Content-Type", "application/json");
+
+        if(this.Answered.length > 0){
+          for (var i=0; i<this.Answered.length; i++){
+            this.Answered_obj[this.Answered[i].id] = {answered: `${this.Answered[i].answer}`} ;
+          }
+        }
+
+        var raw = JSON.stringify({"id":this.$route.params.slug, "answered" : this.Answered_obj});
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+        fetch(config.apiUrl+"wp-json/learnpress/v1/quiz/finish", requestOptions)
+          .then(response => response.text())
+          .then(res => {
+            localStorage.setItem(`Result_${this.$route.params.slug}`, res);
+            this.$router.push({path:`/`})
+          })
+          .catch(error => console.log('error', error));
     },
-     watch: {
+  },
+  watch: {
       Seconds: {
         handler(value) {
           if (value > 0) {
@@ -238,16 +276,17 @@ import AppNav from '@/components/AppNav';
                 this.Quiz_duration = this.Minute + ':' + this.Remseconds
               }
               localStorage.setItem(`Quiz_duration${this.$route.params.slug}`, JSON.stringify((this.Minute*60)+this.Remseconds));
+              if(this.Minute === 0 && this.Remseconds === 1){
+                this.SendData();
+              }
             }, 1000);
-            if(this.Minute === 0 && this.Remseconds === 1){
-              this.$router.push({path:`/Result/${this.$route.params.slug}`})
-            }
+
           }
         },
         immediate: true,
       },
 
-    }
+  }
 
   }
 </script>

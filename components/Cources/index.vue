@@ -45,15 +45,12 @@ export default {
   },
   data (){
     return {
-      Courses_data: [],
       PublishedCourses_data: [],
     }
   },
   mounted() {
     this.fetchCourses();
-    // setTimeout(() => {
-      this.PublishedCourses_data_method();
-    // }, 4000);
+
   },
   methods: {
     fetchCourses() {
@@ -69,13 +66,13 @@ export default {
       fetch(config.apiUrl+"wp-json/learnpress/v1/courses", requestOptions)
         .then(response => response.text())
         .then(result => {
-          this.Courses_data = JSON.parse(result)
+          this.PublishedCourses_data_method(JSON.parse(result));
         })
         .catch(error => console.log('error', error));
     },
-    PublishedCourses_data_method(){
+    PublishedCourses_data_method(Courses_data){
       setTimeout(() => {
-        this.Courses_data.forEach(element => {
+        Courses_data.forEach(element => {
           if(element.show_in_homepage === true ){
             if(element.status === 'publish'){
               this.PublishedCourses_data.push(element)

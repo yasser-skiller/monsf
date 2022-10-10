@@ -2,7 +2,7 @@
 <div>
   <AppNav/>
   <div class="m-4" >
-  <div v-if="this.Quiz_data.length > 0 &&  this.Answered.length > 0 ">
+  <div v-if="this.Quiz_data.length > 0 ">
     <b-row align-h="center"  class="flex-wrap-reverse mb-5">
         <b-col cols="12" lg="6" class="m-sec">
           <div class="d-flex flex-wrap">
@@ -46,7 +46,7 @@
             </div>
             </div>
 
-            <div class="mt-3 ">Selected: <strong>{{ selected }}</strong></div>
+            <!-- <div class="mt-3 ">Selected: <strong>{{ selected }}</strong></div> -->
 
           </div>
         </b-col>
@@ -82,9 +82,9 @@
             </span>
             <ul class="items FoldersListCheckbox mt-2"  v-for="list in FoldersList" :key="list.index">
               <div class="d-flex justify-content-between">
-                <li v-on:click="FoldersListCheckbox(Quiz_data[Quiz_serial])">
-                  <input type="checkbox" :class="list.title" :id="list.title"/>
-                  <label :for="list.title">{{list.title}}</label>
+                <li class="d-flex" v-on:click="FoldersListCheckbox(Quiz_data[Quiz_serial])">
+                    <input type="checkbox" :class="list.title" :id="list.title"/>
+                    <label :for="list.title" class="mx-2">{{list.title}}</label>
                 </li>
 
                 <div>
@@ -300,10 +300,7 @@ import AppNav from '@/components/AppNav';
     Drop(){
       var checkList = document.getElementById('list1');
       checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
-        if (checkList.classList.contains('visible'))
-          checkList.classList.remove('visible');
-        else
-          checkList.classList.add('visible');
+        checkList.classList.toggle('visible');
       }
     },
     CreateList(){

@@ -46,7 +46,7 @@
             </div>
             </div>
 
-            <div class="mt-3 ">Selected: <strong>{{ selected }}</strong></div>
+            <!-- <div class="mt-3 ">Selected: <strong>{{ selected }}</strong></div> -->
 
           </div>
         </b-col>
@@ -82,10 +82,10 @@
             </span>
             <ul class="items FoldersListCheckbox mt-2"  v-for="list in FoldersList" :key="list.index">
               <div class="d-flex justify-content-between">
-                <li v-on:click="FoldersListCheckbox(Quiz_data[Quiz_serial])">
-                  <input type="checkbox" :class="list.title" :id="list.title"/>
-                  <label :for="list.title">{{list.title}}</label>
-                </li>
+                <li class="d-flex" v-on:click="FoldersListCheckbox(Quiz_data[Quiz_serial])">
+                    <input type="checkbox" :class="list.title" :id="list.title"/>
+                    <label :for="list.title" class="mx-2">{{list.title}}</label>
+                  </li>
 
                 <div>
                   <span
@@ -185,10 +185,6 @@ import AppNav from '@/components/AppNav';
     },
     methods: {
       CurrentState(){
-        console.log('localStorage.Pass_Quiz_',JSON.parse(localStorage.getItem(`Pass_Quiz_${this.$route.params.slug}`)))
-       console.log('localStorage.Quiz_duration',JSON.parse(localStorage.getItem(`Quiz_duration${this.$route.params.slug}`)))
-       console.log('localStorage.Answered_',JSON.parse(localStorage.getItem(`Answered_${this.$route.params.slug}`)))
-       console.log('localStorage.Quiz_data_',JSON.parse(localStorage.getItem(`Quiz_data_${this.$route.params.slug}`)))
         this.Pass_Quiz = JSON.parse(localStorage.getItem(`Pass_Quiz_${this.$route.params.slug}`));
         this.Favorite_Quiz = JSON.parse(localStorage.getItem(`Favorite_Quiz_${this.$route.params.slug}`));
         this.Answered = JSON.parse(localStorage.getItem(`Answered_${this.$route.params.slug}`));
@@ -289,10 +285,8 @@ import AppNav from '@/components/AppNav';
     Drop(){
       var checkList = document.getElementById('list1');
       checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
-        if (checkList.classList.contains('visible'))
-          checkList.classList.remove('visible');
-        else
-          checkList.classList.add('visible');
+        checkList.classList.toggle('visible');
+
       }
     },
     CreateList(){

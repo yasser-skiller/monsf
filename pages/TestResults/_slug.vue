@@ -87,10 +87,7 @@ import Loading from "@/components/Loading";
 
 
 <style scoped>
-.bg_liner{
-  background-image: linear-gradient( #006490 , #60B7DE) !important;
 
-}
 .bg_gray{
   background-color: #E7F0F3;
 }
