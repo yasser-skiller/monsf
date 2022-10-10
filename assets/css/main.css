@@ -17,6 +17,11 @@
   --fillOrange:#FFF6E9;
   --fillRed:#FFE0DD;
   --red:#CE5B64;
+  --BlueOldColor: #7aa3d1;
+  --DarkBlueOldColor: #07669f;
+  --DarkBlueSecColor:#4774AC;
+  --GraySecColor: #707070;
+  --BBB:#37B6CC;
 }
 
 html{
@@ -58,6 +63,34 @@ a{
 }
 .text_GraySec{
   color: var(--GraySec);
+}
+.bg-DarkBlueOldColor{
+  background-color: var(--DarkBlueOldColor);
+  color: #fff;
+}
+.DarkBlueSecColor{
+  color: var(--DarkBlueSecColor);
+}
+.bg-DarkBlueSecColor{
+  background-color: var(--DarkBlueSecColor);
+}
+.bg-BlueOldColor{
+  background-color: var(--BlueOldColor);
+}
+.sp_style{
+  min-height: 68vh !important;
+  flex-wrap: wrap;
+}
+@media (max-width:992px) {
+  .sp_style{
+    flex-wrap: wrap-reverse !important;
+  }
+}
+.bg_BBB{
+  background-color: var(--BBB);
+}
+.GraySecColor{
+  color: var(--GraySecColor);
 }
 .bg_GraySec{
   background-color: #F8F8F8;
@@ -106,7 +139,9 @@ button:not(:disabled),
 }
 .btn_blue:hover{
   background-color: var(--DaknessBlue);
-  color: var(--WhiteColor);
+}
+.btn_blue:focus{
+  background-color: var(--DaknessBlue);
 }
 
 .btn_yellow{
@@ -140,6 +175,9 @@ button:not(:disabled),
 .btn_Green:hover{
   background-color: var(--DarkGreenColor);
 }
+.btn_Green:focus{
+  background-color: var(--DarkGreenColor);
+}
 
 .btn_blue_sp{
   background-color: var(--DarkBlueColor);
@@ -149,6 +187,9 @@ button:not(:disabled),
 .btn_blue_sp:hover{
   background-color: var(--DaknessBlue);
   border: 1px solid #fff;
+}
+.btn_blue_sp:focus{
+  background-color: var(--DaknessBlue);
 }
 .font-16{
   font-size: 16px;

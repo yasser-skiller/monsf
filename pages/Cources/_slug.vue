@@ -17,7 +17,7 @@
                 <div v-for="item in section.items" :key="item.id">
                   <div v-on:click="CurentLessons(item.id)" :id="`id${item.id}`" class="d-flex justify-content-between align-items-center my-4 cursor_pointer list" v-if="item.type === 'lp_lesson'">
                     <div class="d-flex align-items-center" >
-                      <img :src="require(`~/assets/icon/righte.svg`)" class="iconCheck" alt="icon"/>
+                      <img :src="require(`~/assets/img/play-button.png`)" class="iconCheck" alt="icon"/>
                       <p class="my-0 mr-2">{{item.title}}</p>
                     </div>
                     <p class="my-0">02:30</p>
@@ -119,9 +119,24 @@
                   <p class="text_green mt-1">عدد ..... سؤال</p>
                 </div>
                 <div class="mr-auto">
-                  <b-button v-on:click="$router.push({path:`/Quiz/${CurentLessons_data.quiz_id}`})" size="sm" class="btn btn_Green my-2 py-2 px-5 rounded_0" type="button" > ابدا الان</b-button>
+                  <b-button v-b-modal.modal-Quiz v-on:click = "ChangePath(CurentLessons_data.quiz_id)" size="sm" class="btn btn_Green my-2 py-2 px-5 rounded_0" type="button" > ابدا الان</b-button>
                 </div>
               </div>
+
+              <b-modal id="modal-Quiz" title="اختر نظام الاختبار" hide-footer>
+                <div class="d-flex flex-wrap justify-content-center">
+                  <div v-on:click = "ChosseNewPath()" class="bgGreen rounded block m-2">
+                    <p class="my-4 text-white font-16">الأختبار</p>
+                    <img :src="require(`~/assets/icon/lateww.svg`)" alt="img" class="clock_img"/>
+                  </div>
+
+                  <div v-on:click = "ChosseOldPath()" class="bluebg  rounded block m-2">
+                    <p class="my-4 text-white font-16">اختبار بنظام محاكي</p>
+                    <img :src="require(`~/assets/icon/lateww.svg`)" alt="img" class="clock_img"/>
+                  </div>
+                </div>
+
+              </b-modal>
 
               <div v-if="CurentLessons_data.pdf_files !== null && CurentLessons_data.pdf_files[2]" class="orangeLind"></div>
 
@@ -202,6 +217,7 @@
         CurentCourse_data: '',
         Lessons_data: [],
         CurentLessons_data: '',
+        path_id : '',
       }
     },
     mounted() {
@@ -253,7 +269,7 @@
             }
           });
           console.log("this.CurentCourse_data",this.CurentCourse_data)
-        }, 5000);
+        }, 2000);
       },
       CurentLessons(item_id){
         console.log("item_id",item_id)
@@ -309,6 +325,18 @@
         };
 
         oReq.send();
+      },
+      ChangePath(id){
+        this.path_id = id;
+        if(screen.width <= 992){
+          this.$router.push({path:`/Quiz/${id}`})
+        }
+      },
+      ChosseNewPath(){
+        this.$router.push({path:`/Quiz/${this.path_id}`})
+      },
+      ChosseOldPath(){
+        this.$router.push({path:`/OldStyleQuiz/${this.path_id}`})
       },
     },
 
@@ -368,7 +396,19 @@
   align-items: flex-start;
 }
 .activeList{
-  border-bottom: 1px solid var(--YellowColor);
-  padding-bottom: 5px;
+  color: #039A7B;
+}
+.clock_img{
+  width: 25px;
+  margin: auto;
+}
+.block{
+  width: 170px;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 </style>

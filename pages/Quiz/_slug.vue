@@ -1,145 +1,161 @@
 <template>
-  <b-container>
-    <div v-if="status_code === 'success' && this.Quiz_data.length > 0 ">
-      <b-row align-h="center"  class="flex-wrap-reverse mb-5">
-        <b-col cols="12" lg="6" class="m-sec">
-          <div class="border rounded_0 fit_width bg_GraySec py-1 px-2">
-            <img :src="require(`~/assets/icon/clockTimer.svg`)" class="" alt="icon"/>
-            <span class="text_blue font-16 px-2">{{Quiz_duration}}</span>
-          </div>
-          <p class="my-4 text_blue">الامتحان الالكتروني</p>
-          <div class="rounded_0 bgGray p-3">
-            <p class="text-center">السؤال الــ <span class="text_yellow">{{Quiz_serial+1}}</span> من السؤال الــ <span class="text_green">{{Quiz_data.length}}</span></p>
-            <b-progress class="my-4">
-              <b-progress-bar :value="(Quiz_serial+1)*100/Quiz_data.length"></b-progress-bar>
-            </b-progress>
-            <p>اختر من الإجابات التالية</p>
-            <div class="Grid mt-5">
-              <div
-                v-for="option in Quiz_data[Quiz_serial].options"
-                :key="option.uid"
-                :class="selected === option.value ? `selected` : ``"
-                v-on:click="Save(Quiz_data[Quiz_serial].id, option.value, Quiz_serial)"
-              >
-              <label
-              :for="option.uid"
-              >
-              {{option.title}}
-              </label>
-              <b-form-radio
-                v-model="selected"
-                :id="`${option.uid}`"
-                class="d-none"
-                name="some-radios"
-                :value="option.value"
-              >
-              </b-form-radio>
-            </div>
-          </div>
-
-            <div class="mt-3 ">Selected: <strong>{{ selected }}</strong></div>
-
-          </div>
-        </b-col>
-        <b-col cols="12" lg="5" class="m-sec ">
-
-          <img :src="Quiz_data[Quiz_serial].thumbnail" class="thumbnail" alt="icon"/>
-
-          <div
-           class="d-flex bgfillRed border_red_2 px-3 py-2 mt-5 font-16 cursor_pointer"
-           v-on:click="Favorite(Quiz_data[Quiz_serial])"
-          >
-            <span class="text_red">السؤال في المفضلة</span>
-            <img :src="HeartCase === false ? require(`~/assets/icon/empatyHart.svg`) : require(`~/assets/icon/heart (10).svg`)" class="icon mr-auto" alt="icon"/>
-          </div>
-
-          <div
-            class="d-flex bgfillBlue border_blue_2 px-3 py-2 mt-5 font-16 cursor_pointer"
-            v-on:click="Pass(Quiz_data[Quiz_serial])"
-          >
-            <div>
-              <img :src="require(`~/assets/icon/late.svg`)" class="icon ml-2" alt="icon"/>
-              <span class="text_blue">تأجيل السؤال</span>
-            </div>
-            <img :src="PassCase === false ? require(`~/assets/icon/emptyBox.svg`) : require(`~/assets/icon/checkBox.svg`)" class="icon mr-auto" alt="icon"/>
-          </div>
-
-
-          <div id="list1" class="dropdown-check-list cursor_pointer bgfillGreen border_Green_2 px-3 py-2 mt-5 font-16" tabindex="100">
-            <span class="anchor ">
-              <img :src="require(`~/assets/icon/file0.svg`)" class="icon ml-2" alt="icon"/>
-              <span class="text_green"> اضف السؤال لمجلد</span>
-            </span>
-            <ul class="items FoldersListCheckbox mt-2"  v-for="list in FoldersList" :key="list.index">
-              <div class="d-flex justify-content-between">
-                <li v-on:click="FoldersListCheckbox(Quiz_data[Quiz_serial])">
-                  <input type="checkbox" :class="list.title" :id="list.title"/>
-                  <label :for="list.title">{{list.title}}</label>
-                </li>
-
-                <div>
-                  <span
-                    class="cursor_pointer text-danger font-weight-bold"
-                    v-on:click="RemaoveFolderListCheckbox(list)"
-                  >x
-                  </span>
-                  <span
-                    class="cursor_pointer font-weight-bold"
-                    v-on:click="EditFolderListCheckboxItem = list; EditeListName = list.title"
-                    v-b-modal.modal-EditList
-                  >
-                  <img :src="require(`~/assets/icon/edit.png`)" class="icon mr-2" alt="icon"/>
-                  </span>
-                </div>
+  <div>
+    <AppNav/>
+    <b-container>
+      <div v-if="status_code === 'success' && this.Quiz_data.length > 0 ">
+        <b-row align-h="center"  class="flex-wrap-reverse mb-5">
+          <b-col cols="12" lg="6" class="m-sec">
+            <div class="d-flex flex-wrap">
+              <div class="border rounded_0 fit_width bg_GraySec py-1 px-2 ml-3">
+                <img :src="require(`~/assets/icon/clockTimer.svg`)" class="" alt="icon"/>
+                <span class="text_blue font-16 px-2">{{Quiz_duration}}</span>
               </div>
 
-            </ul>
-          </div>
-
-          <b-modal id="modal-EditList" title="تعديل اسم المجلد" hide-footer>
-            <b-form-input v-model="EditeListName" class="my-4" placeholder="اكتب اسم المجلد"></b-form-input>
-            <b-button size="sm" class="btn btn_Green my-2 py-2 px-r px-l rounded_0" type="button"  v-on:click="EditFolderListCheckbox(EditFolderListCheckboxItem)"> تعديل</b-button>
-          </b-modal>
-
-          <img
-            :src="require(`~/assets/icon/plus.png`)"
-            class="icon mr-3 cursor_pointer"
-            alt="icon"
-            v-b-modal.modal-addList
-          />
-
-          <b-modal id="modal-addList" title="إضافة مجلد جديد" hide-footer>
-            <b-form-input v-model="ListName" class="my-4" placeholder="اكتب اسم المجلد"></b-form-input>
-            <b-button size="sm" class="btn btn_Green my-2 py-2 px-r px-l rounded_0" type="button"  v-on:click="CreateList"> إنشاء</b-button>
-          </b-modal>
+              <div class="d-flex align-items-center" v-if="Minute < 5 ">
+                <img :src="require(`~/assets/icon/attention.svg`)" class="" alt="icon"/>
+                <p class="text-danger mr-2 my-0 font-weight-bold">الوقت أوشك علي الأنتهاء </p>
+              </div>
+            </div>
 
 
-          <div class="my-5 d-flex justify-content-between">
-            <b-button size="sm" class="btn btn_red my-2 py-2 px-r px-l rounded_0" type="button" v-if="Quiz_serial > 0 " v-on:click="Previous"> السابق</b-button>
-            <b-button size="sm" class="btn btn_yellow my-2 py-2 px-r px-l rounded_0 " type="button" v-if="Quiz_serial !== Quiz_data.length-1 " v-on:click="Next"> التالي</b-button>
-            <b-button size="sm" class="btn btn_yellow my-2 py-2 px-r px-l rounded_0 " type="button" v-if="Quiz_serial === Quiz_data.length-1 " v-on:click="Finish_Quiz">إنهاء الاختبار</b-button>
-          </div>
+            <p class="my-4 text_blue">الامتحان الالكتروني</p>
+            <div class="rounded_0 bgGray p-3">
+              <p class="text-center">السؤال الــ <span class="text_yellow">{{Quiz_serial+1}}</span> من السؤال الــ <span class="text_green">{{Quiz_data.length}}</span></p>
+              <b-progress class="my-4">
+                <b-progress-bar :value="(Quiz_serial+1)*100/Quiz_data.length"></b-progress-bar>
+              </b-progress>
+              <p>اختر من الإجابات التالية</p>
+              <div class="Grid mt-5">
+                <div
+                  v-for="option in Quiz_data[Quiz_serial].options"
+                  :key="option.uid"
+                  :class="selected === option.value ? `selected` : ``"
+                  v-on:click="Save(Quiz_data[Quiz_serial].id, option.value, Quiz_serial)"
+                >
+                <label
+                :for="option.uid"
+                >
+                {{option.title}}
+                </label>
+                <b-form-radio
+                  v-model="selected"
+                  :id="`${option.uid}`"
+                  class="d-none"
+                  name="some-radios"
+                  :value="option.value"
+                >
+                </b-form-radio>
+              </div>
+            </div>
 
-        </b-col>
-      </b-row>
-    </div>
-    <div v-else class="d-flex justify-content-center align-items-center spinner_loading">
-      <Loading/>
-    </div>
-  </b-container>
+              <div class="mt-3 ">Selected: <strong>{{ selected }}</strong></div>
+
+            </div>
+          </b-col>
+          <b-col cols="12" lg="5" class="m-sec ">
+
+            <img :src="Quiz_data[Quiz_serial].thumbnail" class="thumbnail" alt="icon"/>
+
+            <div
+            class="d-flex bgfillRed border_red_2 px-3 py-2 mt-5 font-16 cursor_pointer"
+            v-on:click="Favorite(Quiz_data[Quiz_serial])"
+            >
+              <span class="text_red">السؤال في المفضلة</span>
+              <img :src="HeartCase === false ? require(`~/assets/icon/empatyHart.svg`) : require(`~/assets/icon/heart (10).svg`)" class="icon mr-auto" alt="icon"/>
+            </div>
+
+            <div
+              class="d-flex bgfillBlue border_blue_2 px-3 py-2 mt-5 font-16 cursor_pointer"
+              v-on:click="Pass(Quiz_data[Quiz_serial])"
+            >
+              <div>
+                <img :src="require(`~/assets/icon/late.svg`)" class="icon ml-2" alt="icon"/>
+                <span class="text_blue">تأجيل السؤال</span>
+              </div>
+              <img :src="PassCase === false ? require(`~/assets/icon/emptyBox.svg`) : require(`~/assets/icon/checkBox.svg`)" class="icon mr-auto" alt="icon"/>
+            </div>
+
+
+            <div id="list1" class="dropdown-check-list cursor_pointer bgfillGreen border_Green_2 px-3 py-2 mt-5 font-16" tabindex="100">
+              <span class="anchor ">
+                <img :src="require(`~/assets/icon/file0.svg`)" class="icon ml-2" alt="icon"/>
+                <span class="text_green"> اضف السؤال لمجلد</span>
+              </span>
+              <ul class="items FoldersListCheckbox mt-2"  v-for="list in FoldersList" :key="list.index">
+                <div class="d-flex justify-content-between">
+                  <li v-on:click="FoldersListCheckbox(Quiz_data[Quiz_serial])">
+                    <input type="checkbox" :class="list.title" :id="list.title"/>
+                    <label :for="list.title">{{list.title}}</label>
+                  </li>
+
+                  <div>
+                    <span
+                      class="cursor_pointer text-danger font-weight-bold"
+                      v-on:click="RemaoveFolderListCheckbox(list)"
+                    >x
+                    </span>
+                    <span
+                      class="cursor_pointer font-weight-bold"
+                      v-on:click="EditFolderListCheckboxItem = list; EditeListName = list.title"
+                      v-b-modal.modal-EditList
+                    >
+                    <img :src="require(`~/assets/icon/edit.png`)" class="icon mr-2" alt="icon"/>
+                    </span>
+                  </div>
+                </div>
+
+              </ul>
+            </div>
+
+            <b-modal id="modal-EditList" title="تعديل اسم المجلد" hide-footer>
+              <b-form-input v-model="EditeListName" class="my-4" placeholder="اكتب اسم المجلد"></b-form-input>
+              <b-button size="sm" class="btn btn_Green my-2 py-2 px-r px-l rounded_0" type="button"  v-on:click="EditFolderListCheckbox(EditFolderListCheckboxItem)"> تعديل</b-button>
+            </b-modal>
+
+            <img
+              :src="require(`~/assets/icon/plus.png`)"
+              class="icon mr-3 cursor_pointer"
+              alt="icon"
+              v-b-modal.modal-addList
+            />
+
+            <b-modal id="modal-addList" title="إضافة مجلد جديد" hide-footer>
+              <b-form-input v-model="ListName" class="my-4" placeholder="اكتب اسم المجلد"></b-form-input>
+              <b-button size="sm" class="btn btn_Green my-2 py-2 px-r px-l rounded_0" type="button"  v-on:click="CreateList"> إنشاء</b-button>
+            </b-modal>
+
+
+            <div class="my-5 d-flex justify-content-between">
+              <b-button size="sm" class="btn btn_red my-2 py-2 px-r px-l rounded_0" type="button" v-if="Quiz_serial > 0 " v-on:click="Previous"> السابق</b-button>
+              <b-button size="sm" class="btn btn_yellow my-2 py-2 px-r px-l rounded_0 " type="button" v-if="Quiz_serial !== Quiz_data.length-1 " v-on:click="Next"> التالي</b-button>
+              <b-button size="sm" class="btn btn_yellow my-2 py-2 px-r px-l rounded_0 " type="button" v-if="Quiz_serial === Quiz_data.length-1 " v-on:click="Finish_Quiz">إنهاء الاختبار</b-button>
+            </div>
+
+          </b-col>
+        </b-row>
+      </div>
+      <div v-else class="d-flex justify-content-center align-items-center spinner_loading">
+        <Loading/>
+      </div>
+    </b-container>
+  </div>
+
 </template>
 
 <script>
  import config from "@/config";
+ import AppNav from "@/components/AppNav";
  import Loading from "@/components/Loading";
 
  export default {
   components:{
     Loading,
+    AppNav
   },
   data (){
     return {
       Quiz_data: [],
+      Answered_obj : {},
       selected : '',
       status_code: '',
       Quiz_duration: 0,
@@ -186,10 +202,6 @@
         this.Quiz_data = JSON.parse(res).results.questions;
         this.Seconds =  JSON.parse(res).results.duration;
         this.status_code = JSON.parse(res).status;
-        // this.Quiz_title = JSON.parse(res).results.title;
-        // console.log(this.Quiz_data)
-        // console.log(this.Quiz_data[this.Quiz_serial])
-
       })
       .catch (error => console.log(error));
     },
@@ -322,6 +334,34 @@
         }
       });
     },
+    SendData() {
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer${config.token}`);
+        myHeaders.append("Content-Type", "application/json");
+
+        if(this.Answered.length > 0){
+          for (var i=0; i<this.Answered.length; i++){
+            this.Answered_obj[this.Answered[i].id] = {answered: `${this.Answered[i].answer}`} ;
+          }
+        }
+
+        var raw = JSON.stringify({"id":this.$route.params.slug, "answered" : this.Answered_obj});
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+        fetch(config.apiUrl+"wp-json/learnpress/v1/quiz/finish", requestOptions)
+          .then(response => response.text())
+          .then(res => {
+            localStorage.setItem(`Result_${this.$route.params.slug}`, res);
+            this.$router.push({path:`/TestResults/${this.$route.params.slug}`})
+          })
+          .catch(error => console.log('error', error));
+    },
   },
   watch: {
       Seconds: {
@@ -339,17 +379,17 @@
                 this.Quiz_duration = this.Minute + ':' + this.Remseconds
               }
               localStorage.setItem(`Quiz_duration${this.$route.params.slug}`, JSON.stringify((this.Minute*60)+this.Remseconds));
+              if(this.Minute === 0 && this.Remseconds === 1){
+                this.SendData();
+              }
             }, 1000);
-            if(this.Minute === 0 && this.Remseconds === 1){
-              // this.SendData();
-              this.status_code = '';
-            }
+
           }
         },
         immediate: true,
       },
 
-    }
+  }
  }
 </script>
 

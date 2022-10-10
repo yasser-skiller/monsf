@@ -11,8 +11,8 @@
 
       <b-navbar-nav class="pr-0 NavBar mr-5  text-center justify-content-between align-items-center">
         <NuxtLink  to="/" tag="li" exact class="nav-link" >الرئيسية</NuxtLink >
-        <NuxtLink to="/#steps" class="nav-link"> الكورسات</NuxtLink>
-        <NuxtLink to="/#steps" class="nav-link"> الدورة</NuxtLink>
+        <NuxtLink to="/#Coures" class="nav-link"> الكورسات</NuxtLink>
+        <NuxtLink to="/#Channel" class="nav-link"> الدورة</NuxtLink>
         <NuxtLink to="/About" class="nav-link">عن المنصف</NuxtLink>
         <NuxtLink to="/#steps" class="nav-link"> خطوات التسجيل</NuxtLink>
         <NuxtLink to="/#contact" class="nav-link">تواصل معنا</NuxtLink>
@@ -21,10 +21,16 @@
       <b-navbar-nav class="pr-0">
         <div class="d-flex btns">
           <b-button   size="sm" class="search_btn my-2 my-sm-2 mx-2 py-2 px-3 rounded_0" type="button" > <img :src="require(`~/assets/icon/search.svg`)" alt="icon"/></b-button>
-          <NuxtLink to="/Login" class="">
-            <b-button size="sm" class="btn btn_yellow my-2 my-sm-2 mx-2 py-2 px-4 rounded_0" type="button" >تسجيل دخول</b-button>
-          </NuxtLink>
+          <!-- <NuxtLink to="/Login" class=""> -->
+            <b-button v-b-modal.modal-login size="sm" class="btn btn_yellow my-2 my-sm-2 mx-2 py-2 px-4 rounded_0" type="button" >تسجيل دخول</b-button>
+          <!-- </NuxtLink> -->
         </div>
+
+        <b-modal id="modal-login" title="إنشاء حساب جديد"  hide-footer>
+          <div class="modal_style">
+           <Telegram/>
+          </div>
+        </b-modal>
 
         <!-- <b-button  v-b-modal.modal-1  size="sm" class="search_btn my-2 my-sm-2 mx-2 py-2 px-3 rounded_0" type="button" > <img :src="require(`~/assets/icon/search.svg`)" alt="icon"/></b-button> -->
         <!-- <b-modal id="modal-1"   hide-footer hide-header>
@@ -48,7 +54,12 @@
 </template>
 
 <script>
+  import Telegram from "@/components/Telegram";
+
 export default {
+  components:{
+  Telegram
+},
   // data() {
   //     return {
   //       form: {

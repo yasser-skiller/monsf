@@ -5,9 +5,16 @@
   <div v-if="this.Quiz_data.length > 0 &&  this.Answered.length > 0 ">
     <b-row align-h="center"  class="flex-wrap-reverse mb-5">
         <b-col cols="12" lg="6" class="m-sec">
-          <div class="border rounded_0 fit_width bg_GraySec py-1 px-2">
-            <img :src="require(`~/assets/icon/clockTimer.svg`)" class="" alt="icon"/>
-            <span class="text_blue font-16 px-2">{{Quiz_duration}}</span>
+          <div class="d-flex flex-wrap">
+              <div class="border rounded_0 fit_width bg_GraySec py-1 px-2 ml-3">
+                <img :src="require(`~/assets/icon/clockTimer.svg`)" class="" alt="icon"/>
+                <span class="text_blue font-16 px-2">{{Quiz_duration}}</span>
+              </div>
+
+              <div class="d-flex align-items-center" v-if="Minute < 5 ">
+                <img :src="require(`~/assets/icon/attention.svg`)" class="" alt="icon"/>
+                <p class="text-danger mr-2 my-0 font-weight-bold">الوقت أوشك علي الأنتهاء </p>
+              </div>
           </div>
           <p class="my-4 text_blue">الامتحان الالكتروني</p>
           <div class="rounded_0 bgGray p-3">
@@ -148,6 +155,7 @@ import AppNav from '@/components/AppNav';
     data() {
       return {
         Quiz_data: [],
+        Answered_obj : {},
         Answered:[],
         Favorite_Quiz:[],
         Pass_Quiz:[],
@@ -323,8 +331,36 @@ import AppNav from '@/components/AppNav';
       });
     },
 
+    SendData() {
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer${config.token}`);
+        myHeaders.append("Content-Type", "application/json");
+
+        if(this.Answered.length > 0){
+          for (var i=0; i<this.Answered.length; i++){
+            this.Answered_obj[this.Answered[i].id] = {answered: `${this.Answered[i].answer}`} ;
+          }
+        }
+
+        var raw = JSON.stringify({"id":this.$route.params.slug, "answered" : this.Answered_obj});
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+        fetch(config.apiUrl+"wp-json/learnpress/v1/quiz/finish", requestOptions)
+          .then(response => response.text())
+          .then(res => {
+            localStorage.setItem(`Result_${this.$route.params.slug}`, res);
+            this.$router.push({path:`/TestResults/${this.$route.params.slug}`})
+          })
+          .catch(error => console.log('error', error));
     },
-     watch: {
+  },
+  watch: {
       Seconds: {
         handler(value) {
           if (value > 0) {
@@ -340,16 +376,17 @@ import AppNav from '@/components/AppNav';
                 this.Quiz_duration = this.Minute + ':' + this.Remseconds
               }
               localStorage.setItem(`Quiz_duration${this.$route.params.slug}`, JSON.stringify((this.Minute*60)+this.Remseconds));
+              if(this.Minute === 0 && this.Remseconds === 1){
+                this.SendData();
+              }
             }, 1000);
-            if(this.Minute === 0 && this.Remseconds === 1){
-              this.$router.push({path:`/Result/${this.$route.params.slug}`})
-            }
+
           }
         },
         immediate: true,
       },
 
-    }
+  }
 
   }
 </script>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="46" viewBox="0 0 48 46">
+  <g id="Group_35191" data-name="Group 35191" transform="translate(-846 -194)">
+    <rect id="Rectangle_140" data-name="Rectangle 140" width="48" height="46" rx="11" transform="translate(846 194)" fill="#d15c5c"/>
+    <g id="Layer_2" data-name="Layer 2" transform="translate(860 207)">
+      <g id="invisible_box" data-name="invisible box">
+        <rect id="Rectangle_137" data-name="Rectangle 137" width="20" height="20" fill="none"/>
+      </g>
+      <g id="Q3_icons" data-name="Q3 icons" transform="translate(1.666 1.666)">
+        <g id="Group_1473" data-name="Group 1473">
+          <path id="Path_2482" data-name="Path 2482" d="M19.416,4H5.249A1.208,1.208,0,0,0,4,5.249V19.416a1.208,1.208,0,0,0,1.25,1.25H19.416a1.208,1.208,0,0,0,1.25-1.25V5.249A1.208,1.208,0,0,0,19.416,4ZM19,19H5.666V5.666H19Z" transform="translate(-3.998 -3.998)" fill="#fff"/>
+          <path id="Path_2483" data-name="Path 2483" d="M22.833,18.667a.833.833,0,0,0,.833-.833v-5a.833.833,0,1,0-1.667,0v5A.833.833,0,0,0,22.833,18.667Z" transform="translate(-14.499 -8.666)" fill="#fff"/>
+          <circle id="Ellipse_971" data-name="Ellipse 971" cx="0.833" cy="0.833" r="0.833" transform="translate(7.501 11.667)" fill="#fff"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

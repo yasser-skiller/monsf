@@ -137,7 +137,7 @@ export default {
           }
         });
         console.log("this.CurentCourse_data",this.CurentCourse_data)
-      }, 4000);
+      }, 2000);
     },
   },
 

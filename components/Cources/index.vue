@@ -1,5 +1,5 @@
 <template>
-    <b-container class="m-sec">
+    <b-container class="m-sec" id="Coures">
       <h5 class="font-weight-bold animate__animated animate__fadeInRight">كورسات المنصف</h5>
       <div v-if="this.PublishedCourses_data.length > 0 ">
         <b-row align-h="center"  class="flex-wrap align-items-center">
@@ -51,9 +51,9 @@ export default {
   },
   mounted() {
     this.fetchCourses();
-    setTimeout(() => {
+    // setTimeout(() => {
       this.PublishedCourses_data_method();
-    }, 2000);
+    // }, 4000);
   },
   methods: {
     fetchCourses() {
@@ -74,13 +74,16 @@ export default {
         .catch(error => console.log('error', error));
     },
     PublishedCourses_data_method(){
-      this.Courses_data.forEach(element => {
-        if(element.show_in_homepage === true ){
-          if(element.status === 'publish'){
-            this.PublishedCourses_data.push(element)
+      setTimeout(() => {
+        this.Courses_data.forEach(element => {
+          if(element.show_in_homepage === true ){
+            if(element.status === 'publish'){
+              this.PublishedCourses_data.push(element)
+            }
           }
-        }
-      });
+        });
+      }, 4000);
+
     },
   },
 

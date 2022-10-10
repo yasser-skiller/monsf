@@ -1,0 +1,226 @@
+<template>
+  <div>
+      <AppNav/>
+    <b-container class="my-4" >
+      <div v-if="this.Answered.length > 0  ">
+        <b-row  align-h="center"  class="flex-wrap  justify-content-between align-items-center bg-DarkBlueOldColor p-1">
+          <b-col cols="11" sm="10"  md="8" lg="6" class="">
+            <p class="m-0">اسم الاختبار- اسم المختبر</p>
+          </b-col>
+          <b-col cols="11" sm="10"  md="8" lg="6" class="d-flex flex-column align-items-end">
+            <p class="m-0 f-12">
+              <img :src="require(`~/assets/icon/clock.svg`)" alt="img" class="clock_img"/>
+            الوقت المتبقي : {{Quiz_duration}}</p>
+          </b-col>
+        </b-row>
+
+        <h5 class="text-center my-3">قسم المراجعة</h5>
+        <div class="bg-BlueOldColor p-2">
+          <p class="m-0 text-white">إرشادات</p>
+        </div>
+        <div>
+          <p>فيما يلي ملخص لإجابتك يمكنك مراجعة أسئلتك بثلاث (3) طرق مختلفة</p>
+          <p>الأزرار الموجودة في الركن السفلي الأيسر تطابق هذه الخيارات:</p>
+          <ul>
+            <li>قم بمراحعة كل أسئلتك و إجاباتك </li>
+            <li>قم بمراجعة أسئلتك الغير مكتملة</li>
+            <li>قم بمراجعة الأسئلة المميزة بعلامة المراجعة</li>
+          </ul>
+          <P>يمكنك ايضا النقر فوق رقم سؤال لربطه مباشرة بموقعه في الاختبار</P>
+        </div>
+        <div class="bg-BlueOldColor p-2">
+          <p class="m-0 text-white">الباب 1 جزء</p>
+        </div>
+
+
+        <div class="grid-container  w-100 mt-5 mb-4">
+          <div class="border_0000" v-for="(item, index) in Answered" :key="index">
+          <span
+            class="Pagination_label d-flex justify-content-between p-1"
+            >
+            <div v-on:click="CheckRevsionQuestion(index)">
+              <img  v-if="item.Delay_Qu === false" :src="require(`~/assets/icon/flag_unmarked.svg`)" alt="img" class="clock_img ml-1"/>
+              <img v-if="item.Delay_Qu === true" :src="require(`~/assets/icon/flag_marked.svg`)" alt="img" class="clock_img ml-1"/>
+              سؤال {{index +1}}
+            </div>
+
+            <p v-if="item.answer === '' && item.Delay_Qu === false" class="text-danger ml-2">غير مكتمل</p>
+            </span>
+          </div>
+        </div>
+
+        <b-row  align-h="center"  class="flex-wrap  justify-content-between align-items-center bg-DarkBlueOldColor py-1">
+          <b-col cols="11" sm="10"  md="3" lg="2" class="">
+            <p v-on:click="$router.push({path:`/Result/${$route.params.slug}`})" class="cursor m-0">الأنتهاء من الأسئلة</p>
+          </b-col>
+          <b-col cols="11" sm="10"  md="3" lg="2" class="">
+          </b-col>
+          <b-col cols="11" sm="10"  md="3" lg="2" class="">
+            <span v-on:click="CheckRevsionQuiz" class="cursor m-0">مراجعة الكل</span>
+          </b-col>
+          <b-col cols="11" sm="10"  md="3" lg="2" class="">
+            <span  v-b-modal.modal-4 v-on:click="CheckQuizIncomplete" class="cursor m-0">مراجعة الغير مكتمل</span>
+          </b-col>
+          <b-col cols="11" sm="10"  md="3" lg="2" class="">
+            <span  v-b-modal.modal-5 v-on:click="CheckQuizMarked" class="cursor m-0">مراجعة المميز بعلامة</span>
+          </b-col>
+        </b-row>
+
+
+        <b-modal id="modal-4" title="قسم المراجعة" hide-footer>
+          <p>لا يوجد أسئلة غير مكتملة</p>
+        </b-modal>
+
+        <b-modal id="modal-5" title="قسم المراجعة" hide-footer>
+          <p>لا يوجد أسئلة مميزة بعلامة</p>
+        </b-modal>
+
+
+      </div>
+      <div v-else class="d-flex justify-content-center align-items-center spinner_loading">
+        <Loading/>
+      </div>
+    </b-container>
+
+
+  </div>
+</template>
+
+<script>
+import config from "@/config";
+import AppNav from '@/components/AppNav';
+import Loading from "@/components/Loading";
+
+  export default {
+    components:{
+      Loading,
+      AppNav,
+    },
+    data() {
+      return {
+        Answered:[],
+        Result:[],
+        Quiz_data:[],
+        Answered_obj : {},
+        selected: '',
+        status_code: '',
+        Quiz_serial:0,
+        Quiz_duration:0,
+        Minute:0,
+        Seconds:0,
+        Remseconds:0,
+        Incompleted_Answered:[],
+        Marked_Answered:[],
+      }
+    },
+    mounted() {
+      console.log('localStorage.Quiz_duration',JSON.parse(localStorage.getItem(`Quiz_duration${this.$route.params.slug}`)))
+      console.log('localStorage.',JSON.parse(localStorage.getItem(`Answered_${this.$route.params.slug}`)))
+      console.log('localStorage.',JSON.parse(localStorage.getItem(`Quiz_data_${this.$route.params.slug}`)))
+      this.Answered = JSON.parse(localStorage.getItem(`Answered_${this.$route.params.slug}`));
+      this.Quiz_data = JSON.parse(localStorage.getItem(`Quiz_data_${this.$route.params.slug}`));
+      this.Seconds = JSON.parse(localStorage.getItem(`Quiz_duration${this.$route.params.slug}`));
+    },
+    methods: {
+      CheckQuizIncomplete(){
+        this.Answered.forEach(element => {
+          if(element.answer === '' && element.Delay_Qu === false){
+            this.Incompleted_Answered.push(element)
+          }
+
+        });
+        if(this.Incompleted_Answered.length > 0){
+          this.$router.push({path:`/OldStyleQuizIncomplete/${this.$route.params.slug}`})
+        }
+      },
+      CheckQuizMarked(){
+        this.Answered.forEach(element => {
+          if(element.Delay_Qu === true){
+            this.Marked_Answered.push(element)
+          }
+
+        });
+        if(this.Marked_Answered.length > 0){
+          this.$router.push({path:`/OldStyleQuizMarked/${this.$route.params.slug}`})
+        }
+      },
+      CheckRevsionQuiz(){
+        localStorage.removeItem(`Quiz_serial${this.$route.params.slug}`);
+        this.$router.push({path:`/OldStyleRevsionQuiz/${this.$route.params.slug}`})
+      },
+      CheckRevsionQuestion(serial){
+        this.$router.push({path:`/OldStyleRevsionQuiz/${this.$route.params.slug}`})
+        localStorage.setItem(`Quiz_serial${this.$route.params.slug}`, JSON.stringify(serial));
+      }
+
+    },
+    watch: {
+      Seconds: {
+        handler(value) {
+          if (value > 0) {
+            setTimeout(() => {
+              this.Minute = Math.floor(this.Seconds / 60)
+              this.Remseconds = this.Seconds % 60
+              this.Seconds--;
+              if(this.Seconds < 9){
+                this.Quiz_duration = this.Minute + ':0' + this.Remseconds
+              }if(this.Minute < 9){
+                this.Quiz_duration = "0"+this.Minute + ':' + this.Remseconds
+              }else{
+                this.Quiz_duration = this.Minute + ':' + this.Remseconds
+              }
+              localStorage.setItem(`Quiz_duration${this.$route.params.slug}`, JSON.stringify((this.Minute*60)+this.Remseconds));
+            }, 1000);
+            if(this.Minute === 0 && this.Remseconds === 1){
+              this.$router.push({path:`/Result/${this.$route.params.slug}`})
+            }
+          }
+        },
+        immediate: true,
+      },
+
+    }
+
+  }
+</script>
+
+
+<style scoped>
+
+.spinner_loading{
+  height: 90vh;
+}
+.selected{
+  border: 2px solid var(--BlueColor);
+}
+.Pagination_label{
+  cursor: pointer;
+  color: var(--DarkWhiteSceColor);
+}
+.ImgManger{
+  max-height: 400px;
+  width: 100%;
+}
+.box{
+  width: 20px;
+  height: 20px;
+}
+.Responsive4{
+  display: grid;
+  grid-template-columns: auto auto ;
+  align-items: flex-start;
+  grid-column-gap: 25px;
+}
+.Responsive{
+  display: grid;
+  grid-template-columns: auto  ;
+}
+.clock_img{
+  width: 22px;
+  margin-left: 2px;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+}
+</style>
