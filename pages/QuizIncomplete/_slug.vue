@@ -193,10 +193,10 @@ import AppNav from '@/components/AppNav';
         this.Answered = JSON.parse(localStorage.getItem(`Answered_${this.$route.params.slug}`));
         // this.Quiz_data = JSON.parse(localStorage.getItem(`Quiz_data_${this.$route.params.slug}`));
         this.Seconds = JSON.parse(localStorage.getItem(`Quiz_duration${this.$route.params.slug}`));
-        console.log("localStorQuiz_serial", JSON.parse(localStorage.getItem (`Quiz_serial${this.$route.params.slug}`)))
-        if(JSON.parse(localStorage.getItem(`Quiz_serial${this.$route.params.slug}`)) !== null){
-          this.Quiz_serial = JSON.parse(localStorage.getItem(`Quiz_serial${this.$route.params.slug}`))
-        }
+        // console.log("localStorQuiz_serial", JSON.parse(localStorage.getItem (`Quiz_serial${this.$route.params.slug}`)))
+        // if(JSON.parse(localStorage.getItem(`Quiz_serial${this.$route.params.slug}`)) !== null){
+        //   this.Quiz_serial = JSON.parse(localStorage.getItem(`Quiz_serial${this.$route.params.slug}`))
+        // }
 
         const ids = [];
         this.Answered.forEach(ele => {

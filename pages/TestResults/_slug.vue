@@ -45,6 +45,10 @@
               <p class="bgfillGreen text_red my-0 p-2 px-4 rounded">{{Result.results.question_empty}}</p>
             </div>
           </b-col>
+
+          <b-button v-on:click="$router.push({path:`/ResultsRevsion/${$route.params.slug}`})" size="sm" class="btn btn_blue my-2 py-3 px-5 rounded_0 mx-auto" type="button"> مراجعة الأخطاء</b-button>
+
+
         </b-row>
       </div>
       <div v-else class="d-flex justify-content-center align-items-center spinner_loading">
