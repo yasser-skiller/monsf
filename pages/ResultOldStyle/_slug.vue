@@ -1,17 +1,22 @@
 <template>
   <div>
+    <b-alert v-if="Minute > 4 ? '' : 'd-none'" show  dismissible variant="danger">أوشك الوقت علي الأنتهاء لديك أقل من 5 دقائق</b-alert>
       <AppNav/>
-    <b-container class="my-4" >
+    <b-container class="" >
       <div v-if="this.Quiz_data.length > 0  ">
-        <b-row  align-h="center"  class="flex-wrap  justify-content-between align-items-center bg-DarkBlueOldColor p-1">
-          <b-col cols="11" sm="10"  md="8" lg="6" class="">
+        <b-row  align-h="center">
+          <div class="mt-5">.</div>
+          <div class="d-flex flex-wrap w-100 p-2 justify-content-between align-items-center bg-DarkBlueOldColor p-1">
+          <b-col cols="11" sm="10"  md="6" lg="6" class="">
             <p class="m-0">اسم الاختبار- اسم المختبر</p>
           </b-col>
-          <b-col cols="11" sm="10"  md="8" lg="6" class="d-flex flex-column align-items-end">
-            <p class="m-0 f-12">
+          <b-col cols="11" sm="10"  md="6" lg="6" class=" d-flex flex-column align-items-end">
+            <p :class="Minute > 4 ? 'm-0 f-12 text-white' : 'm-0 f-12 text-danger' ">
               <img :src="require(`~/assets/icon/clock.svg`)" alt="img" class="clock_img"/>
             الوقت المتبقي : {{Quiz_duration}}</p>
+            <p class="m-0 f-12 mt-1">السؤال  <span class="">{{Quiz_serial+1}}</span> من <span class="">{{Quiz_data.length}}</span> سؤال</p>
           </b-col>
+        </div>
         </b-row>
 
         <h5 class="text-center my-3">قسم المراجعة</h5>
@@ -51,18 +56,18 @@
 
         <b-row  align-h="center"  class="flex-wrap  justify-content-between align-items-center bg-DarkBlueOldColor py-1">
           <b-col cols="11" sm="10"  md="3" lg="2" class="">
-            <p v-on:click="$router.push({path:`/Result/${$route.params.slug}`})" class="cursor m-0">الأنتهاء من الأسئلة</p>
+            <p v-on:click="SendData" class="cursor_pointer m-0">الأنتهاء من الأسئلة</p>
           </b-col>
           <b-col cols="11" sm="10"  md="3" lg="2" class="">
           </b-col>
           <b-col cols="11" sm="10"  md="3" lg="2" class="">
-            <span v-on:click="CheckRevsionQuiz" class="cursor m-0">مراجعة الكل</span>
+            <span v-on:click="CheckRevsionQuiz" class="cursor_pointer m-0">مراجعة الكل</span>
           </b-col>
           <b-col cols="11" sm="10"  md="3" lg="2" class="">
-            <span  v-b-modal.modal-4 v-on:click="CheckQuizIncomplete" class="cursor m-0">مراجعة الغير مكتمل</span>
+            <span  v-b-modal.modal-4 v-on:click="CheckQuizIncomplete" class="cursor_pointer m-0">مراجعة الغير مكتمل</span>
           </b-col>
           <b-col cols="11" sm="10"  md="3" lg="2" class="">
-            <span  v-b-modal.modal-5 v-on:click="CheckQuizMarked" class="cursor m-0">مراجعة المميز بعلامة</span>
+            <span  v-b-modal.modal-5 v-on:click="CheckQuizMarked" class="cursor_pointer m-0">مراجعة المميز بعلامة</span>
           </b-col>
         </b-row>
 
@@ -107,7 +112,7 @@ import Loading from "@/components/Loading";
         status_code: '',
         Quiz_serial:0,
         Quiz_duration:0,
-        Minute:0,
+        Minute:5,
         Seconds:0,
         Remseconds:0,
         Incompleted_Answered:[],
@@ -172,7 +177,7 @@ import Loading from "@/components/Loading";
         localStorage.setItem(`Quiz_serial${this.$route.params.slug}`, JSON.stringify(serial));
       },
 
-      SendData() {
+    SendData() {
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer${config.token}`);
         myHeaders.append("Content-Type", "application/json");
@@ -195,8 +200,9 @@ import Loading from "@/components/Loading";
         fetch(config.apiUrl+"wp-json/learnpress/v1/quiz/finish", requestOptions)
           .then(response => response.text())
           .then(res => {
+            localStorage.setItem(`page_${this.$route.params.slug}`, 'old');
             localStorage.setItem(`Result_${this.$route.params.slug}`, res);
-            this.$router.push({path:`/`})
+            this.$router.push({path:`/TestResults/${this.$route.params.slug}`})
           })
           .catch(error => console.log('error', error));
     },

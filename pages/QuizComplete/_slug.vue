@@ -39,7 +39,6 @@
                 v-model="selected"
                 :id="`${option.uid}`"
                 class="d-none"
-                name="some-radios"
                 :value="option.value"
               >
               </b-form-radio>
@@ -362,6 +361,7 @@ import AppNav from '@/components/AppNav';
         fetch(config.apiUrl+"wp-json/learnpress/v1/quiz/finish", requestOptions)
           .then(response => response.text())
           .then(res => {
+            localStorage.setItem(`page_${this.$route.params.slug}`, 'new');
             localStorage.setItem(`Result_${this.$route.params.slug}`, res);
             this.$router.push({path:`/TestResults/${this.$route.params.slug}`})
           })

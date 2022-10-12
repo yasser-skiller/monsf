@@ -29,7 +29,6 @@
                 v-model="selected"
                 :id="`${option.uid}`"
                 class="d-none"
-                name="some-radios"
                 :value="option.value"
               >
               </b-form-radio>

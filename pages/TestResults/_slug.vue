@@ -6,10 +6,13 @@
         <div class="mb-sec">.</div>
         <b-row  align-h="center"  class="flex-wrap  justify-content-between align-items-center p-1">
           <b-col cols="11" sm="10"  md="8" lg="6" class="">
-            <img :src="require(`~/assets/icon/testResult.svg`)" class="" alt="icon"/>
+            <img v-if="(Result.results.user_mark/Result.results.mark)*100 >= 50" :src="require(`~/assets/icon/testResult.svg`)" class="" alt="icon"/>
+            <img v-if="(Result.results.user_mark/Result.results.mark)*100 < 50" :src="require(`~/assets/img/Group 35205.png`)"  class="w-100" alt="icon"/>
             <h5 class="text-center my-4">تقرير نتيجة الامتحان الخاص بك</h5>
 
-            <div class="rounded bg_liner text-center text-white py-2 px-5 fit_width mx-auto">
+            <div
+             :class="`${(Result.results.user_mark/Result.results.mark)*100 > 50  ? 'bg_liner' : 'bg_linerFail'} rounded text-center text-white py-2 px-5 fit_width mx-auto` "
+            >
               <h5 class="my-2"  v-if="(Result.results.user_mark/Result.results.mark)*100 > 50">ناجح</h5>
               <h5 class="my-2" v-else>راسب</h5>
               <small class=" my-1">بنسبة</small>
@@ -46,7 +49,14 @@
             </div>
           </b-col>
 
-          <b-button v-on:click="$router.push({path:`/ResultsRevsion/${$route.params.slug}`})" size="sm" class="btn btn_blue my-2 py-3 px-5 rounded_0 mx-auto" type="button"> مراجعة الأخطاء</b-button>
+          <b-button
+           v-if="old !== 'old'"
+           v-on:click="$router.push({path:`/ResultsRevsion/${$route.params.slug}`})"
+           size="sm"
+           class="btn btn_blue my-2 py-3 px-5 rounded_0 mx-auto"
+           type="button"
+          > مراجعة الأخطاء
+          </b-button>
 
 
         </b-row>
@@ -74,10 +84,12 @@ import Loading from "@/components/Loading";
         Minute:0,
         Seconds:0,
         Remseconds:0,
+        old :''
 
       }
     },
     mounted() {
+      this.old = localStorage.getItem(`page_${this.$route.params.slug}`)
       this.Result = JSON.parse(localStorage.getItem(`Result_${this.$route.params.slug}`));
       console.log("this.Result",this.Result.results)
     },

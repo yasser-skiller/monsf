@@ -167,6 +167,7 @@
                   <b-col
                    cols="10" sm="10" md="8"  lg="6" class="mb-4 py-2 px-4 cursor_pointer"
                    v-for="item in CurentCourse_data.secondary_courses" :key="item.id"
+                   v-on:click="$router.push({path:`/Session/${item.id}`})"
 
                   >
                     <div class="parent">
@@ -188,7 +189,7 @@
 
             </div>
             <div v-else>
-              <h5 class="font-weight-bold text-center mt-5">اختر الدرس </h5>
+              <h5 class="font-weight-bold text-center mt-5"> لا يوجد محتوي </h5>
             </div>
 
           </b-col>
@@ -267,6 +268,16 @@
           }
         });
 
+        setTimeout(() => {
+          this.CurentCourse_data.sections[0].items.forEach(element => {
+            if(element.type === 'lp_lesson'){
+              this.CurentLessons(element.id);
+              document.querySelector(`#id${element.id}`).classList.add('activeList');
+            }
+          });
+
+        }, 500);
+
       },
       CurentLessons(item_id){
 
@@ -313,7 +324,7 @@
             // Once the file is downloaded, open a new window with the PDF
             // Remember to allow the POP-UPS in your browser
             var file = new Blob([oReq.response], {
-                type: 'application/pdf'
+              type: 'application/pdf'
             });
 
             // Generate file download directly in the browser !
@@ -321,6 +332,13 @@
         };
 
         oReq.send();
+
+        setTimeout(() => {
+          if(oReq.status === 0){
+            alert("You must give permission to download from the browser settings")
+          }
+        }, 2000);
+        console.log("oReq",oReq)
       },
       ChangePath(id){
         this.path_id = id;

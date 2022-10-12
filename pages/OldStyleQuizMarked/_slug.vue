@@ -1,5 +1,7 @@
 <template >
   <div>
+    <b-alert v-if="Minute > 4 ? '' : 'd-none'" show  dismissible variant="danger">أوشك الوقت علي الأنتهاء لديك أقل من 5 دقائق</b-alert>
+
     <AppNav/>
     <div class="" >
     <div v-if="this.Quiz_data.length > 0 ">
@@ -12,7 +14,7 @@
               <p class="m-0">اسم الاختبار- اسم المختبر</p>
             </b-col>
             <b-col cols="11" sm="10"  md="8" lg="6" class="d-flex flex-column align-items-end">
-              <p class="m-0 f-12">
+              <p :class="Minute > 4 ? 'm-0 f-12 text-white' : 'm-0 f-12 text-danger' ">
                 <img :src="require(`~/assets/icon/clock.svg`)" alt="img" class="clock_img"/>
               الوقت المتبقي : {{Quiz_duration}}</p>
               <p class="m-0 f-12 mt-1">السؤال  <span class="">{{Quiz_serial+1}}</span> من <span class="">{{Quiz_data.length}}</span> سؤال</p>
@@ -22,7 +24,7 @@
       </b-row>
 
       <b-row class="flex-wrap align-items-center  justify-content-end  bg-BlueOldColor p-1">
-        <p class="cursor text-white m-0 ml-5" v-on:click="Pass(Quiz_data[Quiz_serial])">
+        <p class="cursor_pointer text-white m-0 ml-5" v-on:click="Pass(Quiz_data[Quiz_serial])">
          <img :src="marked_case === false ? require(`~/assets/icon/flag_top.svg`) :  require(`~/assets/icon/flag_marked.svg`)" alt="img" class="clock_img"/> تميز السؤال للمراجعة
         </p>
         <b-dropdown id="dropdown-1" text="الخط" class="m-0 mr-5">
@@ -55,7 +57,6 @@
                         class="radioParent"
                       >
                         <b-form-radio
-                          name="some-radios"
                           :value="option.value"
                           v-model="selected"
                           :aria-describedby="ariaDescribedby"
@@ -88,11 +89,11 @@
        <b-row  align-h="center"  class="flex-wrap-reverse  justify-content-between align-items-center bg-DarkBlueOldColor p-1">
           <b-col cols="12" sm="7" class="d-flex">
             <p class="m-0 border_right pl-3">المعادلات</p>
-            <div class="mr-2 f-18 cursor" v-on:click="Finish_Quiz"> الأنتقال لصفحة المراجعة</div>
+            <div class="mr-2 f-18 cursor_pointer" v-on:click="Finish_Quiz"> الأنتقال لصفحة المراجعة</div>
           </b-col>
           <b-col cols="12" sm="5" class="d-flex justify-content-end">
-            <div v-if="Quiz_serial > 0 "  v-on:click="Previous" class="cursor ml-2"><img :src="require(`~/assets/icon/arrow_right.svg`)" alt="img" class="clock_img ml-2"/>السابق</div>
-            <div  v-if="Quiz_serial !== Quiz_data.length-1 " v-on:click="Next" class="cursor">التالي<img :src="require(`~/assets/icon/arrow_left.svg`)" alt="img" class="clock_img mr-2"/></div>
+            <div v-if="Quiz_serial > 0 "  v-on:click="Previous" class="cursor_pointer ml-2"><img :src="require(`~/assets/icon/arrow_right.svg`)" alt="img" class="clock_img ml-2"/>السابق</div>
+            <div  v-if="Quiz_serial !== Quiz_data.length-1 " v-on:click="Next" class="cursor_pointer">التالي<img :src="require(`~/assets/icon/arrow_left.svg`)" alt="img" class="clock_img mr-2"/></div>
           </b-col>
       </b-row>
     </div>
@@ -124,7 +125,7 @@
           status_code: '',
           Quiz_serial:0,
           Quiz_duration:0,
-          Minute:0,
+          Minute:5,
           Seconds:0,
           Remseconds:0,
           Delay_Qu : false,
@@ -213,6 +214,7 @@
         },
 
 
+
         SendData() {
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer${config.token}`);
@@ -236,8 +238,9 @@
         fetch(config.apiUrl+"wp-json/learnpress/v1/quiz/finish", requestOptions)
           .then(response => response.text())
           .then(res => {
+            localStorage.setItem(`page_${this.$route.params.slug}`, 'old');
             localStorage.setItem(`Result_${this.$route.params.slug}`, res);
-            this.$router.push({path:`/`})
+            this.$router.push({path:`/TestResults/${this.$route.params.slug}`})
           })
           .catch(error => console.log('error', error));
     },
