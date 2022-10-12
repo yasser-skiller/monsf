@@ -1,10 +1,11 @@
 <template >
 <div>
   <AppNav/>
-  <div class="m-4" >
+  <div class="" >
   <div v-if="this.Quiz_data.length > 0 ">
     <b-row align-h="center"  class="flex-wrap-reverse mb-5">
         <b-col cols="12" lg="6" class="m-sec">
+
           <p class="my-4 text_blue">الامتحان الالكتروني</p>
           <div class="rounded_0 bgGray p-3">
             <p class="text-center">السؤال الــ <span class="text_yellow">{{Quiz_serial+1}}</span> من السؤال الــ <span class="text_green">{{Quiz_data.length}}</span></p>
@@ -18,7 +19,6 @@
                 :key="option.uid"
                 :id="option.value"
                 :class="`class${option.value}`"
-                v-on:click="Save(Quiz_data[Quiz_serial].id, option.value, Quiz_serial)"
               >
               <label
               :for="option.uid"
@@ -35,14 +35,13 @@
             </div>
             </div>
 
-            <div class="mt-3 ">Selected: <strong>{{ selected }}</strong></div>
+            <!-- <div class="mt-3 ">Selected: <strong>{{ selected }}</strong></div> -->
 
           </div>
         </b-col>
         <b-col cols="12" lg="5" class="m-sec">
 
           <img :src="Quiz_data[Quiz_serial].thumbnail" class="thumbnail" alt="icon"/>
-
 
           <div
            class="d-flex bgfillRed border_red_2 px-3 py-2 mt-5 font-16 cursor_pointer"
@@ -64,7 +63,7 @@
           </div>
 
 
-          <div id="list1" class="dropdown-check-list cursor_pointer bgfillGreen border_Green_2 px-3 py-2 mt-5 font-16" tabindex="100">
+          <div id="list1" class="dropdown-check-list visible cursor_pointer bgfillGreen border_Green_2 px-3 py-2 mt-5 font-16" tabindex="100">
             <span class="anchor ">
               <img :src="require(`~/assets/icon/file0.svg`)" class="icon ml-2" alt="icon"/>
               <span class="text_green"> اضف السؤال لمجلد</span>
@@ -74,7 +73,7 @@
                 <li class="d-flex" v-on:click="FoldersListCheckbox(Quiz_data[Quiz_serial])">
                     <input type="checkbox" :class="list.title" :id="list.title"/>
                     <label :for="list.title" class="mx-2">{{list.title}}</label>
-                </li>
+                  </li>
 
                 <div>
                   <span
@@ -116,7 +115,7 @@
           <div class="my-5 d-flex justify-content-between">
             <b-button size="sm" class="btn btn_red my-2 py-2 px-r px-l rounded_0" type="button" v-if="Quiz_serial > 0 " v-on:click="Previous"> السابق</b-button>
             <b-button size="sm" class="btn btn_yellow my-2 py-2 px-r px-l rounded_0 " type="button" v-if="Quiz_serial !== Quiz_data.length-1 " v-on:click="Next"> التالي</b-button>
-            <b-button size="sm" class="btn btn_yellow my-2 py-2 px-r px-l rounded_0 " type="button" v-if="Quiz_serial === Quiz_data.length-1 " v-on:click="Finish_Quiz">المراجعة</b-button>
+            <b-button size="sm" class="btn btn_yellow my-2 py-2 px-r px-l rounded_0 " type="button" v-if="Quiz_serial === Quiz_data.length-1 " v-on:click="Finish_Quiz"> المراجعة</b-button>
           </div>
 
         </b-col>
@@ -149,14 +148,9 @@ import AppNav from '@/components/AppNav';
         Answered:[],
         Favorite_Quiz:[],
         Pass_Quiz:[],
-        Result:[],
         selected: '',
         status_code: '',
         Quiz_serial:0,
-        Quiz_duration:0,
-        Minute:0,
-        Seconds:0,
-        Remseconds:0,
         HeartCase: false,
         Favorite_Quiz :[],
         PassCase:false,
@@ -165,6 +159,7 @@ import AppNav from '@/components/AppNav';
         EditeListName:'',
         FoldersList:[{title: 'default', content: []}],
         EditFolderListCheckboxItem: '',
+        Result :[],
       }
     },
     mounted() {
@@ -177,37 +172,26 @@ import AppNav from '@/components/AppNav';
       CurrentState(){
         this.Pass_Quiz = JSON.parse(localStorage.getItem(`Pass_Quiz_${this.$route.params.slug}`));
         this.Favorite_Quiz = JSON.parse(localStorage.getItem(`Favorite_Quiz_${this.$route.params.slug}`));
-        this.Result = JSON.parse(localStorage.getItem(`Result_${this.$route.params.slug}`));
         this.Answered = JSON.parse(localStorage.getItem(`Answered_${this.$route.params.slug}`));
-
-
-        JSON.parse(localStorage.getItem(`Quiz_data_${this.$route.params.slug}`)).forEach(element => {
-          this.Answered.forEach(ele => {
-            if(element.id === ele.id){
-             this.Quiz_data.push(element)
-            }
-          });
-
-        });
-
-        console.log('locQuiz_data_', this.Quiz_data)
-
+        this.Quiz_data = JSON.parse(localStorage.getItem(`Quiz_data_${this.$route.params.slug}`));
+        this.Result = JSON.parse(localStorage.getItem(`Result_${this.$route.params.slug}`));
+        if(JSON.parse(localStorage.getItem(`Quiz_serial${this.$route.params.slug}`)) !== null){
+          this.Quiz_serial = JSON.parse(localStorage.getItem(`Quiz_serial${this.$route.params.slug}`))
+        }
+        console.log("localStorage_Answered",this.Answered)
       },
       Compare(){
-
         setTimeout(() => {
           if(this.Answered.length > 0){
           this.Answered.forEach(element => {
             if(element.my_Quiz_serial === this.Quiz_serial){
               if(this.Result.results.answered[element.id].correct === true){
-                // this.selected = element.answer
                 document.querySelector(`.class${element.answer}`).classList.add('selected')
               }
               if(this.Result.results.answered[element.id].correct === false){
                 this.Result.results.answered[element.id].options.forEach(ele => {
                   if(ele.is_true === 'yes'){
                     document.querySelector(`.class${ele.value}`).classList.add('selected')
-                    // this.selected = ele.value
                   }
                 });
                 document.querySelector(`.class${this.Result.results.answered[element.id].answered.answered}`).classList.add('Wrongselected')
@@ -219,54 +203,29 @@ import AppNav from '@/components/AppNav';
 
         }, 500);
 
-
-
-      // if(this.Answered.length > 0){
-      //   this.Answered.forEach(element => {
-      //     if(element.my_Quiz_serial === this.Quiz_serial){
-      //       this.selected = element.answer
-      //     }
-      //   });
-      // }
-
-      //Favorite
-      this.HeartCase = false;
-      this.Favorite_Quiz.forEach(element => {
-        if(element.id === this.Quiz_data[this.Quiz_serial].id){
-          this.HeartCase = true;
-        }
-      });
-
-      //Pass
-      this.PassCase = false;
-      this.Pass_Quiz.forEach(element => {
-        if(element.id === this.Quiz_data[this.Quiz_serial].id){
-          this.PassCase = true;
-        }
-      });
-
-      //FoldersListCheckbox
-      document.querySelectorAll('.FoldersListCheckbox input').forEach(element => {
-        element.checked = false
-      });
-
-    },
-    Save(id, option_value, my_Quiz_serial){
-      if(this.Answered.length > 0){
-        this.Answered.forEach(element => {
-          if(element){
-            if(element.id === id){
-              this.Answered =  this.Answered.filter(e => e !== element);
-            }
+        //Favorite
+        this.HeartCase = false;
+        this.Favorite_Quiz.forEach(element => {
+          if(element.id === this.Quiz_data[this.Quiz_serial].id){
+            this.HeartCase = true;
           }
         });
-        this.Answered.push({'id':id,'answer':option_value,'my_Quiz_serial':my_Quiz_serial});
-      }if(this.Answered.length === 0){
-        this.Answered.push({'id':id,'answer':option_value,'my_Quiz_serial':my_Quiz_serial});
-      }
 
+        //Pass
+        this.PassCase = false;
+        this.Pass_Quiz.forEach(element => {
+          if(element.id === this.Quiz_data[this.Quiz_serial].id){
+            this.PassCase = true;
+          }
+        });
+
+        //FoldersListCheckbox
+        document.querySelectorAll('.FoldersListCheckbox input').forEach(element => {
+          element.checked = false
+        });
 
     },
+
     Next(){
       this.Quiz_serial++ ;
       this.Compare();
@@ -288,9 +247,7 @@ import AppNav from '@/components/AppNav';
       this.Compare();
     },
     Finish_Quiz(){
-      console.log("localStorage_AnsweredvFinish_Quiz",this.Answered)
       localStorage.setItem(`Answered_${this.$route.params.slug}`, JSON.stringify(this.Answered));
-      localStorage.setItem(`Quiz_duration${this.$route.params.slug}`, JSON.stringify((this.Minute*60)+this.Remseconds));
       localStorage.setItem(`Favorite_Quiz_${this.$route.params.slug}`, JSON.stringify(this.Favorite_Quiz));
       localStorage.setItem(`Pass_Quiz_${this.$route.params.slug}`, JSON.stringify(this.Pass_Quiz));
       this.$router.push({path:`/ResultsRevsion/${this.$route.params.slug}`});
@@ -307,10 +264,9 @@ import AppNav from '@/components/AppNav';
       console.log("Favorite_Quiz",this.Favorite_Quiz)
     },
     Drop(){
-      var checkList = document.getElementById('list1');
-      checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
-        checkList.classList.toggle('visible');
-      }
+      document.querySelector('.anchor').addEventListener('click',()=>{
+        document.getElementById('list1').classList.toggle('visible');
+      })
     },
     CreateList(){
       if(this.ListName !== ''){
@@ -348,6 +304,7 @@ import AppNav from '@/components/AppNav';
         }
       });
     },
+
 
   },
 
@@ -421,11 +378,6 @@ import AppNav from '@/components/AppNav';
   outline-offset: 5px;
  }
 
- .Wrongselected{
-  outline: 2px solid rgb(221, 15, 15);
-  outline-offset: 5px;
- }
-
 
 /* DropList */
 .dropdown-check-list {
@@ -463,6 +415,7 @@ import AppNav from '@/components/AppNav';
 
 .dropdown-check-list ul.items li {
   list-style: none;
+  display: flex !important;
 
 }
 
@@ -473,6 +426,11 @@ import AppNav from '@/components/AppNav';
 .dropdown-check-list.visible .items {
   display: block;
 }
+
+.Wrongselected{
+  outline: 2px solid rgb(221, 15, 15);
+  outline-offset: 5px;
+ }
 
 
 </style>

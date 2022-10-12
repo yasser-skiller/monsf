@@ -222,7 +222,6 @@ import AppNav from '@/components/AppNav';
         this.Compare();
       },
       Finish_Quiz(){
-        this.Answered.pop();
         console.log("Answered",this.Answered);
         console.log("Pass_Quiz",this.Pass_Quiz);
         localStorage.setItem(`Pass_Quiz_${this.$route.params.slug}`, JSON.stringify(this.Pass_Quiz));

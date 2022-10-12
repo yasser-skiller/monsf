@@ -90,7 +90,7 @@
                   <div>
                     <span
                       class="cursor_pointer text-danger font-weight-bold"
-                      v-on:click="RemaoveFolderListCheckbox(list)"
+                      v-on:click="RemaoveFolder(list)"
                     >x
                     </span>
                     <span
@@ -296,7 +296,7 @@
         checkList.classList.toggle('visible');
       }
     },
-    RemaoveFolderListCheckbox(item){
+    RemaoveFolder(item){
       this.FoldersList = this.FoldersList.filter(e => e !== item)
     },
     EditFolderListCheckbox(item){

@@ -9,6 +9,7 @@
             <p class="m-0 font-weight-bold text_blue font-16">مراجعة الامتحان</p>
           </b-col>
           <b-col cols="11" sm="10"  md="8" lg="6" class="d-flex flex-column align-items-end">
+
           </b-col>
         </b-row>
 
@@ -23,19 +24,19 @@
             </div>
           </b-col>
 
-          <b-col cols="11" sm="10"  md="3" lg="3" class="mx-auto" >
+          <b-col cols="11" sm="10"  md="3" lg="3" class="mx-auto" v-b-modal.modal-6 v-on:click="CheckQuizIncomplete">
             <div class="parent">
-              <img :src="require(`~/assets/icon/question (4).svg`)" alt="img" class=""/>
+              <img :src="require(`~/assets/icon/science.svg`)" alt="img" class=""/>
               <p class="my-0 font-16">   عدد الأسئلة الغير المحلولة</p>
-              <h4 class=" font-weight-bold">{{Quiz_data.length - Answered.length}}</h4>
+              <h4 class="text_blue font-weight-bold">{{Quiz_data.length - Answered.length}}</h4>
             </div>
           </b-col>
 
-          <b-col cols="11" sm="10"  md="3" lg="3" class="mx-auto" >
+          <b-col cols="11" sm="10"  md="3" lg="3" class="mx-auto" v-b-modal.modal-5 v-on:click="CheckPassQuiz">
             <div class="parent" >
-              <img :src="require(`~/assets/icon/survey.svg`)" alt="img" class=""/>
+              <img :src="require(`~/assets/icon/trophy4.svg`)" alt="img" class=""/>
               <p class="my-0 font-16"> عدد الأسئلة المؤجلة</p>
-              <h4 class=" font-weight-bold">{{Pass_Quiz.length}}</h4>
+              <h4 class="text_blue font-weight-bold">{{Pass_Quiz.length}}</h4>
             </div>
           </b-col>
 
@@ -50,9 +51,9 @@
         </b-row>
 
         <div class="itemsParent">
-          <p>    مراجعة الأسئلة محلولة</p>
+          <p>مراجعة الأسئلة الخاص بك هنا</p>
           <div class="d-flex my-4">
-            <p class="my-0 mt-2">المراجع الان:<span class="font-weight-bold text_orange bgfillOrange rounded px-3 py-2 mx-2">{{FinishNum}}</span>من <span class="font-weight-bold bgfillGrag rounded px-3 py-2 mx-2">{{Answered.length}}</span></p>
+            <p class="my-0 mt-2">المراجع الان:<span class="font-weight-bold text_orange bgfillOrange rounded px-3 py-2 mx-2">{{FinishNum}}</span>من <span class="font-weight-bold bgfillGrag rounded px-3 py-2 mx-2">{{Quiz_data.length}}</span></p>
             <img :src="require(`~/assets/icon/Group 2273.svg`)" alt="" class="mx-4" v-on:click="NextGroup"/>
             <img :src="require(`~/assets/icon/Group 2274.svg`)" alt="" class="" v-on:click="PerGroup"/>
           </div>
@@ -61,7 +62,9 @@
             <div class="item  cursor_pointer" v-for="(item, index) in All_Modfiy" :key="index" v-on:click="CheckRevsionQuizItem(index)">
               <span class="font-weight-bold">({{index+StartNum+1}})</span>
               <div class="mr-auto">
-                <span  class="span Answered ml-2">سؤال محلول</span>
+                <span v-if="item.Answered === true" class="span Answered ml-2">سؤال محلول</span>
+                <span v-else class="span unAnswered ml-2">سؤال غير محلول</span>
+                <span v-if="item.Pass === true" class="span Pass">سؤال مؤجل</span>
               </div>
 
             </div>
@@ -70,10 +73,18 @@
         </div>
 
         <div class="mt-5 d-flex justify-content-center">
-          <b-button v-on:click="$router.push({path:`/TestResults/${$route.params.slug}`})" size="sm" class="btn btn_blue my-2 py-3 px-5 rounded_0 mx-auto" type="button"> العودة للنتائج</b-button>
+            <b-button v-on:click="$router.push({path:`/TestResults/${$route.params.slug}`})" size="sm" class="btn btn_blue my-2 py-3 px-5 rounded_0 mx-auto" type="button"> العودة للنتائج</b-button>
 
         </div>
 
+
+        <b-modal id="modal-4" title="قسم المراجعة" hide-footer>
+          <p>لا يوجد أسئلة غير ممحلولة</p>
+        </b-modal>
+
+        <b-modal id="modal-5" title="قسم المراجعة" hide-footer>
+          <p>لا يوجد أسئلة  مؤجلة</p>
+        </b-modal>
 
         <b-modal id="modal-6" title="قسم المراجعة" hide-footer>
           <p>لا يوجد أسئلة غير ممحلولة</p>
@@ -89,6 +100,7 @@
 </template>
 
 <script>
+import config from "@/config";
 import AppNav from '@/components/AppNav';
 import Loading from "@/components/Loading";
 
@@ -110,7 +122,7 @@ import Loading from "@/components/Loading";
         Incompleted_Answered:[],
         StartNum: 0,
         FinishNum: 9,
-        // All:[],
+        All:[],
         All_Modfiy:[],
       }
     },
@@ -119,7 +131,6 @@ import Loading from "@/components/Loading";
       console.log('localStorage.Quiz_duration',JSON.parse(localStorage.getItem(`Quiz_duration${this.$route.params.slug}`)))
       console.log('localStorage.Answered_',JSON.parse(localStorage.getItem(`Answered_${this.$route.params.slug}`)))
       console.log('localStorage.Quiz_data_',JSON.parse(localStorage.getItem(`Quiz_data_${this.$route.params.slug}`)))
-      this.Result = JSON.parse(localStorage.getItem(`Result_${this.$route.params.slug}`));
       this.Answered = JSON.parse(localStorage.getItem(`Answered_${this.$route.params.slug}`));
       this.Quiz_data = JSON.parse(localStorage.getItem(`Quiz_data_${this.$route.params.slug}`));
       this.Pass_Quiz = JSON.parse(localStorage.getItem(`Pass_Quiz_${this.$route.params.slug}`));
@@ -127,75 +138,76 @@ import Loading from "@/components/Loading";
     },
     methods: {
       Made(){
-        // this.Answered_ids = [];
-        // this.Pass_Quiz_ids = [];
+        this.Answered_ids = [];
+        this.Pass_Quiz_ids = [];
         // this.Favorite_Quiz_ids = [];
 
-        // this.Answered.forEach(element => {
-        //   this.Answered_ids.push(element.id);
-        // });
+        this.Answered.forEach(element => {
+          this.Answered_ids.push(element.id);
+        });
 
-        // this.Pass_Quiz.forEach(element => {
-        //   this.Pass_Quiz_ids.push(element.id);
-        // });
+        this.Pass_Quiz.forEach(element => {
+          this.Pass_Quiz_ids.push(element.id);
+        });
 
         // this.Favorite_Quiz.forEach(element => {
         //   this.Favorite_Quiz_ids.push(element.id);
         // });
 
-        // this.Quiz_data.forEach(ele => {
-        //   this.All.push({ele,Answered:false, Favorite:false, Pass:false});
-        // });
+        this.Quiz_data.forEach(ele => {
+          this.All.push({ele,Answered:false, Favorite:false, Pass:false});
+        });
 
-        // this.All.forEach(element => {
-        //   if(this.Answered_ids.includes(element.ele.id)){
-        //     element.Answered = true
-        //   }
+        this.All.forEach(element => {
+          if(this.Answered_ids.includes(element.ele.id)){
+            element.Answered = true
+          }
           // if(this.Favorite_Quiz_ids.includes(element.ele.id)){
           //   element.Favorite = true
           // }
-          // if(this.Pass_Quiz_ids.includes(element.ele.id)){
-          //   element.Pass = true
-          // }
-        // });
+          if(this.Pass_Quiz_ids.includes(element.ele.id)){
+            element.Pass = true
+          }
+        });
 
-        this.All_Modfiy = this.Answered.slice(this.StartNum,this.FinishNum);
+        this.All_Modfiy = this.All.slice(this.StartNum,this.FinishNum);
 
-        if(this.FinishNum > this.Answered.length){
-          this.FinishNum = this.Answered.length
+        if(this.FinishNum > this.Quiz_data.length){
+          this.FinishNum = this.Quiz_data.length
         }
       },
       NextGroup(){
-        if(this.FinishNum < this.Answered.length){
+        if(this.FinishNum < this.Quiz_data.length){
           this.StartNum = this.StartNum + 9 ;
           this.FinishNum = this.FinishNum + 9 ;
         }
-        if(this.FinishNum > this.Answered.length){
-          this.FinishNum = this.Answered.length ;
+        if(this.FinishNum > this.Quiz_data.length){
+          this.FinishNum = this.Quiz_data.length ;
 
         }
-        if(this.FinishNum = this.Answered.length){
-          this.FinishNum = this.Answered.length ;
-
-        }
-        this.All_Modfiy = this.Answered.slice(this.StartNum,this.FinishNum)
+        this.All_Modfiy = this.All.slice(this.StartNum,this.FinishNum)
 
       },
       PerGroup(){
 
         if(this.StartNum !== 0){
-          if(this.FinishNum === this.Answered.length){
+          if(this.FinishNum === this.Quiz_data.length){
             this.FinishNum =  this.StartNum ;
             this.StartNum = this.StartNum - 9 ;
           }else{
             this.StartNum = this.StartNum - 9 ;
-            this.FinishNum = this.FinishNum - 9 ;
+          this.FinishNum = this.FinishNum - 9 ;
           }
 
         }
 
-        this.All_Modfiy = this.Answered.slice(this.StartNum,this.FinishNum)
+        this.All_Modfiy = this.All.slice(this.StartNum,this.FinishNum)
 
+      },
+      CheckQuizIncomplete(){
+        if(this.Quiz_data.length - this.Answered.length > 0){
+          this.$router.push({path:`/QuizIncompleteRevsion/${this.$route.params.slug}`})
+        }
       },
       CheckQuizComplete(){
         if(this.Answered.length > 0){
@@ -204,10 +216,18 @@ import Loading from "@/components/Loading";
       },
       CheckRevsionQuizItem(Quiz_serial){
         localStorage.setItem(`Quiz_serial${this.$route.params.slug}`, JSON.stringify(Quiz_serial));
-        this.$router.push({path:`/QuizCompleteRevsion/${this.$route.params.slug}`})
+        this.$router.push({path:`/QuizRevsionFinal/${this.$route.params.slug}`})
+      },
+      CheckPassQuiz(){
+        if(this.Pass_Quiz.length > 0){
+          this.$router.push({path:`/CheckPassQuizRevsion/${this.$route.params.slug}`})
+        }
+
       },
 
+
     },
+
   }
 </script>
 

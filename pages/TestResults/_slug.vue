@@ -55,7 +55,7 @@
            size="sm"
            class="btn btn_blue my-2 py-3 px-5 rounded_0 mx-auto"
            type="button"
-          > مراجعة الأخطاء
+          > مراجعة
           </b-button>
 
 

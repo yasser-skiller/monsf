@@ -1,7 +1,7 @@
 <template >
 <div>
   <AppNav/>
-  <div class="m-4" >
+  <div class="" >
   <div v-if="this.Quiz_data.length > 0 ">
     <b-row align-h="center"  class="flex-wrap-reverse mb-5">
         <b-col cols="12" lg="6" class="m-sec">
