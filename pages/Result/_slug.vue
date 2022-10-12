@@ -267,7 +267,6 @@ import Loading from "@/components/Loading";
         fetch(config.apiUrl+"wp-json/learnpress/v1/quiz/finish", requestOptions)
           .then(response => response.text())
           .then(res => {
-            localStorage.setItem(`page_${this.$route.params.slug}`, 'new');
             localStorage.setItem(`Result_${this.$route.params.slug}`, res);
             this.$router.push({path:`/TestResults/${this.$route.params.slug}`})
           })

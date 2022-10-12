@@ -150,7 +150,6 @@ import AppNav from '@/components/AppNav';
           this.Quiz_data = JSON.parse(res).results.questions;
           this.Seconds =  JSON.parse(res).results.duration;
           this.status_code = JSON.parse(res).status;
-          this.Save(this.Quiz_data[this.Quiz_serial].id, '', this.Quiz_serial,false);
         })
         .catch (error => console.log(error));
       },
@@ -191,21 +190,6 @@ import AppNav from '@/components/AppNav';
       Next(){
         this.Quiz_serial++ ;
         this.Compare();
-        // if(this.Answered.length > 0){
-        //   if(this.Answered.length === this.Quiz_serial){
-        //     this.Answered.forEach(element => {
-        //       if(element.id !== this.Quiz_data[this.Quiz_serial].id){
-        //         this.Answered.push({'id':this.Quiz_data[this.Quiz_serial].id,'answer':'','my_Quiz_serial':this.Quiz_serial, Delay_Qu:false});
-        //       }
-        //     });
-
-        //   }
-
-        // }else{
-        //   this.Answered.push({'id':this.Quiz_data[this.Quiz_serial].id,'answer':'','my_Quiz_serial':this.Quiz_serial, Delay_Qu:false});
-        // }
-        console.log("Answered Next",this.Answered)
-
       },
       Pass(item){
         this.marked_case = !this.marked_case;
@@ -254,7 +238,6 @@ import AppNav from '@/components/AppNav';
         fetch(config.apiUrl+"wp-json/learnpress/v1/quiz/finish", requestOptions)
           .then(response => response.text())
           .then(res => {
-            localStorage.setItem(`page_${this.$route.params.slug}`, 'old');
             localStorage.setItem(`Result_${this.$route.params.slug}`, res);
             this.$router.push({path:`/TestResults/${this.$route.params.slug}`})
           })

@@ -50,7 +50,6 @@
           </b-col>
 
           <b-button
-           v-if="old !== 'old'"
            v-on:click="$router.push({path:`/ResultsRevsion/${$route.params.slug}`})"
            size="sm"
            class="btn btn_blue my-2 py-3 px-5 rounded_0 mx-auto"
@@ -84,12 +83,10 @@ import Loading from "@/components/Loading";
         Minute:0,
         Seconds:0,
         Remseconds:0,
-        old :''
 
       }
     },
     mounted() {
-      this.old = localStorage.getItem(`page_${this.$route.params.slug}`)
       this.Result = JSON.parse(localStorage.getItem(`Result_${this.$route.params.slug}`));
       console.log("this.Result",this.Result.results)
     },

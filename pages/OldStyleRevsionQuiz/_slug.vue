@@ -239,7 +239,6 @@ import AppNav from '@/components/AppNav';
         fetch(config.apiUrl+"wp-json/learnpress/v1/quiz/finish", requestOptions)
           .then(response => response.text())
           .then(res => {
-            localStorage.setItem(`page_${this.$route.params.slug}`, 'old');
             localStorage.setItem(`Result_${this.$route.params.slug}`, res);
             this.$router.push({path:`/TestResults/${this.$route.params.slug}`})
           })

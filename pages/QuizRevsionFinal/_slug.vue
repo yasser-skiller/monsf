@@ -182,24 +182,43 @@ import AppNav from '@/components/AppNav';
       },
       Compare(){
         setTimeout(() => {
+          console.log("dd Result",this.Result.results)
+          console.log("dd Answered",this.Answered)
+
           if(this.Answered.length > 0){
-          this.Answered.forEach(element => {
-            if(element.my_Quiz_serial === this.Quiz_serial){
-              if(this.Result.results.answered[element.id].correct === true){
-                document.querySelector(`.class${element.answer}`).classList.add('selected')
-              }
-              if(this.Result.results.answered[element.id].correct === false){
-                this.Result.results.answered[element.id].options.forEach(ele => {
+
+            this.Answered.forEach(element => {
+              if(element.id !== this.Quiz_data[this.Quiz_serial].id){
+                this.Result.results.answered[this.Quiz_data[this.Quiz_serial].id].options.forEach(ele => {
                   if(ele.is_true === 'yes'){
                     document.querySelector(`.class${ele.value}`).classList.add('selected')
                   }
                 });
-                document.querySelector(`.class${this.Result.results.answered[element.id].answered.answered}`).classList.add('Wrongselected')
-
               }
-            }
-          });
-        }
+              if(element.my_Quiz_serial === this.Quiz_serial){
+                if(this.Result.results.answered[element.id].correct === true){
+                  document.querySelector(`.class${element.answer}`).classList.add('selected')
+                }
+                if(this.Result.results.answered[element.id].correct === false){
+                  this.Result.results.answered[element.id].options.forEach(ele => {
+                    if(ele.is_true === 'yes'){
+                      document.querySelector(`.class${ele.value}`).classList.add('selected')
+                    }
+                  });
+                  document.querySelector(`.class${this.Result.results.answered[element.id].answered.answered}`).classList.add('Wrongselected')
+
+                }
+              }
+            });
+          }else{
+            this.Result.results.answered[this.Quiz_data[this.Quiz_serial].id].options.forEach(ele => {
+              if(ele.is_true === 'yes'){
+                document.querySelector(`.class${ele.value}`).classList.add('selected')
+              }
+            });
+          }
+
+
 
         }, 500);
 
