@@ -113,10 +113,10 @@
           </b-modal>
 
 
-          <div class="my-5 d-flex justify-content-between">
+          <div class="my-5 d-flex flex-wrap justify-content-between">
             <b-button size="sm" class="btn btn_red my-2 py-2 px-r px-l rounded_0" type="button" v-if="Quiz_serial > 0 " v-on:click="Previous"> السابق</b-button>
-            <b-button size="sm" class="btn btn_yellow my-2 py-2 px-r px-l rounded_0 " type="button" v-if="Quiz_serial !== Quiz_data.length-1 " v-on:click="Next"> التالي</b-button>
-            <b-button size="sm" class="btn btn_yellow my-2 py-2 px-r px-l rounded_0 " type="button" v-if="Quiz_serial === Quiz_data.length-1 " v-on:click="Finish_Quiz">المراجعة</b-button>
+            <b-button size="sm" class="btn btn_yellow my-2 py-2 px-r px-l rounded_0 mx-5" type="button" v-if="Quiz_serial !== Quiz_data.length-1 " v-on:click="Next"> التالي</b-button>
+            <b-button size="sm" class="btn btn_yellow my-2 py-2 px-r px-l rounded_0 mx-auto" type="button"  v-on:click="Finish_Quiz">المراجعة</b-button>
           </div>
 
         </b-col>
