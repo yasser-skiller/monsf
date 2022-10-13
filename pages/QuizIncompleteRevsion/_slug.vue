@@ -175,15 +175,22 @@ import AppNav from '@/components/AppNav';
         this.Answered = JSON.parse(localStorage.getItem(`Answered_${this.$route.params.slug}`));
         this.Result = JSON.parse(localStorage.getItem(`Result_${this.$route.params.slug}`));
 
-        const ids = [];
-        this.Answered.forEach(ele => {
-          ids.push(ele.id)
-        });
+        this.Result_ids = [];
+
+        for (const property in this.Result.results.answered) {
+          if(this.Result.results.answered[property].correct === false){
+            console.log(`${property}`);
+            this.Result_ids.push(parseInt(property))
+          }
+
+        }
 
         JSON.parse(localStorage.getItem(`Quiz_data_${this.$route.params.slug}`)).forEach(element => {
-          if(ids.includes(element.id) === false){
-            this.Quiz_data.push(element)
-          }
+          this.Result_ids.forEach(ele => {
+            if(element.id === ele){
+             this.Quiz_data.push(element)
+            }
+          });
 
         });
 

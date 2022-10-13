@@ -19,16 +19,16 @@
           <b-col cols="11" sm="10"  md="3" lg="3" class="mx-auto" v-b-modal.modal-4 v-on:click="CheckQuizComplete">
             <div class="parent">
               <img :src="require(`~/assets/icon/question1.svg`)" alt="img" class=""/>
-              <p class="my-0 font-16">  عدد الأسئلة المحلولة</p>
-              <h4 class="text_blue font-weight-bold">{{Answered.length}}</h4>
+              <p class="my-0 font-16">  عدد  الإجابات الصحيحة</p>
+              <h4 class="text_blue font-weight-bold">{{Result_ids.length}}</h4>
             </div>
           </b-col>
 
           <b-col cols="11" sm="10"  md="3" lg="3" class="mx-auto" v-b-modal.modal-6 v-on:click="CheckQuizIncomplete">
             <div class="parent">
               <img :src="require(`~/assets/icon/science.svg`)" alt="img" class=""/>
-              <p class="my-0 font-16">   عدد الأسئلة الغير المحلولة</p>
-              <h4 class="text_blue font-weight-bold">{{Quiz_data.length - Answered.length}}</h4>
+              <p class="my-0 font-16">   عدد  الإجابات الخاطئة </p>
+              <h4 class="text_blue font-weight-bold">{{Quiz_data.length - Result_ids.length}}</h4>
             </div>
           </b-col>
 
@@ -125,6 +125,7 @@ import Loading from "@/components/Loading";
         All:[],
         All_Modfiy:[],
         Result:[],
+        Result_ids: [],
       }
     },
     mounted() {
@@ -138,7 +139,6 @@ import Loading from "@/components/Loading";
     },
     methods: {
       Made(){
-        this.Result_ids = [];
         this.Pass_Quiz_ids = [];
         // this.Favorite_Quiz_ids = [];
 
@@ -209,12 +209,12 @@ import Loading from "@/components/Loading";
 
       },
       CheckQuizIncomplete(){
-        if(this.Quiz_data.length - this.Answered.length > 0){
+        if(this.Quiz_data.length - this.Result_ids.length > 0){
           this.$router.push({path:`/QuizIncompleteRevsion/${this.$route.params.slug}`})
         }
       },
       CheckQuizComplete(){
-        if(this.Answered.length > 0){
+        if(this.Result_ids.length > 0){
           this.$router.push({path:`/QuizCompleteRevsion/${this.$route.params.slug}`})
         }
       },
