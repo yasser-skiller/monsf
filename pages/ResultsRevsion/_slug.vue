@@ -51,7 +51,7 @@
         </b-row>
 
         <div class="itemsParent">
-          <p>مراجعة الأسئلة الخاص بك هنا</p>
+          <p>مراجعة الحلول الخاص بك هنا</p>
           <div class="d-flex my-4">
             <p class="my-0 mt-2">المراجع الان:<span class="font-weight-bold text_orange bgfillOrange rounded px-3 py-2 mx-2">{{FinishNum}}</span>من <span class="font-weight-bold bgfillGrag rounded px-3 py-2 mx-2">{{Quiz_data.length}}</span></p>
             <img :src="require(`~/assets/icon/Group 2273.svg`)" alt="" class="mx-4" v-on:click="NextGroup"/>
@@ -62,8 +62,8 @@
             <div class="item  cursor_pointer" v-for="(item, index) in All_Modfiy" :key="index" v-on:click="CheckRevsionQuizItem(index)">
               <span class="font-weight-bold">({{index+StartNum+1}})</span>
               <div class="mr-auto">
-                <span v-if="item.Answered === true" class="span Answered ml-2">سؤال محلول</span>
-                <span v-else class="span unAnswered ml-2">سؤال غير محلول</span>
+                <span v-if="item.Answered === true" class="span Answered ml-2"> إجابة صحيحية</span>
+                <span v-else class="span unAnswered ml-2">  إجابه خاطئة</span>
                 <span v-if="item.Pass === true" class="span Pass">سؤال مؤجل</span>
               </div>
 
@@ -124,26 +124,32 @@ import Loading from "@/components/Loading";
         FinishNum: 9,
         All:[],
         All_Modfiy:[],
+        Result:[],
       }
     },
     mounted() {
-      console.log('localStorage.Pass_Quiz_',JSON.parse(localStorage.getItem(`Pass_Quiz_${this.$route.params.slug}`)))
-      console.log('localStorage.Answered_',JSON.parse(localStorage.getItem(`Answered_${this.$route.params.slug}`)))
-      console.log('localStorage.Quiz_data_',JSON.parse(localStorage.getItem(`Quiz_data_${this.$route.params.slug}`)))
+      console.log('localStorage.Result_',JSON.parse(localStorage.getItem(`Result_${this.$route.params.slug}`)))
       this.Answered = JSON.parse(localStorage.getItem(`Answered_${this.$route.params.slug}`));
       this.Quiz_data = JSON.parse(localStorage.getItem(`Quiz_data_${this.$route.params.slug}`));
       this.Pass_Quiz = JSON.parse(localStorage.getItem(`Pass_Quiz_${this.$route.params.slug}`));
+      this.Result = JSON.parse(localStorage.getItem(`Result_${this.$route.params.slug}`));
+
       this.Made();
     },
     methods: {
       Made(){
-        this.Answered_ids = [];
+        this.Result_ids = [];
         this.Pass_Quiz_ids = [];
         // this.Favorite_Quiz_ids = [];
 
-        this.Answered.forEach(element => {
-          this.Answered_ids.push(element.id);
-        });
+        for (const property in this.Result.results.answered) {
+          if(this.Result.results.answered[property].correct === true){
+            console.log(`${property}`);
+            this.Result_ids.push(parseInt(property))
+          }
+
+        }
+
 
         this.Pass_Quiz.forEach(element => {
           this.Pass_Quiz_ids.push(element.id);
@@ -158,12 +164,11 @@ import Loading from "@/components/Loading";
         });
 
         this.All.forEach(element => {
-          if(this.Answered_ids.includes(element.ele.id)){
+          console.log("element.ele.id",element.ele.id)
+          if(this.Result_ids.includes(element.ele.id)){
             element.Answered = true
           }
-          // if(this.Favorite_Quiz_ids.includes(element.ele.id)){
-          //   element.Favorite = true
-          // }
+
           if(this.Pass_Quiz_ids.includes(element.ele.id)){
             element.Pass = true
           }

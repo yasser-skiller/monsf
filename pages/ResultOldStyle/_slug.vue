@@ -55,8 +55,8 @@
         </div>
 
         <b-row  align-h="center"  class="flex-wrap  justify-content-between align-items-center bg-DarkBlueOldColor py-1">
-          <b-col cols="11" sm="10"  md="3" lg="2" class="">
-            <p v-on:click="SendData" class="cursor_pointer m-0">الأنتهاء من الأسئلة</p>
+          <b-col cols="11" sm="10"  md="3" lg="2" :class="Group_id > 3 ? '' : 'd-none'">
+            <p v-on:click="SendData" class="cursor_pointer m-0" >الأنتهاء من الأسئلة</p>
           </b-col>
           <b-col cols="11" sm="10"  md="3" lg="2" :class="Group_id > 3 ? 'd-none' : ''">
             <p v-on:click="Group" class="cursor_pointer m-0">الأنتقال لمجموعة{{Group_id+1}}</p>
