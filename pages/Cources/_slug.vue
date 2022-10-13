@@ -257,7 +257,7 @@
           .then(response => response.text())
           .then(result => {
             this.Lessons_data = JSON.parse(result)
-            console.log("JSON.parse(result)",JSON.parse(result))
+            console.log("JSON.parse(result) Lessons_data",JSON.parse(result))
           })
           .catch(error => console.log('error', error));
       },
@@ -280,12 +280,14 @@
 
       },
       CurentLessons(item_id){
-
+       if(this.Lessons_data.length > 0){
         this.Lessons_data.forEach(element => {
           if(element.id === item_id ){
             this.CurentLessons_data = element
           }
         });
+       }
+
 
         document.querySelectorAll('.list').forEach(ele =>{
           ele.classList.remove('activeList')

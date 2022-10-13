@@ -10,13 +10,13 @@
             <b-button size="sm"  class="btn bg_liner  my-2 py-3 px-4  rounded " type="button"  v-on:click="Show">ابدء الاختبار</b-button>
             <select id="FoldersList"  class="FoldersListInput">
               <option value="none" selected disabled hidden>اسم الحافظة </option>
-              <option v-for="list in FoldersList" :key="list.index" :value="list.title" >{{list.title}}</option>
+              <option v-for="list in FoldersList" :key="list.index" :value="list.name" >{{list.name}}</option>
             </select>
           </div>
 
         </div>
 
-        <div v-for="item in CurrentList" :key="item.index" class="FoldersListItem my-3">
+        <div v-for="item in CurrentList.questions" :key="item.index" class="FoldersListItem my-3">
           <img :src="item.thumbnail" alt="img" class="thumbnail"/>
           <img :src="require(`~/assets/icon/remove.svg`)" v-on:click="Remove(item)" alt="img" class="remove"/>
         </div>
@@ -32,6 +32,7 @@
 <script>
 import AppNav from '@/components/AppNav';
 import Loading from "@/components/Loading";
+import config from "@/config";
 
 export default {
   components:{
@@ -41,25 +42,86 @@ export default {
   data (){
     return {
       FoldersList:[],
+      id:'',
       CurrentList:[],
     }
   },
   mounted(){
-    this.FoldersList = JSON.parse(localStorage.getItem(`FoldersList}`));
-    console.log("FoldersList",this.FoldersList)
+    setTimeout(() => {
+      this.FetchFolders();
+      console.log('item', this.FoldersList)
+
+    }, 500);
   },
   methods:{
+    FetchFolders(){
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer${config.token}`);
+      myHeaders.append("Cookie", "__wpdm_client=f5ddc77fd332e35ab25f445937d36c7c");
+
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      fetch(config.apiUrl+"wp-json/learnpress/v1/folders", requestOptions)
+        .then(response => response.text())
+        .then(result => {
+          this.FoldersList = JSON.parse(result);
+        })
+        .catch(error => console.log('error', error));
+    },
     Show(){
       this.FoldersList.forEach(element => {
-        if(element.title === document.querySelector('#FoldersList').value){
-          this.CurrentList = element.content ;
+        if(element.name === document.querySelector('#FoldersList').value){
+          this.id = element.id ;
         }
       });
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer${config.token}`);
+      myHeaders.append("Cookie", "__wpdm_client=f5ddc77fd332e35ab25f445937d36c7c");
+
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      fetch(config.apiUrl+`wp-json/learnpress/v1/folders/${this.id}`, requestOptions)
+        .then(response => response.text())
+        .then(result => {
+          this.CurrentList = JSON.parse(result);
+        })
+        .catch(error => console.log('error', error));
     },
     Remove(item){
-      this.CurrentList = this.CurrentList.filter(e => e !== item)
+      console.log('item', item.id)
+      // var myHeaders = new Headers();
+      // myHeaders.append("Authorization", `Bearer${config.token}`);
+      // myHeaders.append("Content-Type", "application/json");
+      // myHeaders.append("Cookie", "__wpdm_client=f5ddc77fd332e35ab25f445937d36c7c");
+
+      // var raw = JSON.stringify({
+      //   "folder_id": this.id,
+      //   "question_id": item.id
+      // });
+
+      // var requestOptions = {
+      //   method: 'DELETE',
+      //   headers: myHeaders,
+      //   body: raw,
+      //   redirect: 'follow'
+      // };
+
+      // fetch(config.apiUrl+"wp-json/learnpress/v1/question", requestOptions)
+      //   .then(response => response.text())
+      //   .then(result => {
+      //     console.log('JSON.parse(result)', JSON.parse(result))
+      //   })
+      //   .catch(error => console.log('error', error));
+          },
     },
-  },
 }
 </script>
 

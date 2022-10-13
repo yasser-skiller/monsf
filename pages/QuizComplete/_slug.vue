@@ -1,7 +1,7 @@
 <template >
 <div>
   <AppNav/>
-  <div class="m-4" >
+  <div class="" >
   <div v-if="this.Quiz_data.length > 0 ">
     <b-row align-h="center"  class="flex-wrap-reverse mb-5">
         <b-col cols="12" lg="6" class="m-sec">
@@ -74,59 +74,12 @@
           </div>
 
 
-          <div id="list1" class="dropdown-check-list cursor_pointer bgfillGreen border_Green_2 px-3 py-2 mt-5 font-16" tabindex="100">
-            <span class="anchor ">
-              <img :src="require(`~/assets/icon/file0.svg`)" class="icon ml-2" alt="icon"/>
-              <span class="text_green"> اضف السؤال لمجلد</span>
-            </span>
-            <ul class="items FoldersListCheckbox mt-2"  v-for="list in FoldersList" :key="list.index">
-              <div class="d-flex justify-content-between">
-                <li class="d-flex" v-on:click="FoldersListCheckbox(Quiz_data[Quiz_serial])">
-                    <input type="checkbox" :class="list.title" :id="list.title"/>
-                    <label :for="list.title" class="mx-2">{{list.title}}</label>
-                </li>
+          <AddFoldersList :Quiz_data="Quiz_data" :Quiz_serial="Quiz_serial"/>
 
-                <div>
-                  <span
-                    class="cursor_pointer text-danger font-weight-bold"
-                    v-on:click="RemaoveFolderListCheckbox(list)"
-                  >x
-                  </span>
-                  <span
-                    class="cursor_pointer font-weight-bold"
-                    v-on:click="EditFolderListCheckboxItem = list; EditeListName = list.title"
-                    v-b-modal.modal-EditList
-                  >
-                  <img :src="require(`~/assets/icon/edit.png`)" class="icon mr-2" alt="icon"/>
-                  </span>
-                </div>
-              </div>
-
-            </ul>
-          </div>
-
-          <b-modal id="modal-EditList" title="تعديل اسم المجلد" hide-footer>
-            <b-form-input v-model="EditeListName" class="my-4" placeholder="اكتب اسم المجلد"></b-form-input>
-            <b-button size="sm" class="btn btn_Green my-2 py-2 px-r px-l rounded_0" type="button"  v-on:click="EditFolderListCheckbox(EditFolderListCheckboxItem)"> تعديل</b-button>
-          </b-modal>
-
-          <img
-            :src="require(`~/assets/icon/plus.png`)"
-            class="icon mr-3 cursor_pointer"
-            alt="icon"
-            v-b-modal.modal-addList
-          />
-
-          <b-modal id="modal-addList" title="إضافة مجلد جديد" hide-footer>
-            <b-form-input v-model="ListName" class="my-4" placeholder="اكتب اسم المجلد"></b-form-input>
-            <b-button size="sm" class="btn btn_Green my-2 py-2 px-r px-l rounded_0" type="button"  v-on:click="CreateList"> إنشاء</b-button>
-          </b-modal>
-
-
-          <div class="my-5 d-flex justify-content-between">
+          <div class="my-5 d-flex flex-wrap justify-content-between">
             <b-button size="sm" class="btn btn_red my-2 py-2 px-r px-l rounded_0" type="button" v-if="Quiz_serial > 0 " v-on:click="Previous"> السابق</b-button>
-            <b-button size="sm" class="btn btn_yellow my-2 py-2 px-r px-l rounded_0 " type="button" v-if="Quiz_serial !== Quiz_data.length-1 " v-on:click="Next"> التالي</b-button>
-            <b-button size="sm" class="btn btn_yellow my-2 py-2 px-r px-l rounded_0 " type="button" v-if="Quiz_serial === Quiz_data.length-1 " v-on:click="Finish_Quiz">إنهاء الاختبار</b-button>
+            <b-button size="sm" class="btn btn_yellow my-2 py-2 mx-5 px-r px-l rounded_0 " type="button" v-if="Quiz_serial !== Quiz_data.length-1 " v-on:click="Next"> التالي</b-button>
+            <b-button size="sm" class="btn btn_yellow my-2 py-2 mx-auto px-r px-l rounded_0 " type="button"  v-on:click="Finish_Quiz">إنهاء الاختبار</b-button>
           </div>
 
         </b-col>
@@ -146,11 +99,13 @@
 <script>
 import Loading from "@/components/Loading";
 import AppNav from '@/components/AppNav';
+import AddFoldersList from "@/components/AddFoldersList";
 
   export default {
     components:{
       Loading,
-      AppNav
+      AppNav,
+      AddFoldersList
     },
     data() {
       return {
@@ -170,10 +125,7 @@ import AppNav from '@/components/AppNav';
         Favorite_Quiz :[],
         PassCase:false,
         Pass_Quiz :[],
-        ListName: '',
-        EditeListName:'',
-        FoldersList:[{title: 'default', content: []}],
-        EditFolderListCheckboxItem: '',
+
       }
     },
     mounted() {
@@ -296,48 +248,7 @@ import AppNav from '@/components/AppNav';
       }
       console.log("Favorite_Quiz",this.Favorite_Quiz)
     },
-    Drop(){
-      var checkList = document.getElementById('list1');
-      checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
-        checkList.classList.toggle('visible');
-      }
-    },
-    CreateList(){
-      if(this.ListName !== ''){
-        this.FoldersList.push({title:this.ListName, content:[]})
-      }
-      this.ListName = '';
-      console.log('this.FoldersList',this.FoldersList)
-    },
-    FoldersListCheckbox(item){
 
-      this.FoldersList.forEach(ele => {
-        ele.content = ele.content.filter(e => e !== item)
-      });
-
-      document.querySelectorAll('.FoldersListCheckbox input').forEach(element => {
-        if(element.checked){
-          console.log("FoldersListCheckbox", element.className)
-          this.FoldersList.forEach(ele => {
-            if(ele.title === element.className){
-              ele.content.push(item)
-            }
-          });
-        }
-      });
-      console.log("this.FoldersList", this.FoldersList)
-    },
-    RemaoveFolderListCheckbox(item){
-      this.FoldersList = this.FoldersList.filter(e => e !== item)
-    },
-    EditFolderListCheckbox(item){
-      console.log("EditFolderListCheckbox",item)
-      this.FoldersList.forEach(ele => {
-        if(ele.title === item.title){
-          item.title = this.EditeListName;
-        }
-      });
-    },
     SendData() {
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer${config.token}`);
@@ -464,53 +375,6 @@ import AppNav from '@/components/AppNav';
   outline-offset: 5px;
  }
 
-
-/* DropList */
-.dropdown-check-list {
-  display: inline-block;
-}
-
-.dropdown-check-list .anchor {
-  position: relative;
-  cursor: pointer;
-  display: inline-block;
-}
-
-.dropdown-check-list .anchor:after {
-  position: absolute;
-  content: "";
-  border-left: 2px solid #039A7B;
-  border-top: 2px solid #039A7B;
-  padding: 5px;
-  right: 270px;
-  top: 20%;
-  transform: rotate(-135deg);
-}
-
-.dropdown-check-list .anchor:active:after {
-  right: 270px;
-  top: 21%;
-}
-
-.dropdown-check-list ul.items {
-  padding: 2px;
-  display: none;
-  margin: 0;
-  border-top: none;
-}
-
-.dropdown-check-list ul.items li {
-  list-style: none;
-
-}
-
-.dropdown-check-list.visible .anchor {
-  color: #0094ff;
-}
-
-.dropdown-check-list.visible .items {
-  display: block;
-}
 
 
 </style>
