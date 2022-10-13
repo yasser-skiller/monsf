@@ -58,6 +58,9 @@
           <b-col cols="11" sm="10"  md="3" lg="2" class="">
             <p v-on:click="SendData" class="cursor_pointer m-0">الأنتهاء من الأسئلة</p>
           </b-col>
+          <b-col cols="11" sm="10"  md="3" lg="2" :class="Group_id > 3 ? 'd-none' : ''">
+            <p v-on:click="Group" class="cursor_pointer m-0">الأنتقال لمجموعة{{Group_id+1}}</p>
+          </b-col>
           <b-col cols="11" sm="10"  md="3" lg="2" class="">
           </b-col>
           <b-col cols="11" sm="10"  md="3" lg="2" class="">
@@ -118,20 +121,49 @@ import Loading from "@/components/Loading";
         Incompleted_Answered:[],
         All:[],
         Answered_obj :{},
+        Group_id : 0,
+        Quiz_data_All:[],
+        Quiz_dataCollection : [],
+        AnsweredCollection : [],
+        Pass_QuizCollection:[],
 
       }
     },
     mounted() {
-      console.log('localStorage.Quiz_duration',JSON.parse(localStorage.getItem(`Quiz_duration${this.$route.params.slug}`)))
-      console.log('localStorage.',JSON.parse(localStorage.getItem(`Answered_${this.$route.params.slug}`)))
-      console.log('localStorage.',JSON.parse(localStorage.getItem(`Quiz_data_${this.$route.params.slug}`)))
+      // console.log('localStorage.Quiz_duration',JSON.parse(localStorage.getItem(`Quiz_duration${this.$route.params.slug}`)))
       this.Answered = JSON.parse(localStorage.getItem(`Answered_${this.$route.params.slug}`));
+      this.Group_id = JSON.parse(localStorage.getItem(`Group_id_${this.$route.params.slug}`));
       this.Quiz_data = JSON.parse(localStorage.getItem(`Quiz_data_${this.$route.params.slug}`));
       this.Pass_Quiz = JSON.parse(localStorage.getItem(`Pass_Quiz_${this.$route.params.slug}`));
       this.Seconds = JSON.parse(localStorage.getItem(`Quiz_duration${this.$route.params.slug}`));
+      this.Quiz_dataCollection = JSON.parse(localStorage.getItem(`Quiz_dataCollection_${this.$route.params.slug}`));
+      this.AnsweredCollection = JSON.parse(localStorage.getItem(`AnsweredCollection_${this.$route.params.slug}`));
+      this.Pass_QuizCollection = JSON.parse(localStorage.getItem(`Pass_QuizCollection_${this.$route.params.slug}`));
+
       this.Made();
     },
     methods: {
+      fetchData() {
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer${config.token}`);
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({"id":this.$route.params.slug});
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+        fetch(config.apiUrl+"wp-json/learnpress/v1/quiz/start", requestOptions)
+        .then(response => response.text())
+        .then(res => {
+          this.Quiz_data_All = JSON.parse(res).results.questions
+        })
+        .catch (error => console.log(error));
+      },
       Made(){
         this.Answered_ids = [];
         this.Pass_Quiz_ids = [];
@@ -158,6 +190,30 @@ import Loading from "@/components/Loading";
         });
 
       },
+      Collection(){
+        console.log("yasser Quiz_data",this.Quiz_data)
+        console.log("yasser Answered",this.Answered)
+
+          this.Quiz_data.forEach(ele => {
+            this.Quiz_dataCollection.push(ele)
+          });
+          this.Answered.forEach(ele => {
+            this.AnsweredCollection.push(ele)
+          });
+          this.Pass_Quiz.forEach(ele => {
+            this.Pass_QuizCollection.push(ele)
+          });
+          localStorage.setItem(`Quiz_dataCollection_${this.$route.params.slug}`, JSON.stringify(this.Quiz_dataCollection) );
+          localStorage.setItem(`AnsweredCollection_${this.$route.params.slug}`,  JSON.stringify(this.AnsweredCollection));
+          localStorage.setItem(`Pass_QuizCollection_${this.$route.params.slug}`,  JSON.stringify(this.Pass_QuizCollection));
+
+
+      },
+      Group(){
+       this.Collection()
+        localStorage.setItem(`Group_id_${this.$route.params.slug}`, this.Group_id + 1);
+        this.$router.push({path:`/OldStyleQuizGroup/${this.$route.params.slug}`})
+      },
       CheckQuizIncomplete(){
         if(this.Quiz_data.length - this.Answered.length > 0){
           this.$router.push({path:`/OldStyleQuizIncomplete/${this.$route.params.slug}`})
@@ -177,34 +233,39 @@ import Loading from "@/components/Loading";
         localStorage.setItem(`Quiz_serial${this.$route.params.slug}`, JSON.stringify(serial));
       },
 
-    SendData() {
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer${config.token}`);
-        myHeaders.append("Content-Type", "application/json");
+      SendData() {
+        this.Collection()
+        localStorage.setItem(`Answered_${this.$route.params.slug}`, JSON.stringify(this.AnsweredCollection));
+        localStorage.setItem(`Quiz_data_${this.$route.params.slug}`, JSON.stringify(this.Quiz_dataCollection));
+        localStorage.setItem(`Pass_Quiz_${this.$route.params.slug}`, JSON.stringify(this.Pass_QuizCollection));
+        this.Answered = this.AnsweredCollection
+          var myHeaders = new Headers();
+          myHeaders.append("Authorization", `Bearer${config.token}`);
+          myHeaders.append("Content-Type", "application/json");
 
-        if(this.Answered.length > 0){
-          for (var i=0; i<this.Answered.length; i++){
-            this.Answered_obj[this.Answered[i].id] = {answered: `${this.Answered[i].answer}`} ;
+          if(this.Answered.length > 0){
+            for (var i=0; i<this.Answered.length; i++){
+              this.Answered_obj[this.Answered[i].id] = {answered: `${this.Answered[i].answer}`} ;
+            }
           }
-        }
 
-        var raw = JSON.stringify({"id":this.$route.params.slug, "answered" : this.Answered_obj});
+          var raw = JSON.stringify({"id":this.$route.params.slug, "answered" : this.Answered_obj});
 
-        var requestOptions = {
-          method: 'POST',
-          headers: myHeaders,
-          body: raw,
-          redirect: 'follow'
-        };
+          var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+          };
 
-        fetch(config.apiUrl+"wp-json/learnpress/v1/quiz/finish", requestOptions)
-          .then(response => response.text())
-          .then(res => {
-            localStorage.setItem(`Result_${this.$route.params.slug}`, res);
-            this.$router.push({path:`/TestResults/${this.$route.params.slug}`})
-          })
-          .catch(error => console.log('error', error));
-    },
+          fetch(config.apiUrl+"wp-json/learnpress/v1/quiz/finish", requestOptions)
+            .then(response => response.text())
+            .then(res => {
+              localStorage.setItem(`Result_${this.$route.params.slug}`, res);
+              this.$router.push({path:`/TestResults/${this.$route.params.slug}`})
+            })
+            .catch(error => console.log('error', error));
+      },
   },
   watch: {
       Seconds: {

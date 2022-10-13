@@ -4,7 +4,7 @@
 
   <AppNav/>
   <div class="">
-    <div v-if="status_code === 'success' && this.Quiz_data.length > 0">
+    <div v-if="this.Quiz_data.length > 0">
 
       <b-row  align-h="center"  class="">
         <div class="mt-5">.</div>
@@ -112,7 +112,6 @@ import AppNav from '@/components/AppNav';
     data() {
       return {
         Quiz_data: [],
-        Quiz_data_All: [],
         Answered:[],
         Pass_Quiz :[],
         Answered_obj:{},
@@ -128,43 +127,63 @@ import AppNav from '@/components/AppNav';
         StartNum:0,
         FinishNum:0,
         Group_id : 0,
+        All_Quiz_data:[],
       }
     },
     mounted() {
-      this.fetchData();
+      this.Seconds = JSON.parse(localStorage.getItem(`Quiz_duration${this.$route.params.slug}`));
+      this.All_Quiz_data = JSON.parse(localStorage.getItem(`Quiz_data_All${this.$route.params.slug}`));
+      this.Group_id = JSON.parse(localStorage.getItem(`Group_id_${this.$route.params.slug}`));
+      if(this.Group_id > 4){
+        this.Group_id = 0
+      }
+      // this.fetchData();
       this.Divider();
     },
     methods: {
-      fetchData() {
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer${config.token}`);
-        myHeaders.append("Content-Type", "application/json");
+      // fetchData() {
+      //   var myHeaders = new Headers();
+      //   myHeaders.append("Authorization", `Bearer${config.token}`);
+      //   myHeaders.append("Content-Type", "application/json");
 
-        var raw = JSON.stringify({"id":this.$route.params.slug});
+      //   var raw = JSON.stringify({"id":this.$route.params.slug});
 
-        var requestOptions = {
-          method: 'POST',
-          headers: myHeaders,
-          body: raw,
-          redirect: 'follow'
-        };
+      //   var requestOptions = {
+      //     method: 'POST',
+      //     headers: myHeaders,
+      //     body: raw,
+      //     redirect: 'follow'
+      //   };
 
-        fetch(config.apiUrl+"wp-json/learnpress/v1/quiz/start", requestOptions)
-        .then(response => response.text())
-        .then(res => {
-          this.Seconds =  JSON.parse(res).results.duration;
-          this.status_code = JSON.parse(res).status;
-          this.Quiz_data_All = JSON.parse(res).results.questions
-          this.Divider(JSON.parse(res).results.questions);
+      //   fetch(config.apiUrl+"wp-json/learnpress/v1/quiz/start", requestOptions)
+      //   .then(response => response.text())
+      //   .then(res => {
+      //     this.Seconds =  JSON.parse(res).results.duration;
+      //     this.status_code = JSON.parse(res).status;
+      //     this.Divider(JSON.parse(res).results.questions);
 
-        })
-        .catch (error => console.log(error));
-      },
-      Divider(questions){
-        if(this.status_code === 'success'){
-          let step = Math.floor(questions.length /4)
-          this.FinishNum = this.FinishNum + step ;
-          this.Quiz_data = questions.slice(this.StartNum,this.FinishNum);
+      //   })
+      //   .catch (error => console.log(error));
+      // },
+      Divider(){
+        if(this.All_Quiz_data.length > 0){
+          console.log("asas",this.Group_id,this.StartNum,this.FinishNum)
+          let step = Math.floor(this.All_Quiz_data.length /4)
+          let finalStep = this.All_Quiz_data.length - (step * 3)
+          // this.FinishNum = this.FinishNum + step ;
+          if(this.Group_id > 1){
+            if(this.Group_id === 4){
+              this.StartNum = ((this.Group_id - 1) * step)  ;
+              this.FinishNum = (this.Group_id * step) + finalStep ;
+            }else{
+              this.StartNum = (this.Group_id - 1) * step ;
+              this.FinishNum = this.Group_id * step ;
+            }
+
+          }
+          this.Quiz_data = this.All_Quiz_data.slice(this.StartNum,this.FinishNum);
+          console.log("ssssssssssssssss",this.StartNum,this.FinishNum,step)
+
         }
 
       },
@@ -221,14 +240,14 @@ import AppNav from '@/components/AppNav';
         this.Compare();
       },
       Finish_Quiz(){
-        localStorage.setItem(`Group_id_${this.$route.params.slug}`, 1);
-        localStorage.setItem(`Quiz_dataCollection_${this.$route.params.slug}`, JSON.stringify([]));
-        localStorage.setItem(`AnsweredCollection_${this.$route.params.slug}`, JSON.stringify([]));
-        localStorage.setItem(`Pass_QuizCollection_${this.$route.params.slug}`, JSON.stringify([]));
+        if(this.Group_id > 5){
+          this.Group_id = 4
+        }
+        localStorage.setItem(`Group_id_${this.$route.params.slug}`, this.Group_id);
         localStorage.setItem(`Pass_Quiz_${this.$route.params.slug}`, JSON.stringify(this.Pass_Quiz));
         localStorage.setItem(`Answered_${this.$route.params.slug}`, JSON.stringify(this.Answered));
         localStorage.setItem(`Quiz_data_${this.$route.params.slug}`, JSON.stringify(this.Quiz_data));
-        localStorage.setItem(`Quiz_data_All${this.$route.params.slug}`, JSON.stringify(this.Quiz_data_All));
+        // localStorage.setItem(`Quiz_data_All${this.$route.params.slug}`, JSON.stringify(this.Quiz_data_All));
         localStorage.setItem(`Quiz_duration${this.$route.params.slug}`, JSON.stringify((this.Minute*60)+this.Remseconds));
         this.$router.push({path:`/ResultOldStyle/${this.$route.params.slug}`})
       },

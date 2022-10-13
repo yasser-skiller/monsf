@@ -11,9 +11,9 @@
             <h5 class="text-center my-4">تقرير نتيجة الامتحان الخاص بك</h5>
 
             <div
-             :class="`${(Result.results.user_mark/Result.results.mark)*100 > 50  ? 'bg_liner' : 'bg_linerFail'} rounded text-center text-white py-2 px-5 fit_width mx-auto` "
+             :class="`${(Result.results.user_mark/Result.results.mark)*100 >= 50  ? 'bg_liner' : 'bg_linerFail'} rounded text-center text-white py-2 px-5 fit_width mx-auto` "
             >
-              <h5 class="my-2"  v-if="(Result.results.user_mark/Result.results.mark)*100 > 50">ناجح</h5>
+              <h5 class="my-2"  v-if="(Result.results.user_mark/Result.results.mark)*100 >= 50">ناجح</h5>
               <h5 class="my-2" v-else>راسب</h5>
               <small class=" my-1">بنسبة</small>
               <h5 class="font-weight-bold">{{(Result.results.user_mark/Result.results.mark)*100}}%</h5>
@@ -23,13 +23,13 @@
           <b-col cols="11" sm="10"  md="8" lg="6" class="">
             <div class="rounded_1 my-4 font-16 px-4 py-3 bg_gray d-flex justify-content-between align-items-center">
               <p class="text_blue my-0">درجة الامتحان</p>
-              <p v-if="(Result.results.user_mark/Result.results.mark)*100 > 50" class="bgfillGreen text_green my-0 p-2 px-4 rounded">{{(Result.results.user_mark/Result.results.mark)*100}}%</p>
-              <p class="bgfillRed text_red my-0 p-2 px-4 rounded">{{(Result.results.user_mark/Result.results.mark)*100}}%</p>
+              <p v-if="(Result.results.user_mark/Result.results.mark)*100 >= 50" class="bgfillGreen text_green my-0 p-2 px-4 rounded">{{(Result.results.user_mark/Result.results.mark)*100}}%</p>
+              <p v-else class="bgfillRed text_red my-0 p-2 px-4 rounded">{{(Result.results.user_mark/Result.results.mark)*100}}%</p>
             </div>
             <div class="rounded_1 my-4 font-16 px-4 py-3 bg_gray d-flex justify-content-between align-items-center">
               <p class="text_blue my-0"> الحالة</p>
-              <p v-if="(Result.results.user_mark/Result.results.mark)*100 > 50" class="bgfillGreen text_green my-0 p-2 px-4 rounded">ناجح</p>
-              <p class="bgfillRed text_red my-0 p-2 px-4 rounded">راسب</p>
+              <p v-if="(Result.results.user_mark/Result.results.mark)*100 >= 50" class="bgfillGreen text_green my-0 p-2 px-4 rounded">ناجح</p>
+              <p v-else class="bgfillRed text_red my-0 p-2 px-4 rounded">راسب</p>
             </div>
             <div class="rounded_1 my-4 font-16 px-4 py-3 bg_gray d-flex justify-content-between align-items-center">
               <p class="text_blue my-0"> عدد الأسئلة التي تم اجابتها</p>

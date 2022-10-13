@@ -195,6 +195,9 @@ import AppNav from '@/components/AppNav';
       },
       Compare(){
 
+        console.log("zzzzz",this.Answered)
+        console.log("ooooozzz",this.Result.results)
+
         setTimeout(() => {
           if(this.Answered.length > 0){
           this.Answered.forEach(element => {
@@ -213,6 +216,15 @@ import AppNav from '@/components/AppNav';
                 document.querySelector(`.class${this.Result.results.answered[element.id].answered.answered}`).classList.add('Wrongselected')
 
               }
+            }else{
+              this.Result.results.answered[this.Quiz_data[this.Quiz_serial].id].options.forEach(ele => {
+                if(ele.is_true === 'yes'){
+                  document.querySelector(`.class${ele.value}`).classList.add('selected')
+                }
+                if(ele.value === this.Result.results.answered[this.Quiz_data[this.Quiz_serial].id].answered.answered){
+                  document.querySelector(`.class${ele.value}`).classList.add('Wrongselected')
+                }
+              });
             }
           });
         }
@@ -416,15 +428,17 @@ import AppNav from '@/components/AppNav';
   justify-content: center;
   align-items: center;
  }
- .selected{
-  outline: 2px solid rgb(15, 192, 124);
-  outline-offset: 5px;
- }
 
  .Wrongselected{
   outline: 2px solid rgb(221, 15, 15);
   outline-offset: 5px;
  }
+
+ .selected{
+  outline: 2px solid rgb(15, 192, 124);
+  outline-offset: 5px;
+ }
+
 
 
 /* DropList */
