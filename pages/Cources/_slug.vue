@@ -15,7 +15,7 @@
               <div class="content" :id="section.id">
 
                 <div v-for="item in section.items" :key="item.id">
-                  <div v-on:click="CurentLessons(item.id)" :id="`id${item.id}`" class="d-flex justify-content-between align-items-center my-4 cursor_pointer list" v-if="item.type === 'lp_lesson'">
+                  <div v-on:click="CurentLessons(item.id)" :id="`id${item.id}`" class="d-flex justify-content-between align-items-center my-4 cursor_pointer list" v-if="item.type === 'lp_lesson' && item.locked === false">
                     <div class="d-flex align-items-center" >
                       <img :src="require(`~/assets/img/play-button.png`)" class="iconCheck" alt="icon"/>
                       <p class="my-0 mr-2">{{item.title}}</p>

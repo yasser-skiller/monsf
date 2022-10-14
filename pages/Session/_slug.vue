@@ -34,9 +34,11 @@
           </b-col>
           <b-col cols="12"  lg="5" class="m-sec">
 
-            <div class="d-flex flex-column justify-content-left align-items-end">
-
+            <div  v-if="CurentCourse_data.is_subscribed === true" class="d-flex flex-column justify-content-left align-items-end">
               <b-button  v-on:click="$router.push({path:`/Cources/${CurentCourse_data.id}`})" type="button" class="btn btn_Green rounded_0 px-5 py-2 mt-5 w-75"> شراء الدورة الان</b-button>
+            </div>
+            <div  v-if="CurentCourse_data.is_subscribed === false" class="d-flex flex-column justify-content-left align-items-end">
+              <b-button  v-on:click="$router.push({path:`/#contact`})" type="button" class="btn btn_Green rounded_0 px-5 py-2 mt-5 w-75"> شراء الدورة الان</b-button>
             </div>
             <p class="mt-5">:يتضمن البرنامج التدريبي</p>
 

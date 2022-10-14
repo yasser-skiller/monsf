@@ -135,7 +135,7 @@ import AddFoldersList from "@/components/AddFoldersList";
         setTimeout(() => {
           if(this.Answered.length > 0){
           this.Answered.forEach(element => {
-            if(element.my_Quiz_serial === this.Quiz_serial){
+            if(element.id === this.Quiz_data[this.Quiz_serial].id){
               if(this.Result.results.answered[element.id].correct === true){
                 document.querySelector(`.class${element.answer}`).classList.add('selected')
               }
