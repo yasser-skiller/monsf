@@ -1,69 +1,68 @@
 <template>
   <div>
-    <AppNav/>
+      <AppNav/>
     <b-container class="" >
       <div v-if="this.Quiz_data.length > 0  ">
         <div class="mb-sec">.</div>
-        <b-row  align-h="center"  class="flex-wrap  justify-content-between align-items-center p-1">
+        <b-row  align-h="center"  class="flex-wrap  justify-content-between align-items-center  p-1">
           <b-col cols="11" sm="10"  md="8" lg="6" class="">
-            <p class="m-0 font-weight-bold text_blue font-16">مراجعة الامتحان</p>
+            <p class="m-0 font-weight-bold text_orange"> تسليم الامتحان</p>
           </b-col>
           <b-col cols="11" sm="10"  md="8" lg="6" class="d-flex flex-column align-items-end">
 
           </b-col>
         </b-row>
 
-
         <b-row  align-h="center"  class="my-4 flex-wrap justify-content-between align-items-center">
 
           <b-col cols="11" sm="10"  md="3" lg="3" class="mx-auto" v-b-modal.modal-4 v-on:click="CheckQuizComplete">
             <div class="parent">
               <img :src="require(`~/assets/icon/question1.svg`)" alt="img" class=""/>
-              <p class="my-0 font-16">  عدد  الإجابات الصحيحة</p>
-              <h4 class="text_blue font-weight-bold">{{Result_ids.length}}</h4>
+              <p class="my-0 font-16">  عدد الأسئلة المحلولة</p>
+              <h4 class="text_dark">{{Answered.length}}</h4>
             </div>
           </b-col>
 
-          <b-col cols="11" sm="10"  md="3" lg="3" class="mx-auto" v-b-modal.modal-6 v-on:click="CheckQuizIncomplete">
+          <b-col cols="11" sm="10"  md="3" lg="3" class="mx-auto" v-b-modal.modal-5 v-on:click="CheckQuizIncomplete">
             <div class="parent">
               <img :src="require(`~/assets/icon/science.svg`)" alt="img" class=""/>
-              <p class="my-0 font-16">   عدد  الإجابات الخاطئة </p>
-              <h4 class="text_blue font-weight-bold">{{Quiz_data.length - Result_ids.length}}</h4>
+              <p class="my-0 font-16">   عدد الأسئلة الغير المحلولة</p>
+              <h4 class="text_dark">{{Quiz_data.length - Answered.length}}</h4>
             </div>
           </b-col>
 
-          <b-col cols="11" sm="10"  md="3" lg="3" class="mx-auto" v-b-modal.modal-5 v-on:click="CheckPassQuiz">
+          <b-col cols="11" sm="10"  md="3" lg="3" class="mx-auto" v-b-modal.modal-6 v-on:click="CheckPassQuiz">
             <div class="parent" >
               <img :src="require(`~/assets/icon/trophy4.svg`)" alt="img" class=""/>
               <p class="my-0 font-16"> عدد الأسئلة المؤجلة</p>
-              <h4 class="text_blue font-weight-bold">{{Pass_Quiz.length}}</h4>
+              <h4 class="text_dark">{{Pass_Quiz.length}}</h4>
             </div>
           </b-col>
 
-          <!-- <b-col cols="11" sm="10"  md="3" lg="3" class="mx-auto" v-b-modal.modal-7 v-on:click="CheckFavorite">
+          <b-col cols="11" sm="10"  md="3" lg="3" class="mx-auto" v-b-modal.modal-7 v-on:click="CheckFavorite">
             <div class="parent">
               <img :src="require(`~/assets/icon/quiz2.svg`)" alt="img" class=""/>
               <p class="my-0 font-16">عدد الأسئلة المضافة للمفضلة</p>
               <h4 class="text_dark">{{Favorite_Quiz.length}}</h4>
             </div>
-          </b-col> -->
+          </b-col>
 
         </b-row>
 
-        <div class="itemsParent mb-5">
-          <p>مراجعة الحلول الخاص بك هنا</p>
+        <div class="itemsParent">
+          <p>مراجعة الأسئلة الخاص بك هنا</p>
           <div class="d-flex my-4">
             <p class="my-0 mt-2">المراجع الان:<span class="font-weight-bold text_orange bgfillOrange rounded px-3 py-2 mx-2">{{FinishNum}}</span>من <span class="font-weight-bold bgfillGrag rounded px-3 py-2 mx-2">{{Quiz_data.length}}</span></p>
             <img :src="require(`~/assets/icon/Group 2273.svg`)" alt="" class="mx-4" v-on:click="NextGroup"/>
             <img :src="require(`~/assets/icon/Group 2274.svg`)" alt="" class="" v-on:click="PerGroup"/>
           </div>
 
-          <div class="items " >
-            <div class="item  cursor_pointer" v-for="(item, index) in All_Modfiy" :key="index" v-on:click="CheckRevsionQuizItem(index)">
+          <div class="items" >
+            <div class="item cursor_pointer" v-for="(item, index) in All_Modfiy" :key="index" v-on:click="CheckRevsionQuizItem(index)">
               <span class="font-weight-bold">({{index+StartNum+1}})</span>
               <div class="mr-auto">
-                <span v-if="item.Answered === true" class="span Answered ml-2"> إجابة صحيحية</span>
-                <span v-else class="span unAnswered ml-2">  إجابه خاطئة</span>
+                <span v-if="item.Answered === true" class="span Answered ml-2">سؤال محلول</span>
+                <span v-else class="span unAnswered ml-2">سؤال غير محلول</span>
                 <span v-if="item.Pass === true" class="span Pass">سؤال مؤجل</span>
               </div>
 
@@ -72,21 +71,28 @@
 
         </div>
 
-        <div v-if=" this.tx !== 'Folder'" class="d-flex justify-content-center">
-            <b-button v-on:click="$router.push({path:`/TestResults/${$route.params.slug}`})" size="sm" class="btn btn_gradient my-2 py-3 px-5 rounded_0 mx-auto" type="button"> العودة للنتائج</b-button>
+
+        <div class="mt-5 d-flex justify-content-center">
+          <b-button v-on:click="CheckRevsionQuiz" size="sm" class="btn btn_red my-2 py-3 px-5 rounded_0 ml-5" type="button"> مراجعة الكل</b-button>
+          <b-button v-on:click="SendData" size="sm" class="btn btn_yellow my-2 py-3 px-5 rounded_0" type="button"> تسليم الامتحان</b-button>
+
         </div>
 
 
         <b-modal id="modal-4" title="قسم المراجعة" hide-footer>
-          <p>لا يوجد أسئلة غير ممحلولة</p>
-        </b-modal>
-
-        <b-modal id="modal-5" title="قسم المراجعة" hide-footer>
-          <p>لا يوجد أسئلة  مؤجلة</p>
+          <p>لا يوجد أسئلة  ممحلولة</p>
         </b-modal>
 
         <b-modal id="modal-6" title="قسم المراجعة" hide-footer>
+          <p>لا يوجد أسئلة  مؤجلة</p>
+        </b-modal>
+
+        <b-modal id="modal-5" title="قسم المراجعة" hide-footer>
           <p>لا يوجد أسئلة غير ممحلولة</p>
+        </b-modal>
+
+        <b-modal id="modal-7" title="قسم المراجعة" hide-footer>
+          <p>لا يوجد أسئلة  مفضلة</p>
         </b-modal>
 
 
@@ -95,6 +101,8 @@
         <Loading/>
       </div>
     </b-container>
+
+
   </div>
 </template>
 
@@ -110,74 +118,68 @@ import Loading from "@/components/Loading";
     },
     data() {
       return {
+        All:[],
+        All_Modfiy:[],
         Answered:[],
         Result:[],
         Quiz_data:[],
         Pass_Quiz :[],
         Answered_obj : {},
-        selected: '',
         status_code: '',
         Quiz_serial:0,
         Incompleted_Answered:[],
+        Favorite_Quiz:[],
         StartNum: 0,
         FinishNum: 9,
-        All:[],
-        All_Modfiy:[],
-        Result:[],
-        Result_ids: [],
-        tx: ''
-
       }
     },
     mounted() {
-      console.log('localStorage.Result_',JSON.parse(localStorage.getItem(`Result_${this.$route.params.slug}`)))
-      this.tx = localStorage.getItem(`Folder_${this.$route.params.slug}`)
+      console.log('FolderQuiz',localStorage.getItem(`FolderQuiz`))
+      // console.log('localStorage.Quiz_duration',JSON.parse(localStorage.getItem(`Quiz_duration${this.$route.params.slug}`)))
+      // console.log('localStorage.Answered_',JSON.parse(localStorage.getItem(`Answered_${this.$route.params.slug}`)))
+      // console.log('localStorage.Quiz_data_',JSON.parse(localStorage.getItem(`Quiz_data_${this.$route.params.slug}`)))
       this.Answered = JSON.parse(localStorage.getItem(`Answered_${this.$route.params.slug}`));
+      this.Favorite_Quiz = JSON.parse(localStorage.getItem(`Favorite_Quiz_${this.$route.params.slug}`));
       this.Quiz_data = JSON.parse(localStorage.getItem(`Quiz_data_${this.$route.params.slug}`));
       this.Pass_Quiz = JSON.parse(localStorage.getItem(`Pass_Quiz_${this.$route.params.slug}`));
-      this.Result = JSON.parse(localStorage.getItem(`Result_${this.$route.params.slug}`));
-
+      this.Seconds = JSON.parse(localStorage.getItem(`Quiz_duration${this.$route.params.slug}`));
       this.Made();
     },
     methods: {
       Made(){
+        this.Answered_ids = [];
         this.Pass_Quiz_ids = [];
-        // this.Favorite_Quiz_ids = [];
+        this.Favorite_Quiz_ids = [];
 
-        for (const property in this.Result.results.answered) {
-          if(this.Result.results.answered[property].correct === true){
-            console.log(`${property}`);
-            this.Result_ids.push(parseInt(property))
-          }
-
-        }
-
+        this.Answered.forEach(element => {
+          this.Answered_ids.push(element.id);
+        });
 
         this.Pass_Quiz.forEach(element => {
           this.Pass_Quiz_ids.push(element.id);
         });
 
-        // this.Favorite_Quiz.forEach(element => {
-        //   this.Favorite_Quiz_ids.push(element.id);
-        // });
+        this.Favorite_Quiz.forEach(element => {
+          this.Favorite_Quiz_ids.push(element.id);
+        });
 
         this.Quiz_data.forEach(ele => {
           this.All.push({ele,Answered:false, Favorite:false, Pass:false});
         });
 
         this.All.forEach(element => {
-          console.log("element.ele.id",element.ele.id)
-          if(this.Result_ids.includes(element.ele.id)){
+          if(this.Answered_ids.includes(element.ele.id)){
             element.Answered = true
           }
-
+          if(this.Favorite_Quiz_ids.includes(element.ele.id)){
+            element.Favorite = true
+          }
           if(this.Pass_Quiz_ids.includes(element.ele.id)){
             element.Pass = true
           }
         });
 
         this.All_Modfiy = this.All.slice(this.StartNum,this.FinishNum);
-
         if(this.FinishNum > this.Quiz_data.length){
           this.FinishNum = this.Quiz_data.length
         }
@@ -211,28 +213,64 @@ import Loading from "@/components/Loading";
 
       },
       CheckQuizIncomplete(){
-        if(this.Quiz_data.length - this.Result_ids.length > 0){
-          this.$router.push({path:`/QuizIncompleteRevsion/${this.$route.params.slug}`})
+        if(this.Quiz_data.length - this.Answered.length > 0){
+          this.$router.push({path:`/QuizIncomplete/${this.$route.params.slug}`})
         }
       },
       CheckQuizComplete(){
-        if(this.Result_ids.length > 0){
-          this.$router.push({path:`/QuizCompleteRevsion/${this.$route.params.slug}`})
+        if(this.Answered.length > 0){
+          this.$router.push({path:`/QuizComplete/${this.$route.params.slug}`})
         }
+      },
+      CheckFavorite(){
+        if(this.Favorite_Quiz.length > 0){
+          this.$router.push({path:`/CheckFavoriteQuiz/${this.$route.params.slug}`})
+        }
+
+      },
+      CheckRevsionQuiz(){
+        localStorage.removeItem(`Quiz_serial${this.$route.params.slug}`);
+        this.$router.push({path:`/QuizRevsion/${this.$route.params.slug}`})
       },
       CheckRevsionQuizItem(Quiz_serial){
         localStorage.setItem(`Quiz_serial${this.$route.params.slug}`, JSON.stringify(Quiz_serial));
-        this.$router.push({path:`/QuizRevsionFinal/${this.$route.params.slug}`})
+        this.$router.push({path:`/QuizRevsion/${this.$route.params.slug}`})
       },
       CheckPassQuiz(){
         if(this.Pass_Quiz.length > 0){
-          this.$router.push({path:`/CheckPassQuizRevsion/${this.$route.params.slug}`})
+          this.$router.push({path:`/CheckPassQuiz/${this.$route.params.slug}`})
         }
 
       },
 
+      SendData() {
+        let answered = {}
+        console.log('Answered....',this.Answered)
 
-    },
+
+        if(this.Quiz_data.length > 0){
+
+          for (var i=0; i<this.Answered.length; i++){
+            answered[this.Quiz_data[i].id] = {
+                answered: {answered :  this.Answered[i].id === this.Quiz_data[i].id ? this.Answered[i].answer : ''},
+                correct : this.Quiz_data[i].options.forEach(el => el.is_true === 'yes')  ? true : false,
+                options :  this.Quiz_data[i].options
+              } ;
+            }
+
+        }
+
+        let res = {results:{answered},status :'success'}
+
+            console.log('finisf',res)
+            localStorage.setItem(`Folder_${this.$route.params.slug}`, 'Folder');
+            localStorage.setItem(`Result_${this.$route.params.slug}`, JSON.stringify(res));
+            this.$router.push({path:`/ResultsRevsion/${this.$route.params.slug}`})
+
+
+      },
+
+  },
 
   }
 </script>
@@ -243,33 +281,10 @@ import Loading from "@/components/Loading";
 .spinner_loading{
   height: 90vh;
 }
-.selected{
-  border: 2px solid var(--BlueColor);
-}
 
 .clock_img{
   width: 22px;
   margin-left: 2px;
-}
-.parent{
-  position: relative;
-  cursor: pointer;
-}
-.overly{
-  position:absolute ;
-  top: 70px;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  color: #fff;
-  padding: 9px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.icon{
-  width: 20px;
 }
 .parent{
   position: relative;
@@ -284,6 +299,9 @@ import Loading from "@/components/Loading";
   justify-content: space-around;
   align-items: center;
 
+}
+.icon{
+  width: 20px;
 }
 .itemsParent{
   background-color: #FBFBFB;

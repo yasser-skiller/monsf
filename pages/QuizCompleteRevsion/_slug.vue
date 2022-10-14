@@ -198,14 +198,6 @@ import AddFoldersList from "@/components/AddFoldersList";
 
 
 
-      // if(this.Answered.length > 0){
-      //   this.Answered.forEach(element => {
-      //     if(element.my_Quiz_serial === this.Quiz_serial){
-      //       this.selected = element.answer
-      //     }
-      //   });
-      // }
-
       //Favorite
       this.HeartCase = false;
       this.Favorite_Quiz.forEach(element => {

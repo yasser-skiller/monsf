@@ -159,13 +159,11 @@ import AddFoldersList from "@/components/AddFoldersList";
 
         });
 
-        console.log('locQuiz_data_', this.Quiz_data)
-
       },
       Compare(){
       if(this.Answered.length > 0){
         this.Answered.forEach(element => {
-          if(element.my_Quiz_serial === this.Quiz_serial){
+          if(element.id === this.Quiz_data[this.Quiz_serial].id){
             this.selected = element.answer
           }
         });

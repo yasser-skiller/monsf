@@ -1,5 +1,5 @@
 export default {
   apiUrl:'https://system.elmonsf.com/',
-  token :`eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvc3lzdGVtLmVsbW9uc2YuY29tIiwiaWF0IjoxNjY1MDc1OTQ2LCJuYmYiOjE2NjUwNzU5NDYsImV4cCI6MTY2NTY4MDc0NiwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMjkifX19.aithJH1iwEkfse9rX8MZpoOkLWTwklIpAM4iVsJgDtE`,
+  token :`eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvc3lzdGVtLmVsbW9uc2YuY29tIiwiaWF0IjoxNjY1NzA2NDQzLCJuYmYiOjE2NjU3MDY0NDMsImV4cCI6MTY2NjMxMTI0MywiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMSJ9fX0.7ydsE2iGpB2a4URRPb4jg-yxzfb0j1lc1hx16yR4YIA`,
 }
 
